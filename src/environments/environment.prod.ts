@@ -30,7 +30,7 @@ environment = {
   menuHiddenBreakpoint: 768,
   themeColorStorageKey: 'vien-themecolor',
   isMultiColorActive: true,
-  defaultColor: 'light.blueyale',
+  defaultColor: 'light.bluenavy',
   isDarkSwitchActive: true,
   defaultDirection: 'ltr',
   themeRadiusStorageKey: 'vien-themeradius',

@@ -7,6 +7,8 @@ import { AuthService } from 'src/app/shared/auth.service';
 import { environment } from 'src/environments/environment';
 import { getThemeColor, setThemeColor } from 'src/app/utils/util';
 
+import { Colors } from 'src/app/constants/colors.service';
+
 @Component({
   selector: 'app-topnav',
   templateUrl: './topnav.component.html',
@@ -24,11 +26,14 @@ export class TopnavComponent implements OnInit, OnDestroy {
   isDarkModeActive = false;
   searchKey = '';
 
+  themeColor1 = Colors.getColors().themeColor1;
+  foregroundColor = Colors.getColors().foregroundColor;
+
   constructor(
     private sidebarService: SidebarService,
     private authService: AuthService,
     private router: Router,
-    private langService: LangService
+    private langService: LangService,
   ) {
     this.languages = this.langService.supportedLanguages;
     this.currentLanguage = this.langService.languageShorthand;

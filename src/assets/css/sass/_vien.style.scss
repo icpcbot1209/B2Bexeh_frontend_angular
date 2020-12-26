@@ -1715,7 +1715,7 @@ a.btn-secondary:not([href]):not([tabindex]) {
 
 /* 08.Navbar*/
 .navbar {
-  background: $foreground-color;
+  background: $theme-color-1;
   height: $navbar-height;
   padding: 1.5rem 0 1.5rem 0;
   @include depth(1);
@@ -1967,7 +1967,7 @@ a.btn-secondary:not([href]):not([tabindex]) {
 
   .header-icon {
     font-size: 16px;
-    color: $secondary-color;
+    color: $foreground-color;
     padding-left: 0.6rem;
     padding-right: 0.6rem;
     vertical-align: initial;
@@ -1978,14 +1978,14 @@ a.btn-secondary:not([href]):not([tabindex]) {
     }
 
     &:hover {
-      color: $theme-color-1;
+      color: $secondary-color;
     }
 
     &#notificationButton {
       .count {
         font-size: 9px;
-        color: $theme-color-1;
-        border: 1px solid $theme-color-1;
+        color: $foreground-color;
+        border: 1px solid $foreground-color;
         border-radius: 10px;
         position: absolute;
         width: 18px;
@@ -2005,11 +2005,11 @@ a.btn-secondary:not([href]):not([tabindex]) {
 
   .custom-control {
     .custom-control-label::before {
-      border: 1px solid $secondary-color !important;
+      border: 1px solid $foreground-color !important;
     }
 
     .custom-control-label::after {
-      background-color: $secondary-color;
+      background-color: $foreground-color;
     }
   }
 
@@ -2066,7 +2066,7 @@ a.btn-secondary:not([href]):not([tabindex]) {
 
 .logo {
   width: 110px;
-  height: 40px;
+  height: 60px;
   background: url($logo-path) no-repeat;
   background-position: center center;
   margin: 0 auto;
@@ -3434,11 +3434,11 @@ body.default-transition main {
     line-height: 1rem;
     }
   }
-  
+
     .fc-toolbar.fc-header-toolbar .fc-prev-button {
       margin-right: 0;
     }
-  
+
     .fc-toolbar.fc-header-toolbar .fc-next-button {
       margin-right: 5px;
     }
@@ -7759,7 +7759,7 @@ app-profile-who-to-follow app-user-follow:last-of-type > div {
     border-radius: $border-radius;
   }
 
-  
+
 
   .input-group-append .btn + .btn,
   .input-group-append .btn + .input-group-text,
@@ -9437,9 +9437,10 @@ footer.page-footer {
     span {
       display: inline-block;
       width: 100px;
-      height: 30px;
+      height: 50px;
       background: url($lp-logo-path-pinned);
       background-repeat: no-repeat;
+      background-size: contain;
     }
   }
 
@@ -9580,20 +9581,21 @@ footer.page-footer {
     .navbar-logo {
       width: 120px;
       height: 40px;
-
       .white {
         display: inline-block;
         width: 120px;
-        height: 40px;
+        height: 60px;
         background: url($lp-logo-path);
         background-repeat: no-repeat;
+        background-size: contain;
       }
 
       .dark {
         width: 120px;
-        height: 40px;
+        height: 60px;
         background: url($lp-logo-path-pinned);
         background-repeat: no-repeat;
+        background-size: contain;
         display: none;
       }
     }
