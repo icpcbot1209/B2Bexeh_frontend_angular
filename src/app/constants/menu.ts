@@ -420,4 +420,34 @@ const data: IMenuItem[] = [
     newWindow: true,
   },
 ];
-export default data;
+
+const mydata: IMenuItem[] = [
+  {
+    icon: 'iconsminds-magnifi-glass',
+    label: 'Browse Items',
+    to: `${adminRoot}/browse`,
+    // roles: [UserRole.Editor],
+  },
+  {
+    icon: 'simple-icon-tag',
+    label: 'My Offers',
+    to: `${adminRoot}/offers`,
+    // roles: [UserRole.Editor],
+  },
+  {
+    icon: 'iconsminds-mail',
+    label: 'Messages',
+    to: `${adminRoot}/chat`,
+    // roles: [UserRole.Editor],
+  },
+  {
+    icon: 'simple-icon-question',
+    label: 'Help',
+    to: `${adminRoot}/help`,
+    // roles: [UserRole.Editor],
+  },
+  // ...data
+];
+
+
+export default mydata;

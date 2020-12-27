@@ -55,9 +55,9 @@ Table of Contents
 
 $main-menu-item-height: 110px;
 $main-menu-width: 120px;
-$main-menu-width-lg: 110px;
-$main-menu-width-md: 100px;
-$main-menu-width-xs: 90px;
+$main-menu-width-lg: 120px;
+$main-menu-width-md: 120px;
+$main-menu-width-xs: 120px;
 
 $sub-menu-width: 230px;
 $sub-menu-width-lg: 230px;
@@ -258,7 +258,7 @@ perfect-scrollbar > .ps {
 
 .logo-single {
   width: 110px;
-  height: 35px;
+  height: 110px;
   background: url($logo-path) no-repeat;
   background-position: center center;
   display: inline-block;
@@ -2201,34 +2201,34 @@ a.btn-secondary:not([href]):not([tabindex]) {
         }
       }
     }
-    @include respond-below(xl) {
-      width: $main-menu-width-lg;
-      height: calc(100% - #{$navbar-height-lg});
-    }
+    // @include respond-below(xl) {
+    //   width: $main-menu-width-lg;
+    //   height: calc(100% - #{$navbar-height-lg});
+    // }
 
-    @include respond-below(lg) {
-      width: $main-menu-width-md;
-      height: calc(100% - #{$navbar-height-md});
-    }
+    // @include respond-below(lg) {
+    //   width: $main-menu-width-md;
+    //   height: calc(100% - #{$navbar-height-md});
+    // }
 
-    @include respond-below(sm) {
-      width: $main-menu-width-xs;
-      height: calc(100% - #{$navbar-height-xs});
+    // @include respond-below(sm) {
+    //   width: $main-menu-width-xs;
+    //   height: calc(100% - #{$navbar-height-xs});
 
-      ul li i {
-        font-size: 26px;
-        line-height: 30px;
-      }
+    //   ul li i {
+    //     font-size: 26px;
+    //     line-height: 30px;
+    //   }
 
-      ul li a {
-        height: $main-menu-item-height-mobile;
-      }
+    //   ul li a {
+    //     height: $main-menu-item-height-mobile;
+    //   }
 
-      ul li.active:after {
-        width: 3px;
-        height: 60px;
-      }
-    }
+    //   ul li.active:after {
+    //     width: 3px;
+    //     height: 60px;
+    //   }
+    // }
   }
 
   .sub-menu {
@@ -2830,30 +2830,30 @@ main {
     padding-right: 0;
   }
 
-  @include respond-below(xl) {
-    margin-left: $sub-menu-width-lg + $main-menu-width-lg + $main-margin-lg;
-    margin-right: $main-margin-lg;
-    margin-top: $main-margin-lg + $navbar-height-lg - 10;
-    margin-bottom: 30px;
-  }
+  // @include respond-below(xl) {
+  //   margin-left: $sub-menu-width-lg + $main-menu-width-lg + $main-margin-lg;
+  //   margin-right: $main-margin-lg;
+  //   margin-top: $main-margin-lg + $navbar-height-lg - 10;
+  //   margin-bottom: 30px;
+  // }
 
-  @include respond-below(lg) {
-    margin-left: $sub-menu-width-md + $main-menu-width-md + $main-margin-md;
-    margin-right: $main-margin-md;
-    margin-top: $main-margin-md + $navbar-height-md - 10;
-    margin-bottom: 20px;
-  }
+  // @include respond-below(lg) {
+  //   margin-left: $sub-menu-width-md + $main-menu-width-md + $main-margin-md;
+  //   margin-right: $main-margin-md;
+  //   margin-top: $main-margin-md + $navbar-height-md - 10;
+  //   margin-bottom: 20px;
+  // }
 
-  @include respond-below(sm) {
-    margin-left: $main-margin-xs !important;
-    margin-right: $main-margin-xs !important;
-    margin-top: $main-margin-xs + $navbar-height-xs !important;
-    margin-bottom: 0;
-  }
+  // @include respond-below(sm) {
+  //   margin-left: $main-margin-xs !important;
+  //   margin-right: $main-margin-xs !important;
+  //   margin-top: $main-margin-xs + $navbar-height-xs !important;
+  //   margin-bottom: 0;
+  // }
 
-  @include respond-below(xs) {
-    margin-bottom: 0;
-  }
+  // @include respond-below(xs) {
+  //   margin-bottom: 0;
+  // }
 }
 
 body.default-transition main {

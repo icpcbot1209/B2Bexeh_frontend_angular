@@ -277,17 +277,17 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   @HostListener('window:resize', ['$event'])
   handleWindowResize(event): void {
-    if (event && !event.isTrusted) {
-      return;
-    }
-    const { containerClassnames } = this.sidebar;
-    const nextClasses = this.getMenuClassesForResize(containerClassnames);
-    this.sidebarService.setContainerClassnames(
-      0,
-      nextClasses.join(' '),
-      this.sidebar.selectedMenuHasSubItems
-    );
-    this.isCurrentMenuHasSubItem();
+    // if (event && !event.isTrusted) {
+    //   return;
+    // }
+    // const { containerClassnames } = this.sidebar;
+    // const nextClasses = this.getMenuClassesForResize(containerClassnames);
+    // this.sidebarService.setContainerClassnames(
+    //   0,
+    //   nextClasses.join(' '),
+    //   this.sidebar.selectedMenuHasSubItems
+    // );
+    // this.isCurrentMenuHasSubItem();
   }
 
   menuClicked(e: MouseEvent): void {
