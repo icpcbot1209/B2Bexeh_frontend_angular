@@ -1,8 +1,12 @@
-import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { from } from 'rxjs';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { AngularFireAuth } from "@angular/fire/auth";
+import { getUserRole } from "src/app/utils/util";
 
-import { getUserRole } from 'src/app/utils/util';
+import { from } from "rxjs";
+import { map } from "rxjs/operators";
+import { ApiUrlConstant } from "src/app/constants/api-url.constant";
+import { Router } from "@angular/router";
 
 export interface ISignInCredentials {
   email: string;
@@ -20,32 +24,81 @@ export interface IPasswordReset {
   newPassword: string;
 }
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: "root" })
 export class AuthService {
-  constructor(private auth: AngularFireAuth) {}
+  isAuthed = false;
+  constructor(private auth: AngularFireAuth, private http: HttpClient, private router: Router) {
+    this.autoLogin();
+  }
+
+  private autoLogin() {
+    if (this.getToken()) this.isAuthed = true;
+  }
+
+  setToken(token: string) {
+    localStorage.setItem("b2b_auth_token", token);
+  }
+  getToken() {
+    return localStorage.getItem("b2b_auth_token");
+  }
+
+  trySignOut() {
+    localStorage.removeItem("b2b_auth_token");
+    localStorage.removeItem("b2b_auth_role");
+    localStorage.removeItem("b2b_auth_username");
+    localStorage.removeItem("b2b_auth_userId");
+  }
+
+  trySignup(data) {
+    return this.http.post(ApiUrlConstant.REGISTER, data).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
+  }
+
+  tryLogin(data) {
+    return this.http.post(ApiUrlConstant.LOGIN, data).pipe(
+      map((res: any) => {
+        if (res.code === 200) {
+          localStorage.setItem("b2b_auth_token", res["data"]["token"]);
+          let username = res.data.loginData.data[0].first_name + " " + res.data.loginData.data[0].last_name;
+          if (res.data.loginData.data[0].role == "admin") {
+            localStorage.setItem("b2b_auth_role", "admin");
+            localStorage.setItem("b2b_auth_username", username);
+          } else {
+            localStorage.setItem("b2b_auth_role", "user");
+            localStorage.setItem("b2b_auth_username", username);
+          }
+          let userId = res["data"]["params"]["_id"];
+          localStorage.setItem("b2b_auth_userId", userId);
+
+          this.isAuthed = true;
+        }
+
+        return res;
+      })
+    );
+  }
 
   // tslint:disable-next-line:typedef
   signIn(credentials: ISignInCredentials) {
-    return this.auth
-      .signInWithEmailAndPassword(credentials.email, credentials.password)
-      .then(({ user }) => {
-        return user;
-      });
+    return this.auth.signInWithEmailAndPassword(credentials.email, credentials.password).then(({ user }) => {
+      return user;
+    });
   }
 
   signOut = () => from(this.auth.signOut());
 
   // tslint:disable-next-line:typedef
   register(credentials: ICreateCredentials) {
-    return this.auth
-      .createUserWithEmailAndPassword(credentials.email, credentials.password)
-      .then(async ({ user }) => {
-        user.updateProfile({
-          displayName: credentials.displayName,
-        });
-        this.auth.updateCurrentUser(user);
-        return user;
+    return this.auth.createUserWithEmailAndPassword(credentials.email, credentials.password).then(async ({ user }) => {
+      user.updateProfile({
+        displayName: credentials.displayName,
       });
+      this.auth.updateCurrentUser(user);
+      return user;
+    });
   }
 
   // tslint:disable-next-line:typedef
@@ -57,11 +110,9 @@ export class AuthService {
 
   // tslint:disable-next-line:typedef
   resetPassword(credentials: IPasswordReset) {
-    return this.auth
-      .confirmPasswordReset(credentials.code, credentials.newPassword)
-      .then((data) => {
-        return data;
-      });
+    return this.auth.confirmPasswordReset(credentials.code, credentials.newPassword).then((data) => {
+      return data;
+    });
   }
 
   // tslint:disable-next-line:typedef

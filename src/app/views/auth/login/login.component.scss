@@ -1,0 +1,56 @@
+:host {
+  .full-flex {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    background-color: #f1f2f3;
+  }
+
+  .login-box {
+    margin: auto;
+    margin-top: 7%;
+    width: 600px;
+    background-color: #fff;
+  }
+
+  .login-title {
+    background-color: #0280ff;
+    padding: 30px 30px 15px;
+    font-family: "Lato", sans-serif;
+    color: #fff;
+    font-weight: 300;
+    font-size: 28px;
+    text-transform: uppercase;
+  }
+
+  #login-form {
+    padding: 30px;
+    font-size: large;
+  }
+
+  #email {
+    width: 100%;
+  }
+
+  #password {
+    width: 100%;
+  }
+
+  button {
+    border-radius: 5%;
+    font-size: large;
+    margin: 20px 0;
+  }
+
+  .forgot-password {
+    text-align: center;
+    margin: 10px;
+
+    color: #999999;
+    font-size: 14px;
+  }
+
+  .disabled {
+    user-select: none;
+  }
+}

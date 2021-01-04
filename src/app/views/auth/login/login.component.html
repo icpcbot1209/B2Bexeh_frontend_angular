@@ -1,0 +1,39 @@
+<div class="full-flex">
+  <div class="login-box">
+    <div class="login-title">LOGIN</div>
+
+    <form [formGroup]="loginForm" novalidate (submit)="onSubmit($event)" id="login-form">
+      <mat-form-field id="email">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" />
+        <mat-icon matSuffix class="secondary-text">mail</mat-icon>
+        <mat-error *ngIf="loginForm.get('email').hasError('required')"> Email is required </mat-error>
+        <mat-error *ngIf="!loginForm.get('email').hasError('required') && loginForm.get('email').hasError('email')">
+          Please enter a valid email address
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field id="password">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" />
+        <mat-icon matSuffix class="secondary-text">vpn_key</mat-icon>
+        <mat-error> Password is required </mat-error>
+      </mat-form-field>
+
+      <div style="display: flex">
+        <div style="flex: 1"></div>
+        <app-state-button btnClass="btn btn-primary font-weight-light text-uppercase" [currentState]="busy?'show-spinner':''" [showMessage]="false" [isDisabled]="loginForm.invalid">
+          SIGN IN
+        </app-state-button>
+      </div>
+
+      <div class="forgot-password text-center mt-4">
+        <a [routerLink]="['forgot-password']" class="text-gray-scale1 f-13 font-weight-bolder">Forgot Password?</a>
+      </div>
+      <div class="forgot-password text-center text-gray-scale1 text-gray-scale1 f-13 font-weight-bolder">
+        New User?
+        <a [routerLink]="['/auth/signup']" class="text-primary"> Sign Up</a>
+      </div>
+    </form>
+  </div>
+</div>
