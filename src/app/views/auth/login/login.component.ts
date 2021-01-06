@@ -27,7 +27,6 @@ export class LoginComponent implements OnInit {
     this.busy = true;
     this.authService.tryLogin(this.loginForm.value).subscribe((res) => {
       this.busy = false;
-      console.log(res);
       if (res.code === 200) {
         this.snackbar.open(res.message, "close", { horizontalPosition: "end", verticalPosition: "top", duration: 3000, panelClass: ["green-snackbar"] });
         this.router.navigate(["app/browse"]);

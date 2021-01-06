@@ -26,7 +26,7 @@ export const environment = {
   'dark.greenlime', 'dark.yellowgranola', 'dark.greysteel', 'dark.orangecarrot',
   'dark.redruby', 'dark.purplemonster'
   */
-  defaultColor: "light.bluenavy",
+  defaultColor: "light.blueyale",
   isDarkSwitchActive: true,
   defaultDirection: "ltr",
   themeRadiusStorageKey: "vien-themeradius",
