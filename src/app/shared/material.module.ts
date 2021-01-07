@@ -11,6 +11,7 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatIconModule } from "@angular/material/icon";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatTabsModule } from "@angular/material/tabs";
 
 const MaterialComponentArray = [
   MatFormFieldModule,
@@ -23,6 +24,7 @@ const MaterialComponentArray = [
   MatIconModule,
   MatCheckboxModule,
   MatProgressSpinnerModule,
+  MatTabsModule,
 ];
 
 @NgModule({

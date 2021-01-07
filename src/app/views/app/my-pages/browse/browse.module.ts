@@ -2,7 +2,8 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterModule, Routes } from "@angular/router";
 
-import { MatTabsModule } from "@angular/material/tabs";
+import { MaterialModule } from "src/app/shared/material.module";
+import { PrimengModule } from "src/app/shared/primneng.module";
 
 import { BrowseComponent } from "./browse.component";
 import { MarketComponent } from "./market/market.component";
@@ -10,6 +11,11 @@ import { LatestOffersComponent } from "./latest-offers/latest-offers.component";
 import { PopularComponent } from "./popular/popular.component";
 import { NewArrivalsComponent } from "./new-arrivals/new-arrivals.component";
 import { WatchListComponent } from "./watch-list/watch-list.component";
+import { HttpClientModule } from "@angular/common/http";
+import { FormsModule } from "@angular/forms";
+import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { CustomerService } from "./market/customerservice";
 
 const routes: Routes = [
   {
@@ -27,6 +33,7 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [BrowseComponent, MarketComponent],
-  imports: [CommonModule, RouterModule.forChild(routes), MatTabsModule],
+  imports: [CommonModule, RouterModule.forChild(routes), HttpClientModule, FormsModule, MaterialModule, PrimengModule],
+  providers: [CustomerService],
 })
 export class BrowseModule {}

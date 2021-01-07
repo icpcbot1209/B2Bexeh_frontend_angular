@@ -1,0 +1,20 @@
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Customer } from "./customer";
+
+@Injectable()
+export class CustomerService {
+  constructor(private http: HttpClient) {}
+
+  getCustomersLarge() {
+    console.log("fetch");
+    return this.http
+      .get<any>("assets/customers-large.json")
+      .toPromise()
+      .then((res) => <Customer[]>res.data)
+      .then((data) => {
+        console.log(data);
+        return data;
+      });
+  }
+}
