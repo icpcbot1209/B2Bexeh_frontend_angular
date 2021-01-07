@@ -13,9 +13,9 @@ import { NewArrivalsComponent } from "./new-arrivals/new-arrivals.component";
 import { WatchListComponent } from "./watch-list/watch-list.component";
 import { HttpClientModule } from "@angular/common/http";
 import { FormsModule } from "@angular/forms";
-import { BrowserModule } from "@angular/platform-browser";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { CustomerService } from "./market/customerservice";
+import { CustomerService } from "../../pdtable/customerservice";
+
+import { PdtableModule } from "src/app/views/app/pdtable/pdtable.module";
 
 const routes: Routes = [
   {
@@ -33,7 +33,6 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [BrowseComponent, MarketComponent],
-  imports: [CommonModule, RouterModule.forChild(routes), HttpClientModule, FormsModule, MaterialModule, PrimengModule],
-  providers: [CustomerService],
+  imports: [CommonModule, RouterModule.forChild(routes), HttpClientModule, FormsModule, MaterialModule, PrimengModule, PdtableModule],
 })
 export class BrowseModule {}
