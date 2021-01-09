@@ -1,0 +1,46 @@
+<mat-expansion-panel #panel [expanded]="isOpen" [style.overflow]="isOpen ? 'visible' : 'hidden'">
+  <div class="filters-container">
+    <ng-container *ngFor="let filter of filters">
+      <div class="filter-card" [ngClass]="{ active: theFilter == filter }" (click)="setFilter(filter)">
+        <div class="filter-card-title">
+          <i class="iconsminds-filter-2"></i>
+          <span>{{ filter.title }}</span>
+        </div>
+        <ng-container *ngIf="filter.uid != '0'">
+          <div class="filter-card-description text-center">
+            <i [class]="filter.icon"></i>
+            <p>{{ filter.description }}</p>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="filter.uid == '0'">
+          <div style="margin: 10px; margin-top: 40px">
+            <label><span>Sports</span></label>
+            <ng-select
+              [placeholder]="'--- select sports ---'"
+              [items]="categories"
+              bindLabel="categoryName"
+              autofocus
+              (change)="onChangeCategory($event)"
+              [(ngModel)]="category"
+            >
+            </ng-select>
+          </div>
+          <div style="margin: 10px; margin-top: 30px">
+            <label><span>Year</span></label>
+            <ng-select
+              [placeholder]="'--- select year ---'"
+              [items]="subcategories"
+              bindLabel="subcategory_name"
+              autofocus
+              (change)="onChangeSubcategory($event)"
+              [(ngModel)]="subcategory"
+            >
+            </ng-select>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+  </div>
+  <mat-progress-bar mode="indeterminate" *ngIf="isBusy"></mat-progress-bar>
+  <hr />
+</mat-expansion-panel>

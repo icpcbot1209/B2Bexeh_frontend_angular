@@ -11,9 +11,14 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatIconModule } from "@angular/material/icon";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatTabsModule } from "@angular/material/tabs";
+import { MatExpansionModule } from "@angular/material/expansion";
+import { MatTableModule } from "@angular/material/table";
+import { MatPaginatorModule } from "@angular/material/paginator";
+import { MatSortModule } from "@angular/material/sort";
 
-const MaterialComponentArray = [
+const arr = [
   MatFormFieldModule,
   MatInputModule,
   MatCardModule,
@@ -24,12 +29,17 @@ const MaterialComponentArray = [
   MatIconModule,
   MatCheckboxModule,
   MatProgressSpinnerModule,
+  MatProgressBarModule,
   MatTabsModule,
+  MatExpansionModule,
+  MatTableModule,
+  MatPaginatorModule,
+  MatSortModule,
 ];
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, ...MaterialComponentArray],
-  exports: [...MaterialComponentArray],
+  imports: [CommonModule, ...arr],
+  exports: [...arr],
 })
 export class MaterialModule {}

@@ -1,0 +1,44 @@
+:host {
+  mat-expansion-panel {
+    background: transparent;
+    box-shadow: none !important;
+  }
+
+  .filters-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    color: #8f8f8f;
+    padding-bottom: 20px;
+
+    .filter-card {
+      cursor: pointer;
+      width: 250px;
+      margin-top: 20px;
+      border: 1px solid rgb(230, 230, 230);
+      padding: 10px;
+      &:hover {
+        border: 1px solid rgb(200, 200, 200);
+      }
+      &.active {
+        border: 1px solid rgb(115, 171, 245);
+        color: #0280ff;
+      }
+
+      .filter-card-title {
+        font-size: large;
+      }
+
+      .filter-card-description {
+        margin: 50px 20px;
+        i {
+          font-size: 48px;
+        }
+        p {
+          margin-top: 20px;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}

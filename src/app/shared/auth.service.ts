@@ -27,12 +27,16 @@ export interface IPasswordReset {
 @Injectable({ providedIn: "root" })
 export class AuthService {
   isAuthed = false;
+  userId = "";
   constructor(private auth: AngularFireAuth, private http: HttpClient, private router: Router) {
     this.autoLogin();
   }
 
   private autoLogin() {
-    if (this.getToken()) this.isAuthed = true;
+    if (this.getToken()) {
+      this.isAuthed = true;
+      this.userId = localStorage.getItem("b2b_auth_userId");
+    }
   }
 
   setToken(token: string) {
@@ -70,8 +74,8 @@ export class AuthService {
             localStorage.setItem("b2b_auth_role", "user");
             localStorage.setItem("b2b_auth_username", username);
           }
-          let userId = res["data"]["params"]["_id"];
-          localStorage.setItem("b2b_auth_userId", userId);
+          this.userId = res["data"]["params"]["_id"];
+          localStorage.setItem("b2b_auth_userId", this.userId);
 
           this.isAuthed = true;
         }

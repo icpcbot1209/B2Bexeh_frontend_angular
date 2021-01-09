@@ -1,15 +1,17 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { AppRoutingModule } from './app.routing';
-import { AppComponent } from './app.component';
-import { ViewsModule } from './views/views.module';
-import { TranslateModule } from '@ngx-translate/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from "@angular/platform-browser";
+import { NgModule } from "@angular/core";
+import { AppRoutingModule } from "./app.routing";
+import { AppComponent } from "./app.component";
+import { ViewsModule } from "./views/views.module";
+import { TranslateModule } from "@ngx-translate/core";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
-import { HttpClientModule } from '@angular/common/http';
-import { AngularFireModule } from '@angular/fire';
-import { environment } from 'src/environments/environment';
-import { LayoutContainersModule } from './containers/layout/layout.containers.module';
+import { AngularFireModule } from "@angular/fire";
+import { environment } from "src/environments/environment";
+import { LayoutContainersModule } from "./containers/layout/layout.containers.module";
+
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { AuthInterceptor } from "src/app/shared/auth-interceptor";
 
 @NgModule({
   imports: [
@@ -20,12 +22,16 @@ import { LayoutContainersModule } from './containers/layout/layout.containers.mo
     BrowserAnimationsModule,
     TranslateModule.forRoot(),
     HttpClientModule,
-    AngularFireModule.initializeApp(environment.firebase)
+    AngularFireModule.initializeApp(environment.firebase),
   ],
-  declarations: [
-    AppComponent
+  declarations: [AppComponent],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

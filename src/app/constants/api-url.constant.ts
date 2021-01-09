@@ -4,6 +4,7 @@ export class ApiUrlConstant {
 
     private static appurl = environment.myApiUrl;
     //add product and categary CATEGART
+    public static get TEST(): string { return this.appurl + '/test' }
     public static get CATEGARTLIST(): string { return this.appurl + '/category/getAllCategorys' }
     public static get GETSEARCHCATEGORYTLIST(): string { return this.appurl + '/category/getSearchCategoryList' }
     // public static get SUBCATEGARTLIST(): string { return this.appurl + '/subcategory/getallSubcategory' }

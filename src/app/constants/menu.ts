@@ -424,26 +424,26 @@ const data: IMenuItem[] = [
 let mydata: IMenuItem[] = [
   {
     icon: "iconsminds-magnifi-glass",
-    label: "Browse Items",
-    to: `${adminRoot}/browse`,
+    label: "Browse Market",
+    to: `/main/market`,
     // roles: [UserRole.Editor],
   },
   {
-    icon: "iconsminds-arrow-x-left",
+    icon: "iconsminds-tag-3",
     label: "My Offers",
-    to: `${adminRoot}/offers`,
+    to: `/main/myoffers`,
     // roles: [UserRole.Editor],
   },
   {
     icon: "iconsminds-mail",
     label: "Messages",
-    to: `${adminRoot}/applications/chat`,
+    to: `/main/messages`,
     // roles: [UserRole.Editor],
   },
   {
     icon: "iconsminds-information",
     label: "Help",
-    to: `${adminRoot}/help`,
+    to: `/main/help`,
     // roles: [UserRole.Editor],
   },
 ];
