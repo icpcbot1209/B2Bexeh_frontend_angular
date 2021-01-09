@@ -6,10 +6,11 @@ import { NgSelectModule } from "@ng-select/ng-select";
 import { ProductTableComponent } from "./product-table/product-table.component";
 import { BootstrapModule } from "src/app/components/bootstrap/bootstrap.module";
 import { MaterialModule } from "src/app/shared/material.module";
+import { CategorySelectComponent } from "./category-select/category-select.component";
 
 @NgModule({
-  declarations: [ProductFilterComponent, ProductTableComponent],
+  declarations: [ProductFilterComponent, ProductTableComponent, CategorySelectComponent],
   imports: [CommonModule, FormsModule, MaterialModule, ReactiveFormsModule, NgSelectModule],
-  exports: [ProductFilterComponent, ProductTableComponent],
+  exports: [ProductFilterComponent, ProductTableComponent, CategorySelectComponent],
 })
 export class MainComponentsModule {}

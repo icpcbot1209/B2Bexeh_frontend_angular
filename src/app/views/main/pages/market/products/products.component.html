@@ -1,9 +1,9 @@
 <ng-container>
   <div>
-    <main-product-filter [isOpen]="isOpenFilter" (productsChanged)="handleProductsChanged($event)"></main-product-filter>
+    <main-category-select (productsChanged)="handleProductsChanged($event)"></main-category-select>
   </div>
 
-  <div style="margin-top: 20px" #refTableDiv>
+  <div>
     <main-product-table [products]="products"></main-product-table>
   </div>
 </ng-container>

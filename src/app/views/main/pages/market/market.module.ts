@@ -8,6 +8,9 @@ import { FormsModule } from "@angular/forms";
 import { MaterialModule } from "src/app/shared/material.module";
 import { PrimengModule } from "src/app/shared/primneng.module";
 import { MainComponentsModule } from "src/app/views/main/main-components/main-components.module";
+import { PopularComponent } from "./popular/popular.component";
+import { NewArrivalsComponent } from "./new-arrivals/new-arrivals.component";
+import { WatchListComponent } from "./watch-list/watch-list.component";
 
 const routes: Routes = [
   {
@@ -24,6 +27,18 @@ const routes: Routes = [
         component: ProductsComponent,
       },
       {
+        path: "popular",
+        component: PopularComponent,
+      },
+      {
+        path: "new-arrivals",
+        component: NewArrivalsComponent,
+      },
+      {
+        path: "watch-list",
+        component: WatchListComponent,
+      },
+      {
         path: "offers",
         component: OffersComponent,
       },
@@ -32,7 +47,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [MarketComponent, ProductsComponent, OffersComponent],
+  declarations: [MarketComponent, ProductsComponent, OffersComponent, PopularComponent, NewArrivalsComponent, WatchListComponent],
   imports: [CommonModule, RouterModule.forChild(routes), FormsModule, MaterialModule, PrimengModule, MainComponentsModule],
 })
 export class MarketModule {}

@@ -1,0 +1,36 @@
+<div style="display: flex">
+  <div class="input-group" style="width: 250px; margin-right: 20px">
+    <div class="input-group-prepend">
+      <div class="input-group-text" style="width: 70px">Sports:</div>
+    </div>
+    <ng-select
+      class="form-control"
+      style="padding: 0"
+      [clearable]="false"
+      [placeholder]="'--- select sports ---'"
+      [items]="categories"
+      bindLabel="categoryName"
+      autofocus
+      (change)="onChangeCategory($event)"
+    >
+    </ng-select>
+  </div>
+
+  <div class="input-group" style="width: 250px">
+    <div class="input-group-prepend">
+      <div class="input-group-text" style="width: 70px">Year:</div>
+    </div>
+    <ng-select
+      class="form-control"
+      style="padding: 0"
+      [clearable]="false"
+      [placeholder]="'--- select year ---'"
+      [items]="subcategories"
+      bindLabel="subcategory_name"
+      autofocus
+      (change)="onChangeSubcategory($event)"
+    >
+    </ng-select>
+  </div>
+</div>
+<mat-progress-bar mode="indeterminate" *ngIf="isBusy"></mat-progress-bar>

@@ -12,13 +12,13 @@ export class ProductsComponent implements OnInit {
   ngOnInit(): void {}
   isOpenFilter = true;
 
-  products = [];
+  products;
   handleProductsChanged(products) {
     this.products = products;
 
-    setTimeout(() => {
-      // this.isOpenFilter = false;
-      this.refTableDiv.nativeElement.scrollIntoView();
-    }, 500);
+    // setTimeout(() => {
+    //   // this.isOpenFilter = false;
+    //   this.refTableDiv.nativeElement.scrollIntoView();
+    // }, 500);
   }
 }

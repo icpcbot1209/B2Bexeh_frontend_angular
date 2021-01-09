@@ -12,7 +12,10 @@ export class MarketComponent implements OnInit {
 
   tabs = [
     { label: "Products", url: "/main/market/products" },
-    { label: "Offers", url: "/main/market/offers" },
+    { label: "Latest Offers", url: "/main/market/offers" },
+    { label: "Popular", url: "/main/market/popular" },
+    { label: "New Arrivals", url: "/main/market/new-arrivals" },
+    { label: "Watch List", url: "/main/market/watch-list" },
   ];
   activeTab = this.tabs[0];
 }

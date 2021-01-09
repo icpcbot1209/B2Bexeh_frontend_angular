@@ -27,6 +27,7 @@ export class ProductTableComponent implements OnInit {
   displayedColumns: string[] = ["productName", "listingDates", "releaseDate", "boxhighestbid", "boxlowestask"];
   dataSource: MatTableDataSource<IRow>;
   updateTableRows(products: IRespProduct[]) {
+    if (!products) return;
     let rows: IRow[] = [];
     products.forEach((product) => {
       let differenceInTime = new Date().getTime() - new Date(product.releaseDate).getTime();
