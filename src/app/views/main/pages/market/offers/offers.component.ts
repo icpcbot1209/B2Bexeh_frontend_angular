@@ -9,4 +9,6 @@ export class OffersComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  handleCategoriesSelected({ categoryId, subcategoryId }) {}
 }

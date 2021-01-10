@@ -17,5 +17,4 @@ export class MarketComponent implements OnInit {
     { label: "New Arrivals", url: "/main/market/new-arrivals" },
     { label: "Watch List", url: "/main/market/watch-list" },
   ];
-  activeTab = this.tabs[0];
 }

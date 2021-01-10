@@ -59,7 +59,6 @@ export class ProductFilterComponent implements OnInit {
       this.getProducts(this.productService.getProductsNewArrival());
     } else if (filter.uid === "3") {
       // watch list
-      console.log(this.authService.userId);
       this.getProducts(this.productService.getProductsWatchList(this.authService.userId));
     }
   }
