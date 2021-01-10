@@ -38,6 +38,7 @@ export class ProductTableComponent implements OnInit {
 
     this.dataSource = new MatTableDataSource(rows);
     this.dataSource.sort = this.sort;
+    console.log(this.sort);
     this.dataSource.paginator = this.paginator;
   }
 

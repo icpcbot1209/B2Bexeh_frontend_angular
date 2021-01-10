@@ -10,9 +10,9 @@ import { AuthService } from "src/app/shared/auth.service";
   styleUrls: ["./category-select.component.scss"],
 })
 export class CategorySelectComponent implements OnInit {
-  @Output() productsChanged = new EventEmitter<any[]>();
+  @Output() categoriesSelected = new EventEmitter<{ categoryId; subcategoryId }>();
 
-  constructor(public productService: ProductService, private snackbar: MatSnackBar, private authService: AuthService) {}
+  constructor(public productService: ProductService) {}
 
   ngOnInit(): void {
     this.init();
@@ -36,26 +36,9 @@ export class CategorySelectComponent implements OnInit {
     this.subcategory = null;
   }
 
-  isBusy = false;
-  products = [];
   onChangeSubcategory(subcategory) {
-    this.subcategory = subcategory;
-    this.getProducts(this.productService.getProductsByCategory(this.category.id, this.subcategory.id));
-  }
-
-  getProducts(observable: Observable<any>) {
-    this.isBusy = true;
-    observable.subscribe(
-      (resp) => {
-        this.products = resp["data"]["rows"] || resp["data"];
-        this.productsChanged.emit(this.products);
-        this.isBusy = false;
-      },
-      (err) => {
-        console.log(err);
-        this.snackbar.open(err.message, "close", { horizontalPosition: "end", verticalPosition: "top", duration: 5000, panelClass: ["red-snackbar"] });
-        this.isBusy = false;
-      }
-    );
+    let categoryId = this.category.id;
+    let subcategoryId = subcategory.id;
+    this.categoriesSelected.emit({ categoryId, subcategoryId });
   }
 }

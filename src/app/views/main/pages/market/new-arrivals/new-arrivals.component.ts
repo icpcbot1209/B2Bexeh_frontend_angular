@@ -6,7 +6,7 @@ import { ProductService } from "src/app/services/product.service";
 import { AuthService } from "src/app/shared/auth.service";
 
 @Component({
-  selector: "app-new-arrivals",
+  selector: "market-new-arrivals",
   templateUrl: "./new-arrivals.component.html",
   styleUrls: ["./new-arrivals.component.scss"],
 })

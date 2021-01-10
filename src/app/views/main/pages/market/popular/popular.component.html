@@ -1,6 +1,6 @@
 <div *ngIf="isBusy" style="display: flex; align-items: center; justify-content: center; margin-top: 100px">
   <mat-spinner></mat-spinner>
 </div>
-<div *ngIf="!isBusy">
+<div [style.display]="isBusy ? 'none' : 'block'">
   <main-product-table [products]="products"></main-product-table>
 </div>

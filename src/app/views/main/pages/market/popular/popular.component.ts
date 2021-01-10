@@ -6,7 +6,7 @@ import { ProductService } from "src/app/services/product.service";
 import { AuthService } from "src/app/shared/auth.service";
 
 @Component({
-  selector: "app-popular",
+  selector: "market-popular",
   templateUrl: "./popular.component.html",
   styleUrls: ["./popular.component.scss"],
 })

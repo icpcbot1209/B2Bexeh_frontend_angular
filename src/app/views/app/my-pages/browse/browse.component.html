@@ -1,7 +1,0 @@
-<nav mat-tab-nav-bar>
-  <a mat-tab-link *ngFor="let tab of tabs" (click)="activeTab = tab" [active]="activeTab == tab" [routerLink]="[tab.url]"> {{ tab.label }} </a>
-  <!-- <a mat-tab-link disabled>Disabled tab</a> -->
-</nav>
-<div style="margin-top: 20px">
-  <router-outlet></router-outlet>
-</div>

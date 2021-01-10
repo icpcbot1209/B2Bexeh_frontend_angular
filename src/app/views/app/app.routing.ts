@@ -8,23 +8,7 @@ const routes: Routes = [
     path: "",
     component: AppComponent,
     children: [
-      { path: "", pathMatch: "full", redirectTo: "browse" },
-      {
-        path: "browse",
-        loadChildren: () => import("./my-pages/browse/browse.module").then((m) => m.BrowseModule),
-      },
-      {
-        path: "offers",
-        loadChildren: () => import("./my-pages/offers/offers.module").then((m) => m.OffersModule),
-      },
-      {
-        path: "chat",
-        loadChildren: () => import("./my-pages/chat/chat.module").then((m) => m.ChatModule),
-      },
-      {
-        path: "help",
-        loadChildren: () => import("./my-pages/help/help.module").then((m) => m.HelpModule),
-      },
+      { path: "", pathMatch: "full", redirectTo: "dashboards" },
       {
         path: "dashboards",
         loadChildren: () => import("./dashboards/dashboards.module").then((m) => m.DashboardsModule),

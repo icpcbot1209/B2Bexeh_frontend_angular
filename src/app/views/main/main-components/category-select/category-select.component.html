@@ -29,8 +29,8 @@
       bindLabel="subcategory_name"
       autofocus
       (change)="onChangeSubcategory($event)"
+      [(ngModel)]="subcategory"
     >
     </ng-select>
   </div>
 </div>
-<mat-progress-bar mode="indeterminate" *ngIf="isBusy"></mat-progress-bar>

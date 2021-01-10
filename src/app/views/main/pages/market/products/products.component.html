@@ -1,9 +1,8 @@
-<ng-container>
-  <div>
-    <main-category-select (productsChanged)="handleProductsChanged($event)"></main-category-select>
-  </div>
+<main-category-select (categoriesSelected)="handleCategoriesSelected($event)"></main-category-select>
 
-  <div>
-    <main-product-table [products]="products"></main-product-table>
-  </div>
-</ng-container>
+<div *ngIf="isBusy" style="display: flex; align-items: center; justify-content: center; margin-top: 100px">
+  <mat-spinner></mat-spinner>
+</div>
+<div [style.display]="isBusy ? 'none' : 'block'">
+  <main-product-table [products]="products"></main-product-table>
+</div>
