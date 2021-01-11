@@ -2,6 +2,8 @@ import { Component, Input, OnInit, ViewChild } from "@angular/core";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
+import { IRespOffer } from "src/app/services/IRespOffer";
+import { ProductService } from "src/app/services/product.service";
 
 @Component({
   selector: "main-offers-table",
@@ -9,33 +11,35 @@ import { MatTableDataSource } from "@angular/material/table";
   styleUrls: ["./offers-table.component.scss"],
 })
 export class OffersTableComponent implements OnInit {
-  private _offers: any[];
-  @Input() set offers(value: any[]) {
+  private _offers: IRespOffer[];
+  @Input() set offers(value: IRespOffer[]) {
     this.updateTableRows(value);
   }
-  get offers(): any[] {
+  get offers(): IRespOffer[] {
     return this._offers;
   }
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor() {}
+  constructor(private productService: ProductService) {}
 
   ngOnInit(): void {}
 
-  displayedColumns: string[] = ["productName", "listingDates", "releaseDate", "boxhighestbid", "boxlowestask"];
+  displayedColumns: string[] = ["user_name", "productName", "producttype", "categoryName", "amount", "type"];
+
   dataSource: MatTableDataSource<IRow>;
-  updateTableRows(offers: any[]) {
+  updateTableRows(offers: IRespOffer[]) {
     if (!offers) return;
     let rows: IRow[] = [];
-    offers.forEach((product) => {
-      let differenceInTime = new Date().getTime() - new Date(product.releaseDate).getTime();
+    offers.forEach((offer) => {
+      let differenceInTime = new Date().getTime() - new Date(offer.releaseDate).getTime();
       let listingDates = (differenceInTime / (1000 * 3600 * 24)).toFixed();
-      let row: IRow = { ...product, listingDates: listingDates };
+
+      let categoryName = this.productService.sportId2Name(offer.categoryId);
+      let row: IRow = { ...offer, listingDates, categoryName };
       rows.push(row);
     });
-
     this.dataSource = new MatTableDataSource(rows);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
@@ -88,4 +92,5 @@ interface IRow {
   updatedbyId: string;
   user_name: string;
   listingDates: string;
+  categoryName: string;
 }

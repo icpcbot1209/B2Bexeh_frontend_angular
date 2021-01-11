@@ -31,7 +31,12 @@ export class ProductsComponent implements OnInit {
       },
       (err) => {
         console.log(err);
-        this.snackbar.open(err.message, "close", { horizontalPosition: "end", verticalPosition: "top", duration: 5000, panelClass: ["red-snackbar"] });
+        this.snackbar.open(err.message, "close", {
+          horizontalPosition: "end",
+          verticalPosition: "top",
+          duration: 5000,
+          panelClass: ["red-snackbar"],
+        });
         this.isBusy = false;
       }
     );

@@ -9,8 +9,20 @@ import { ApiUrlConstant } from "../constants/api-url.constant";
 export class ProductService {
   constructor(private http: HttpClient) {}
 
+  categories = [];
+  sportId2Name(id: string) {
+    let category = this.categories.find((x) => x.id === id);
+    if (!category) return "";
+    return category.categoryName;
+  }
+
   getCategories() {
-    return this.http.post(ApiUrlConstant.CATEGARTLIST, null);
+    return this.http.post(ApiUrlConstant.CATEGARTLIST, null).pipe(
+      map((resp) => {
+        this.categories = resp["data"]["rows"] || resp["data"];
+        return resp;
+      })
+    );
   }
 
   getSubcategories(category_id: string) {
