@@ -1,1 +1,6 @@
-<p>listing-time-select works!</p>
+<div class="input-group">
+  <div class="input-group-prepend">
+    <div class="input-group-text" style="width: fit-content">Listing since (hrs):</div>
+  </div>
+  <input type="number" class="form-control" style="width: 70px" [(ngModel)]="listingTime" (change)="onChange($event)" />
+</div>

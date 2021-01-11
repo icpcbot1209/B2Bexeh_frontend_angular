@@ -1,1 +1,16 @@
-<p>offer-type-select works!</p>
+<div class="input-group" style="width: 250px">
+  <div class="input-group-prepend">
+    <div class="input-group-text" style="width: 70px">Type:</div>
+  </div>
+  <ng-select
+    class="form-control"
+    style="padding: 0"
+    [clearable]="false"
+    [placeholder]="'--- select type ---'"
+    [items]="items"
+    bindLabel="label"
+    [(ngModel)]="theItem"
+    (change)="onSelectItem($event)"
+  >
+  </ng-select>
+</div>

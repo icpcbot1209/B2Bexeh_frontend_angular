@@ -32,4 +32,15 @@ export class ProductService {
   getProductsWatchList(userId) {
     return this.http.post(ApiUrlConstant.GETALLWATCHLIST, { userId });
   }
+
+  getLatestOffers(isAsk: boolean) {
+    let data = {
+      request: "asks",
+      productid: "",
+      type: "",
+      producttype: "",
+    };
+    if (!isAsk) return this.http.post(ApiUrlConstant.GETALLBIDS, data);
+    else return this.http.post(ApiUrlConstant.GETALLBIDS, data);
+  }
 }

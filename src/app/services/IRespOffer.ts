@@ -1,0 +1,37 @@
+export interface IRespOffer {
+  additional_term: string;
+  amount: number;
+  categoryId: string;
+  company_logo: string;
+  createdAt: string;
+  createdbyId: string;
+  first_name: string;
+  id: string;
+  imageUrl: string;
+  isPrivate: boolean;
+  isactive: boolean;
+  isaddtocart: boolean;
+  isdeleted: boolean;
+  last_name: string;
+  listingTime: string;
+  maxQuantity: number;
+  minQuantity: number;
+  note: string;
+  payment_mode: string;
+  payment_timing: string;
+  productId: string;
+  productName: string;
+  producttype: string;
+  profile_image_url: string;
+  quantity: number;
+  releaseDate: string;
+  request: string;
+  subcategoryId: string;
+  subtype: string;
+  term_shipping: string;
+  type: string;
+  uid: string;
+  updatedAt: string;
+  updatedbyId: string;
+  user_name: string;
+}

@@ -29,7 +29,6 @@ export class CategorySelectComponent implements OnInit {
   category;
   subcategory;
   onChangeCategory(category) {
-    this.category = category;
     this.productService.getSubcategories(category.id).subscribe((resp) => {
       this.subcategories = resp["data"]["rows"];
     });

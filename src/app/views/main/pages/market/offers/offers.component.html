@@ -1,5 +1,11 @@
 <div style="display: flex; align-items: center">
   <main-category-select (categoriesSelected)="handleCategoriesSelected($event)"></main-category-select>
-  <main-offer-type-select></main-offer-type-select>
-  <main-listing-time-select></main-listing-time-select>
+  <main-offer-type-select style="margin-left: 20px" (valueChanged)="handleChangeType($event)"></main-offer-type-select>
+  <main-listing-time-select
+    style="margin-left: 20px"
+    (valueChanged)="handleChangeListing($event)"
+  ></main-listing-time-select>
+</div>
+<div style="margin-top: 20px">
+  <main-offers-table [offers]="offers"></main-offers-table>
 </div>

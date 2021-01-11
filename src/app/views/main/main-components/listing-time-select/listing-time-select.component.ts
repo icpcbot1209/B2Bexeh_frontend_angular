@@ -9,4 +9,7 @@ export class ListingTimeSelectComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  listingTime: number = 0;
+  onChange(listingTime) {}
 }
