@@ -11,7 +11,12 @@ import { AuthService } from "src/app/shared/auth.service";
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  constructor(private _formBuilder: FormBuilder, public authService: AuthService, private router: Router, private snackbar: MatSnackBar) {}
+  constructor(
+    private _formBuilder: FormBuilder,
+    public authService: AuthService,
+    private router: Router,
+    private snackbar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.loginForm = this._formBuilder.group({
@@ -28,10 +33,20 @@ export class LoginComponent implements OnInit {
     this.authService.tryLogin(this.loginForm.value).subscribe((res) => {
       this.busy = false;
       if (res.code === 200) {
-        this.snackbar.open(res.message, "close", { horizontalPosition: "end", verticalPosition: "top", duration: 3000, panelClass: ["green-snackbar"] });
-        this.router.navigate(["app/browse"]);
+        this.snackbar.open(res.message, "close", {
+          horizontalPosition: "end",
+          verticalPosition: "top",
+          duration: 3000,
+          panelClass: ["green-snackbar"],
+        });
+        this.router.navigate(["main"]);
       } else {
-        this.snackbar.open(res.message, "close", { horizontalPosition: "end", verticalPosition: "top", duration: 5000, panelClass: ["red-snackbar"] });
+        this.snackbar.open(res.message, "close", {
+          horizontalPosition: "end",
+          verticalPosition: "top",
+          duration: 5000,
+          panelClass: ["red-snackbar"],
+        });
       }
     });
   }
