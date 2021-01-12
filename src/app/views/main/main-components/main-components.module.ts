@@ -10,6 +10,7 @@ import { CategorySelectComponent } from "./category-select/category-select.compo
 import { OfferTypeSelectComponent } from "./offer-type-select/offer-type-select.component";
 import { ListingTimeSelectComponent } from "./listing-time-select/listing-time-select.component";
 import { OffersTableComponent } from "./offers-table/offers-table.component";
+import { MyOffersTableComponent } from "./my-offers-table/my-offers-table.component";
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { OffersTableComponent } from "./offers-table/offers-table.component";
     OfferTypeSelectComponent,
     ListingTimeSelectComponent,
     OffersTableComponent,
+    MyOffersTableComponent,
   ],
   imports: [CommonModule, FormsModule, MaterialModule, ReactiveFormsModule, NgSelectModule],
   exports: [
@@ -28,6 +30,7 @@ import { OffersTableComponent } from "./offers-table/offers-table.component";
     OfferTypeSelectComponent,
     ListingTimeSelectComponent,
     OffersTableComponent,
+    MyOffersTableComponent,
   ],
 })
 export class MainComponentsModule {}

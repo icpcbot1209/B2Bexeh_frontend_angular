@@ -24,12 +24,18 @@ export class PopularComponent implements OnInit {
     this.isBusy = true;
     observable.subscribe(
       (resp) => {
+        console.log(resp);
         this.products = resp["data"]["rows"] || resp["data"];
         this.isBusy = false;
       },
       (err) => {
         console.log(err);
-        this.snackbar.open(err.message, "close", { horizontalPosition: "end", verticalPosition: "top", duration: 5000, panelClass: ["red-snackbar"] });
+        this.snackbar.open(err.message, "close", {
+          horizontalPosition: "end",
+          verticalPosition: "top",
+          duration: 5000,
+          panelClass: ["red-snackbar"],
+        });
         this.isBusy = false;
       }
     );
