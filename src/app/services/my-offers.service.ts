@@ -14,4 +14,19 @@ export class MyOffersService {
     let userId = this.authService.userId;
     return this.http.post(ApiUrlConstant.GETMYOFFERS, { userId, tag });
   }
+
+  getOffers() {
+    return this.http.post(ApiUrlConstant.GETMYOFFERS, {});
+  }
+
+  getLatestOffers(isAsk: boolean) {
+    let data = {
+      request: "asks",
+      productid: "",
+      type: "",
+      producttype: "",
+    };
+    if (!isAsk) return this.http.post(ApiUrlConstant.GETALLBIDS, data);
+    else return this.http.post(ApiUrlConstant.GETALLBIDS, data);
+  }
 }

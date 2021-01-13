@@ -30,11 +30,12 @@ export class MyOffersTableContainerComponent implements OnInit, OnDestroy {
 
   isBusy = false;
   offers: IRespMyOffer[] = [];
-
+  tag: string;
   getMyOffers(tag: string) {
+    console.log(tag);
+    this.tag = tag;
     this.myOffersService.getMyOffers(tag).subscribe(
       (resp) => {
-        console.log(resp);
         this.offers = resp["data"]["rows"] || resp["data"];
         this.isBusy = false;
       },
