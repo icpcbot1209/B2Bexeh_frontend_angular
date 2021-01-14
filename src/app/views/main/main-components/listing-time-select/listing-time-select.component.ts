@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 
 @Component({
   selector: "main-listing-time-select",
@@ -6,10 +6,13 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./listing-time-select.component.scss"],
 })
 export class ListingTimeSelectComponent implements OnInit {
+  @Output() valueChanged = new EventEmitter<any>();
   constructor() {}
 
   ngOnInit(): void {}
 
-  listingTime: number = 0;
-  onChange(listingTime) {}
+  listingTime: number = 24;
+  onChange(event) {
+    this.valueChanged.emit(event.target.value);
+  }
 }

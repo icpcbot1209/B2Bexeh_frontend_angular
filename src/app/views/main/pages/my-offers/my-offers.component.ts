@@ -1,8 +1,4 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
-import { Router, Event, NavigationStart, NavigationEnd, NavigationError } from "@angular/router";
-import { Subscription } from "rxjs";
-import { MyOffersService } from "src/app/services/my-offers.service";
-import { AuthService } from "src/app/shared/auth.service";
+import { Component, OnInit } from "@angular/core";
 
 @Component({
   selector: "app-my-offers",

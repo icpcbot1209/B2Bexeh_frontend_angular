@@ -558,4 +558,8 @@ export class ApiUrlConstant {
   public static get GETMYOFFERS(): string {
     return this.appurl + "/user/getMyOffers";
   }
+
+  public static get GETLATESTOFFERS(): string {
+    return this.appurl + "/user/getLatestOffers";
+  }
 }

@@ -11,7 +11,7 @@
     <mat-spinner></mat-spinner>
   </div>
   <div [style.display]="isBusy ? 'none' : 'block'">
-    <main-offers-table [offers]="offers"></main-offers-table>
+    <main-offers-table [offers]="buyOffers"></main-offers-table>
   </div>
 </div>
 
@@ -20,6 +20,6 @@
     <mat-spinner></mat-spinner>
   </div>
   <div [style.display]="isBusy ? 'none' : 'block'">
-    <main-offers-table [offers]="offers"></main-offers-table>
+    <main-offers-table [offers]="sellOffers"></main-offers-table>
   </div>
 </div>

@@ -24,7 +24,6 @@ export class PopularComponent implements OnInit {
     this.isBusy = true;
     observable.subscribe(
       (resp) => {
-        console.log(resp);
         this.products = resp["data"]["rows"] || resp["data"];
         this.isBusy = false;
       },

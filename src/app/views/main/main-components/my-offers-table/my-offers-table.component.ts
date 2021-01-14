@@ -4,7 +4,6 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { IRespMyOffer } from "src/app/services/IRespMyOffer";
-import { MyOffersService } from "src/app/services/my-offers.service";
 
 @Component({
   selector: "main-my-offers-table",
@@ -25,7 +24,7 @@ export class MyOffersTableComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private myOffersService: MyOffersService) {}
+  constructor() {}
 
   ngOnInit(): void {}
 

@@ -6,7 +6,7 @@ import { Component, EventEmitter, OnInit, Output } from "@angular/core";
   styleUrls: ["./offer-type-select.component.scss"],
 })
 export class OfferTypeSelectComponent implements OnInit {
-  @Output() valueChanged = new EventEmitter<{}>();
+  @Output() valueChanged = new EventEmitter<any>();
 
   constructor() {}
 
@@ -30,9 +30,11 @@ export class OfferTypeSelectComponent implements OnInit {
     { id: "Super Jumbos", label: "Super Jumbos" },
     { id: "T-mall", label: "T-mall" },
     { id: "Tins", label: "Tins" },
-    { id: "x (Gaming Only)", label: "Tins" },
+    { id: "x (Gaming Only)", label: "x (Gaming Only)" },
   ];
 
   theItem = null;
-  onSelectItem(item) {}
+  onSelectItem(item) {
+    this.valueChanged.emit(item.id);
+  }
 }

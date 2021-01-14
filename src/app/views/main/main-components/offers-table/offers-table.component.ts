@@ -2,6 +2,7 @@ import { Component, Input, OnInit, ViewChild } from "@angular/core";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
+import { SelectionModel } from "@angular/cdk/collections";
 import { IRespOffer } from "src/app/services/IRespOffer";
 import { ProductService } from "src/app/services/product.service";
 
@@ -26,18 +27,25 @@ export class OffersTableComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  displayedColumns: string[] = ["user_name", "productName", "producttype", "categoryName", "amount", "type"];
+  displayedColumns: string[] = [
+    "select",
+    "dealer_name",
+    "product_name",
+    "product_type",
+    "sport_name",
+    "amount",
+    "type",
+  ];
 
   dataSource: MatTableDataSource<IRow>;
   updateTableRows(offers: IRespOffer[]) {
     if (!offers) return;
     let rows: IRow[] = [];
     offers.forEach((offer) => {
-      let differenceInTime = new Date().getTime() - new Date(offer.releaseDate).getTime();
+      let differenceInTime = new Date().getTime() - new Date(offer.release_date).getTime();
       let listingDates = (differenceInTime / (1000 * 3600 * 24)).toFixed();
 
-      let categoryName = this.productService.sportId2Name(offer.categoryId);
-      let row: IRow = { ...offer, listingDates, categoryName };
+      let row: IRow = { ...offer, listingDates };
       rows.push(row);
     });
     this.dataSource = new MatTableDataSource(rows);
@@ -53,44 +61,45 @@ export class OffersTableComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
+  selection = new SelectionModel<IRow>(true, []);
+
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ? this.selection.clear() : this.dataSource.data.forEach((row) => this.selection.select(row));
+  }
 }
 
 interface IRow {
-  additional_term: string;
+  id: number;
+  productId: number;
+  producttype: string;
   amount: number;
-  categoryId: string;
-  company_logo: string;
-  createdAt: string;
-  createdbyId: string;
-  first_name: string;
-  id: string;
-  imageUrl: string;
-  isPrivate: boolean;
-  isactive: boolean;
-  isaddtocart: boolean;
   isdeleted: boolean;
-  last_name: string;
-  listingTime: string;
+  createdAt: string;
+  createdbyId: number;
+  updatedAt: string;
+  updatedbyId: number;
+  request: string;
+  type: string;
+  note: string;
   maxQuantity: number;
   minQuantity: number;
-  note: string;
-  payment_mode: string;
-  payment_timing: string;
-  productId: string;
-  productName: string;
-  producttype: string;
-  profile_image_url: string;
-  quantity: number;
-  releaseDate: string;
-  request: string;
-  subcategoryId: string;
   subtype: string;
-  term_shipping: string;
-  type: string;
-  uid: string;
-  updatedAt: string;
-  updatedbyId: string;
-  user_name: string;
+  isactive: boolean;
+  isaddtocart: boolean;
+  isPrivate: boolean;
+  dealer_name: string;
+  product_name: string;
+  product_type: string;
+  sport_name: string;
+  release_date: string;
   listingDates: string;
-  categoryName: string;
 }

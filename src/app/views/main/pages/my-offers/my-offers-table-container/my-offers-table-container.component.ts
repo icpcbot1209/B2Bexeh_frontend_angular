@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { Router, Event, NavigationStart, NavigationEnd, NavigationError } from "@angular/router";
 import { Subscription } from "rxjs";
-import { MyOffersService } from "src/app/services/my-offers.service";
+import { OfferService } from "src/app/services/offer.service";
 import { AuthService } from "src/app/shared/auth.service";
 import { IRespMyOffer } from "src/app/services/IRespMyOffer";
 
@@ -13,7 +13,7 @@ import { IRespMyOffer } from "src/app/services/IRespMyOffer";
 })
 export class MyOffersTableContainerComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
-  constructor(private router: Router, private myOffersService: MyOffersService, private snackbar: MatSnackBar) {
+  constructor(private router: Router, private offerService: OfferService, private snackbar: MatSnackBar) {
     this.subscription = this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         let lastUrl = event.urlAfterRedirects.split("/").pop();
@@ -34,7 +34,7 @@ export class MyOffersTableContainerComponent implements OnInit, OnDestroy {
   getMyOffers(tag: string) {
     console.log(tag);
     this.tag = tag;
-    this.myOffersService.getMyOffers(tag).subscribe(
+    this.offerService.getMyOffers(tag).subscribe(
       (resp) => {
         this.offers = resp["data"]["rows"] || resp["data"];
         this.isBusy = false;
