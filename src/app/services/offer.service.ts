@@ -1,10 +1,10 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { ApiUrlConstant } from "../constants/api-url.constant";
-import { AuthService } from "../shared/auth.service";
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { ApiUrlConstant } from '../constants/api-url.constant';
+import { AuthService } from '../shared/auth.service';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class OfferService {
   constructor(private http: HttpClient, private authService: AuthService) {}
@@ -16,5 +16,9 @@ export class OfferService {
 
   getLatestOffers(data: { categoryId; subcategoryId }) {
     return this.http.post(ApiUrlConstant.GETLATESTOFFERS, data);
+  }
+
+  getOffersByProductId(productId) {
+    return this.http.post(ApiUrlConstant.GETOFFERSBYPRODUCTID, { productId });
   }
 }

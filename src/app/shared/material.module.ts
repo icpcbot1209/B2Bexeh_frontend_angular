@@ -17,6 +17,7 @@ import { MatExpansionModule } from "@angular/material/expansion";
 import { MatTableModule } from "@angular/material/table";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatSortModule } from "@angular/material/sort";
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 
 const arr = [
   MatFormFieldModule,
@@ -35,6 +36,7 @@ const arr = [
   MatTableModule,
   MatPaginatorModule,
   MatSortModule,
+  MatSlideToggleModule,
 ];
 
 @NgModule({

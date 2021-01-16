@@ -12,6 +12,7 @@ const routes: Routes = [
       { path: "myoffers", loadChildren: () => import("./pages/my-offers/my-offers.module").then((m) => m.MyOffersModule) },
       { path: "messages", loadChildren: () => import("./pages/messages/messages.module").then((m) => m.MessagesModule) },
       { path: "help", loadChildren: () => import("./pages/help/help.module").then((m) => m.HelpModule) },
+      { path: "product/:productId", loadChildren: () => import("./pages/product/product.module").then((m) => m.ProductModule) },
     ],
   },
 ];

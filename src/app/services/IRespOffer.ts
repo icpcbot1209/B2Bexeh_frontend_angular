@@ -5,7 +5,7 @@ export interface IRespOffer {
   amount: number;
   isdeleted: boolean;
   createdAt: string;
-  createdbyId: number;
+  createdbyId: string;
   updatedAt: string;
   updatedbyId: number;
   request: string;

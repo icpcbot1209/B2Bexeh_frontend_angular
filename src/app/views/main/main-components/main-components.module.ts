@@ -11,26 +11,11 @@ import { OfferTypeSelectComponent } from "./offer-type-select/offer-type-select.
 import { ListingTimeSelectComponent } from "./listing-time-select/listing-time-select.component";
 import { OffersTableComponent } from "./offers-table/offers-table.component";
 import { MyOffersTableComponent } from "./my-offers-table/my-offers-table.component";
+import { ProductOffersTableComponent } from "./product-offers-table/product-offers-table.component";
 
 @NgModule({
-  declarations: [
-    ProductFilterComponent,
-    ProductTableComponent,
-    CategorySelectComponent,
-    OfferTypeSelectComponent,
-    ListingTimeSelectComponent,
-    OffersTableComponent,
-    MyOffersTableComponent,
-  ],
+  declarations: [ProductFilterComponent, ProductTableComponent, CategorySelectComponent, OfferTypeSelectComponent, ListingTimeSelectComponent, OffersTableComponent, MyOffersTableComponent, ProductOffersTableComponent],
   imports: [CommonModule, FormsModule, MaterialModule, ReactiveFormsModule, NgSelectModule],
-  exports: [
-    ProductFilterComponent,
-    ProductTableComponent,
-    CategorySelectComponent,
-    OfferTypeSelectComponent,
-    ListingTimeSelectComponent,
-    OffersTableComponent,
-    MyOffersTableComponent,
-  ],
+  exports: [ProductFilterComponent, ProductTableComponent, CategorySelectComponent, OfferTypeSelectComponent, ListingTimeSelectComponent, OffersTableComponent, MyOffersTableComponent, ProductOffersTableComponent],
 })
 export class MainComponentsModule {}

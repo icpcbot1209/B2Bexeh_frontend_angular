@@ -1,0 +1,45 @@
+:host {
+  button {
+    color: #0080ff;
+  }
+
+  .toggle-container {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+
+    label {
+      margin: 0 10px;
+    }
+  }
+
+  .sell-price,
+  .buy-price {
+    label {
+      font-size: smaller;
+      font-weight: 400;
+      color: #547282;
+    }
+    p {
+      font-weight: 700;
+    }
+  }
+
+  .table-grid {
+    margin-top: 50px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    column-gap: 50px;
+    row-gap: 50px;
+
+    .table-container {
+      min-height: 500px;
+      p {
+        color: black;
+        font-size: large;
+        font-weight: 700;
+      }
+    }
+  }
+}

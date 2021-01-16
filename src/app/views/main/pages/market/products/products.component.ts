@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { ProductService } from "src/app/services/product.service";
 import { AuthService } from "src/app/shared/auth.service";
@@ -10,7 +11,7 @@ import { AuthService } from "src/app/shared/auth.service";
 })
 export class ProductsComponent implements OnInit {
   @ViewChild("refTableDiv", { static: true }) refTableDiv: ElementRef;
-  constructor(public productService: ProductService, private snackbar: MatSnackBar, private authService: AuthService) {}
+  constructor(public productService: ProductService, private snackbar: MatSnackBar, private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {}
   isOpenFilter = true;
@@ -40,5 +41,10 @@ export class ProductsComponent implements OnInit {
         this.isBusy = false;
       }
     );
+  }
+
+  handleProductClicked(productId) {
+    console.log(productId);
+    this.router.navigate(["/main/product", productId]);
   }
 }

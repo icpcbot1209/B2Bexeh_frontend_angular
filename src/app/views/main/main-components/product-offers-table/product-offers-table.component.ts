@@ -1,17 +1,15 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { SelectionModel } from '@angular/cdk/collections';
 import { IRespOffer } from 'src/app/services/IRespOffer';
-import { ProductService } from 'src/app/services/product.service';
 
 @Component({
-  selector: 'main-offers-table',
-  templateUrl: './offers-table.component.html',
-  styleUrls: ['./offers-table.component.scss'],
+  selector: 'main-product-offers-table',
+  templateUrl: './product-offers-table.component.html',
+  styleUrls: ['./product-offers-table.component.scss'],
 })
-export class OffersTableComponent implements OnInit {
+export class ProductOffersTableComponent implements OnInit {
   private _offers: IRespOffer[];
   @Input() set offers(value: IRespOffer[]) {
     this.updateTableRows(value);
@@ -20,30 +18,25 @@ export class OffersTableComponent implements OnInit {
     return this._offers;
   }
 
+  @Output() productClicked = new EventEmitter<any>();
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private productService: ProductService) {}
+  constructor() {}
 
   ngOnInit(): void {}
 
-  test(e) {
-    console.log(e);
-  }
-
-  displayedColumns: string[] = ['select', 'dealer_name', 'product_name', 'product_type', 'sport_name', 'amount', 'type'];
-
+  displayedColumns: string[] = ['dealer_name', 'product_type', 'qty', 'amount'];
   dataSource: MatTableDataSource<IRow>;
   updateTableRows(offers: IRespOffer[]) {
     if (!offers) return;
     let rows: IRow[] = [];
     offers.forEach((offer) => {
-      let differenceInTime = new Date().getTime() - new Date(offer.release_date).getTime();
-      let listingDates = (differenceInTime / (1000 * 3600 * 24)).toFixed();
-
-      let row: IRow = { ...offer, listingDates };
+      let qty = `${offer.minQuantity || 0}${offer.maxQuantity ? ' - ' + offer.maxQuantity : ''}`;
+      let row: IRow = { ...offer, qty };
       rows.push(row);
     });
+
     this.dataSource = new MatTableDataSource(rows);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
@@ -58,22 +51,8 @@ export class OffersTableComponent implements OnInit {
     }
   }
 
-  selection = new SelectionModel<IRow>(true, []);
-
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected() ? this.selection.clear() : this.dataSource.data.forEach((row) => this.selection.select(row));
-  }
-
   onClickRow(row: IRow) {
-    console.log(row);
+    this.productClicked.emit(row.id);
   }
 }
 
@@ -97,9 +76,6 @@ interface IRow {
   isaddtocart: boolean;
   isPrivate: boolean;
   dealer_name: string;
-  product_name: string;
   product_type: string;
-  sport_name: string;
-  release_date: string;
-  listingDates: string;
+  qty: string;
 }

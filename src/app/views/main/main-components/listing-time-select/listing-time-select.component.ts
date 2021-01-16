@@ -11,7 +11,7 @@ export class ListingTimeSelectComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  listingTime: number = 24;
+  listingTime: number = 24000;
   onChange(event) {
     this.valueChanged.emit(event.target.value);
   }

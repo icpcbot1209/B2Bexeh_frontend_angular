@@ -44,4 +44,8 @@ export class ProductService {
   getProductsWatchList(userId) {
     return this.http.post(ApiUrlConstant.GETALLWATCHLIST, { userId });
   }
+
+  getProductById(productId) {
+    return this.http.post(ApiUrlConstant.GETPRODUCTBYID, { id: productId });
+  }
 }

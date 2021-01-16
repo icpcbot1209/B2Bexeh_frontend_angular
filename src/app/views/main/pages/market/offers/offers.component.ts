@@ -21,7 +21,7 @@ export class OffersComponent implements OnInit {
   categoryId;
   subcategoryId;
   type = "All";
-  listingTime = 24;
+  listingTime = 24000;
   handleCategoriesSelected({ categoryId, subcategoryId }) {
     this.categoryId = categoryId;
     this.subcategoryId = subcategoryId;

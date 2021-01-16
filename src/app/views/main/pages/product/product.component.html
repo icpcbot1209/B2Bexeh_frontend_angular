@@ -1,0 +1,59 @@
+<ng-container *ngIf="isBusy">
+  <mat-spinner></mat-spinner>
+</ng-container>
+<ng-container [style.display]="!isBusy ? 'block' : 'none'">
+  <div style="display: flex" *ngIf="product">
+    <img [src]="product?.imageUrl" height="208" width="158" />
+    <div style="margin-left: 20px">
+      <h2>{{ product.productName }}</h2>
+      <p>Released on {{ product.releaseDate | date: 'longDate' }}</p>
+
+      <div class="toggle-container">
+        <label>Per box</label>
+        <mat-slide-toggle [(ngModel)]="isPerCase" (change)="onChangeUnit($event)" color="primary"></mat-slide-toggle>
+        <label>Per case</label>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 100px 100px">
+        <div class="sell-price">
+          <label>Highest sell</label>
+          <p>{{ (!isPerCase ? product.boxhighestbid : product.casehighestbid) | currency }}</p>
+        </div>
+        <div class="buy-price">
+          <label>Lowest buy</label>
+          <p>{{ (!isPerCase ? product.boxlowestask : product.caselowestask) | currency }}</p>
+        </div>
+      </div>
+      <div>
+        <button mat-button>Create bid</button>
+        <button mat-button>Create ask</button>
+        <button mat-button>Price history</button>
+      </div>
+    </div>
+    <div>
+      <button mat-button>
+        <mat-icon>remove_red_eye</mat-icon>
+        Add to watch list
+      </button>
+    </div>
+  </div>
+
+  <div class="table-grid">
+    <div class="table-container">
+      <p>Buy Offers / Per {{ !isPerCase ? 'Box' : 'Case' }}</p>
+      <main-product-offers-table [offers]="offersBuy"></main-product-offers-table>
+    </div>
+    <div class="table-container">
+      <p>Sell Offers / Per {{ !isPerCase ? 'Box' : 'Case' }}</p>
+      <main-product-offers-table [offers]="offersSell"></main-product-offers-table>
+    </div>
+    <div class="table-container">
+      <p>My Bids for this item / Per {{ !isPerCase ? 'Box' : 'Case' }}</p>
+      <main-product-offers-table [offers]="offersMyBuy"></main-product-offers-table>
+    </div>
+    <div class="table-container">
+      <p>My Asks for this item / Per {{ !isPerCase ? 'Box' : 'Case' }}</p>
+      <main-product-offers-table [offers]="offersMySell"></main-product-offers-table>
+    </div>
+  </div>
+</ng-container>
