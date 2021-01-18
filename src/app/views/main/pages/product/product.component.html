@@ -25,15 +25,15 @@
         </div>
       </div>
       <div>
-        <button mat-button>Create bid</button>
-        <button mat-button>Create ask</button>
-        <button mat-button>Price history</button>
+        <button mat-button (click)="openCreateBid()">Create bid</button>
+        <button mat-button (click)="openCreateAsk()">Create ask</button>
+        <button mat-button (click)="openPriceHistory()">Price history</button>
       </div>
     </div>
     <div>
-      <button mat-button>
+      <button mat-button (click)="addToWatchlist()">
         <mat-icon>remove_red_eye</mat-icon>
-        Add to watch list
+        Add to watchlist
       </button>
     </div>
   </div>

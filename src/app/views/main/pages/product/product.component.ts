@@ -1,10 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+
 import { IRespOffer } from 'src/app/services/IRespOffer';
+import { IRespProduct } from 'src/app/services/IRespProduct';
 import { ProductService } from 'src/app/services/product.service';
 import { OfferService } from 'src/app/services/offer.service';
 import { AuthService } from 'src/app/shared/auth.service';
+
+import { ModalCreateOfferComponent } from 'src/app/views/main/main-components/modal-create-offer/modal-create-offer.component';
 
 @Component({
   selector: 'app-product',
@@ -13,7 +18,13 @@ import { AuthService } from 'src/app/shared/auth.service';
 })
 export class ProductComponent implements OnInit {
   isPerCase = false;
-  constructor(private activatedRoute: ActivatedRoute, private productService: ProductService, private offerService: OfferService, private authService: AuthService) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private productService: ProductService,
+    private offerService: OfferService,
+    private authService: AuthService,
+    public dialog: MatDialog
+  ) {}
 
   productId;
   ngOnInit(): void {
@@ -28,7 +39,7 @@ export class ProductComponent implements OnInit {
   }
 
   isBusy = false;
-  product: IProductRecp;
+  product: IRespProduct;
   loadProduct(productId) {
     this.isBusy = true;
     this.productService.getProductById(productId).subscribe(
@@ -88,26 +99,30 @@ export class ProductComponent implements OnInit {
     this.offersMyBuy = offersMyBuy;
     this.offersMySell = offersMySell;
   }
-}
 
-interface IProductRecp {
-  boxhighestbid: number;
-  boxlowestask: number;
-  casehighestbid: number;
-  caselowestask: number;
-  categoryId: string;
-  categoryName: string;
-  createdAt: string;
-  createdById: string;
-  id: string;
-  imageUrl: string;
-  isActivate: boolean;
-  is_featured: boolean;
-  isdeleted: boolean;
-  productName: string;
-  product_id: string;
-  releaseDate: string;
-  subcategoryId: string;
-  updatedAt: string;
-  updatedById: any;
+  openCreateBid() {
+    const dialogRef = this.dialog.open(ModalCreateOfferComponent, {
+      data: { request: 'bid', product: this.product },
+      panelClass: 'custom-dialog-container',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed', result);
+    });
+  }
+
+  openCreateAsk() {
+    const dialogRef = this.dialog.open(ModalCreateOfferComponent, {
+      data: { request: 'ask', product: this.product },
+      panelClass: 'custom-dialog-container',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed', result);
+    });
+  }
+
+  openPriceHistory() {}
+
+  addToWatchlist() {}
 }

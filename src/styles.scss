@@ -1,10 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  font-family: "Inter", monospace;
+  font-family: 'Inter', monospace;
 }
 
 button {
@@ -13,7 +13,7 @@ button {
 }
 
 .required:after {
-  content: " *";
+  content: ' *';
   color: red;
 }
 
@@ -34,4 +34,8 @@ button {
   background-color: darkred !important;
   color: white !important;
   border: none;
+}
+
+.custom-dialog-container .mat-dialog-container .mat-dialog-content {
+  overflow: visible;
 }

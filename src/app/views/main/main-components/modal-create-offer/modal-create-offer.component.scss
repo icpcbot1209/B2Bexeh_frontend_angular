@@ -1,0 +1,19 @@
+:host {
+  .mat-dialog-content {
+    position: relative;
+  }
+  .close-button {
+    position: absolute;
+    cursor: pointer;
+    user-select: none;
+    top: 0px;
+    right: 20px;
+    &:hover {
+      color: gray;
+    }
+  }
+
+  textarea {
+    padding: 10px;
+  }
+}

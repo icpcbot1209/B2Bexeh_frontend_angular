@@ -1,0 +1,66 @@
+<div mat-dialog-content>
+  <mat-icon class="close-button" (click)="onNoClick()">close</mat-icon>
+
+  <h1 mat-dialog-title>Create {{ data.request | titlecase }}</h1>
+  <div style="display: flex">
+    <img [src]="data.product.imageUrl" width="158" height="auto" />
+
+    <div style="margin-left: 50px">
+      <strong style="font-size: large">{{ data.product.productName }}</strong>
+      <p>Released on {{ data.product.releaseDate | date: 'longDate' }}</p>
+    </div>
+  </div>
+
+  <div style="display: flex; margin: 20px 0">
+    <div class="form-group" style="flex: 1">
+      <label>Per</label>
+      <ng-select
+        class="form-control"
+        style="padding: 0"
+        [clearable]="false"
+        [placeholder]="'--- select unit ---'"
+        [items]="['Box', 'Case']"
+        [(ngModel)]="unit"
+        (change)="unitWillChange($event)"
+      >
+      </ng-select>
+    </div>
+
+    <div class="form-group" style="margin-left: 20px; flex: 1">
+      <label>Type</label>
+      <ng-select
+        class="form-control"
+        style="padding: 0"
+        [clearable]="false"
+        [placeholder]="'--- select type ---'"
+        [items]="productTypes"
+        bindLabel="label"
+        [(ngModel)]="productType"
+      >
+      </ng-select>
+    </div>
+
+    <div class="form-group" style="margin-left: 20px; flex: 1">
+      <label>Qty</label>
+      <input class="form-control" placeholder="" [(ngModel)]="qty" />
+    </div>
+
+    <div class="form-group" style="margin-left: 20px; flex: 1">
+      <label>{{ data.request | titlecase }} Price / {{ unit }}</label>
+      <input class="form-control" placeholder="" [(ngModel)]="price" />
+    </div>
+  </div>
+
+  <div>
+    <textarea cols="80" rows="8" placeholder="Write message" [(ngModel)]="text"></textarea>
+  </div>
+</div>
+<div mat-dialog-actions style="flex-direction: column">
+  <div>
+    <button mat-raised-button color="primary" style="margin: 20px auto" (click)="onClickCreate()">Create {{ data.request | titlecase }}</button>
+  </div>
+
+  <div style="text-align: center; color: gray; margin-bottom: 50px">
+    ALL OFFERS SENT ARE BINDING AND CANNOT BE CANCELED IF ACCEPTED BY THE OTHER PARTY
+  </div>
+</div>

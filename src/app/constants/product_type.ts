@@ -1,0 +1,18 @@
+export const productTypes = [
+  { id: 'All', label: 'All' },
+  { id: 'Hobby', label: 'Hobby' },
+  { id: 'Blaster', label: 'Blaster' },
+  { id: 'Jumbo', label: 'Jumbo' },
+  { id: 'Cellos', label: 'Cellos/Fat Packs' },
+  { id: 'Choice', label: 'Choice' },
+  { id: 'FOTL', label: 'FOTL' },
+  { id: 'Fast Break', label: 'Fast Break' },
+  { id: 'Hanger', label: 'Hanger' },
+  { id: 'Hybrid', label: 'Hybrid' },
+  { id: 'Mega', label: 'Mega' },
+  { id: 'Retail', label: 'Retail/Other' },
+  { id: 'Super Jumbos', label: 'Super Jumbos' },
+  { id: 'T-mall', label: 'T-mall' },
+  { id: 'Tins', label: 'Tins' },
+  { id: 'x (Gaming Only)', label: 'x (Gaming Only)' },
+];
