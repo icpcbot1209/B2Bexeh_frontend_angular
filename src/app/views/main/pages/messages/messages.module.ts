@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MessagesComponent } from './messages.component';
+
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HotkeyModule } from 'angular2-hotkeys';
@@ -13,10 +13,18 @@ import { LayoutContainersModule } from 'src/app/containers/layout/layout.contain
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { TranslateModule } from '@ngx-translate/core';
 
-const routes: Routes = [{ path: '', component: MessagesComponent }];
+import { MessagesComponent } from './messages.component';
+import { ChatListComponent } from './chat-list/chat-list.component';
+import { ChatBoxComponent } from './chat-box/chat-box.component';
+import { ContactListComponent } from './contact-list/contact-list.component';
+
+const routes: Routes = [
+  { path: '', component: MessagesComponent },
+  { path: ':chatId', component: MessagesComponent },
+];
 
 @NgModule({
-  declarations: [MessagesComponent],
+  declarations: [MessagesComponent, ChatListComponent, ContactListComponent, ChatBoxComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

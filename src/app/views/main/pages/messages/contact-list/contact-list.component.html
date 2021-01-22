@@ -1,0 +1,27 @@
+<div class="form-group">
+  <input type="text" class="form-control rounded-100" placeholder="Search" #searchBoxContact id="search-box" />
+</div>
+<div class="chat-app-tab-pane-contacts">
+  <perfect-scrollbar class="scroll" [config]="{ suppressScrollX: true, wheelPropagation: false }">
+    <ng-container>
+      <div class="d-flex flex-row mb-3 border-bottom pb-3" *ngFor="let contact of contacts">
+        <a class="d-flex" href="javascript:;">
+          <img
+            [alt]="contact.first_name"
+            [src]="contact.profile_image_url || 'assets/img/profiles/user-avatar-placeholder.png'"
+            class="img-thumbnail border-0 rounded-circle mr-3 list-thumbnail align-self-center xsmall"
+          />
+        </a>
+        <div class="d-flex flex-grow-1 min-width-zero">
+          <div class="m-2 pl-0 align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero">
+            <div class="min-width-zero">
+              <a (click)="onClickContact(contact)">
+                <p class="mb-0 truncate">{{ contact.first_name + ' ' + contact.last_name }}</p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </perfect-scrollbar>
+</div>

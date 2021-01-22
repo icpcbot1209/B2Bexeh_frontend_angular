@@ -12,6 +12,16 @@ import { IUser } from '../interfaces/IUser';
 export class UserService {
   constructor(private http: HttpClient) {}
 
+  //test purpose
+  async getTenUsers(): Promise<IUser[]> {
+    let resp = await this.http.post(ApiUrl2.getTenUsers, {}).toPromise();
+    let arr = resp['data']['rows'] || resp['data'];
+    arr.forEach((user) => {
+      if (!user.profile_image_url || user.profile_image_url === '') user.profile_image_url = 'assets/img/profiles/user-avatar-placeholder.png';
+    });
+    return arr;
+  }
+
   me: IUser = null;
   me$ = new Subject<IUser>();
 
@@ -28,7 +38,8 @@ export class UserService {
     try {
       const resp = await this.http.post(ApiUrl2.getUserById, { userId }).toPromise();
       if (resp['data'] && resp['data']['rows'] && resp['data']['rows'].length > 0) {
-        const user = resp['data']['rows'][0];
+        const user: IUser = resp['data']['rows'][0];
+        if (!user.profile_image_url || user.profile_image_url === '') user.profile_image_url = 'assets/img/profiles/user-avatar-placeholder.png';
         this.users.push(user);
         return user;
       } else {

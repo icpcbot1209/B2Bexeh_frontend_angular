@@ -30,7 +30,7 @@ export class ChattingService {
   }
 
   private async readMyChats(me: IUser) {
-    if (!me || this.me === me) return;
+    if (!me) return;
     this.isLoading = true;
 
     try {
@@ -55,10 +55,10 @@ export class ChattingService {
   async mergeUserData(arr: IRespChat[]) {
     let chats: IChat[] = [];
     for (let i = 0; i < arr.length; i++) {
-      const { id, users, msgs } = arr[i];
+      const { id, users, msgs, lastMessageTime, date } = arr[i];
       const idOther = users[0] !== this.me.id ? users[0] : users[1];
       const other = await this.userService.getUserById(idOther);
-      const chat: IChat = { id, me: this.me, other, msgs };
+      const chat: IChat = { id, me: this.me, other, msgs, lastMessageTime, date };
       chats.push(chat);
     }
     return chats;
@@ -92,20 +92,22 @@ export class ChattingService {
       const data = {
         users: [this.me.id, idOther],
         msgs: [newMsg],
+        lastMessageTime: new Date(newMsg.timestamp).toUTCString(),
+        date: new Date(newMsg.timestamp).toUTCString(),
       };
 
       const docRef = await this.afs.collection('chats').add(data);
       chatId = docRef.id;
     }
 
-    return this.router.navigate(['/me/messages', chatId]);
+    // this.router.navigate(['/me/messages', chatId]);
   }
 
-  async sendMessage(chatId, data) {
+  async sendMessage(chatId, txt) {
     const senderId = this.me.id;
     const newMsg: IMsg = {
       senderId,
-      content: data.text,
+      content: txt,
       timestamp: Date.now(),
       isRead: false,
     };
@@ -113,6 +115,8 @@ export class ChattingService {
     const ref = this.afs.collection('chats').doc(chatId);
     return ref.update({
       msgs: firebase.firestore.FieldValue.arrayUnion(newMsg),
+      lastMessageTime: new Date(newMsg.timestamp).toUTCString(),
+      date: new Date(newMsg.timestamp).toUTCString(),
     });
   }
 

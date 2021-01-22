@@ -1,0 +1,23 @@
+<div class="chat-app-tab-pane-messages">
+  <perfect-scrollbar class="scroll" [config]="{ suppressScrollX: true, wheelPropagation: false }">
+    <div class="d-flex flex-row mb-1 border-bottom pb-3 mb-3" *ngFor="let chat of chats" (click)="gotoChat(chat.id)">
+      <a class="d-flex" href="javascript:;">
+        <img
+          [src]="chat.other.profile_image_url || 'assets/img/profiles/user-avatar-placeholder.png'"
+          [alt]="chat.other.first_name + ' ' + chat.other.last_name"
+          class="img-thumbnail border-0 rounded-circle mr-3 list-thumbnail align-self-center xsmall"
+        />
+      </a>
+      <div class="d-flex flex-grow-1 min-width-zero">
+        <div class="pl-0 align-self-center d-flex flex-column flex-lg-row justify-content-between min-width-zero">
+          <div class="min-width-zero">
+            <a href="javascript:;">
+              <p class="mb-0 truncate" [ngClass]="{ selected: chat.id == activeChatId }">{{ chat.other.first_name + ' ' + chat.other.last_name }}</p>
+            </a>
+            <p class="mb-1 text-muted text-small">{{ chat.lastMessageTime | date: 'longDate' }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </perfect-scrollbar>
+</div>
