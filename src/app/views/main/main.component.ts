@@ -1,16 +1,17 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { Subscription } from "rxjs";
-import { SidebarService, ISidebar } from "src/app/containers/layout/sidebar/sidebar.service";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { SidebarService, ISidebar } from 'src/app/containers/layout/sidebar/sidebar.service';
+import { ChattingService } from 'src/app/services/chatting.service';
 
 @Component({
-  selector: "app-main",
-  templateUrl: "./main.component.html",
-  styleUrls: ["./main.component.scss"],
+  selector: 'app-main',
+  templateUrl: './main.component.html',
+  styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit, OnDestroy {
   sidebar: ISidebar;
   subscription: Subscription;
-  constructor(private sidebarService: SidebarService) {}
+  constructor(private sidebarService: SidebarService, private chattingService: ChattingService) {}
 
   ngOnInit(): void {
     this.subscription = this.sidebarService.getSidebar().subscribe(
@@ -21,6 +22,8 @@ export class MainComponent implements OnInit, OnDestroy {
         console.error(`An error occurred: ${err.message}`);
       }
     );
+
+    this.chattingService.doInit();
   }
 
   ngOnDestroy(): void {

@@ -1,13 +1,13 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from "@angular/core";
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { Observable } from "rxjs";
-import { ProductService } from "src/app/services/product.service";
-import { AuthService } from "src/app/shared/auth.service";
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable } from 'rxjs';
+import { ProductService } from 'src/app/services/product.service';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
-  selector: "main-product-filter",
-  templateUrl: "./product-filter.component.html",
-  styleUrls: ["./product-filter.component.scss"],
+  selector: 'main-product-filter',
+  templateUrl: './product-filter.component.html',
+  styleUrls: ['./product-filter.component.scss'],
 })
 export class ProductFilterComponent implements OnInit {
   @Input() isOpen: boolean;
@@ -21,25 +21,25 @@ export class ProductFilterComponent implements OnInit {
 
   filters: Filter[] = [
     {
-      uid: "0",
-      title: "Categories",
+      uid: '0',
+      title: 'Categories',
     },
     {
-      uid: "1",
-      title: "Popular",
-      icon: "iconsminds-business-mens",
-      description: "Items that have the most buy/sell offers",
+      uid: '1',
+      title: 'Popular',
+      icon: 'iconsminds-business-mens',
+      description: 'Items that have the most buy/sell offers',
     },
     {
-      uid: "2",
-      title: "New Arrivals",
-      icon: "iconsminds-add-bag",
-      description: "Items that have just been released",
+      uid: '2',
+      title: 'New Arrivals',
+      icon: 'iconsminds-add-bag',
+      description: 'Items that have just been released',
     },
     {
-      uid: "3",
-      title: "Watch List",
-      icon: "iconsminds-receipt-4",
+      uid: '3',
+      title: 'Watch List',
+      icon: 'iconsminds-receipt-4',
       description: "Items that i've hearted",
     },
   ];
@@ -51,13 +51,13 @@ export class ProductFilterComponent implements OnInit {
     this.category = null;
     this.subcategory = null;
 
-    if (filter.uid === "1") {
+    if (filter.uid === '1') {
       // popular
       this.getProducts(this.productService.getProductsPopular());
-    } else if (filter.uid === "2") {
+    } else if (filter.uid === '2') {
       // new arrivals
       this.getProducts(this.productService.getProductsNewArrival());
-    } else if (filter.uid === "3") {
+    } else if (filter.uid === '3') {
       // watch list
       this.getProducts(this.productService.getProductsWatchList(this.authService.userId));
     }
@@ -66,7 +66,7 @@ export class ProductFilterComponent implements OnInit {
   categories = [];
   init() {
     this.productService.getCategories().subscribe((resp) => {
-      this.categories = resp["data"]["rows"];
+      this.categories = resp['data']['rows'];
     });
   }
 
@@ -75,7 +75,7 @@ export class ProductFilterComponent implements OnInit {
   subcategory;
   onChangeCategory(category) {
     this.productService.getSubcategories(category.id).subscribe((resp) => {
-      this.subcategories = resp["data"]["rows"];
+      this.subcategories = resp['data']['rows'];
     });
     this.subcategory = null;
   }
@@ -90,13 +90,18 @@ export class ProductFilterComponent implements OnInit {
     this.isBusy = true;
     observable.subscribe(
       (resp) => {
-        this.products = resp["data"]["rows"] || resp["data"];
+        this.products = resp['data']['rows'] || resp['data'];
         this.productsChanged.emit(this.products);
         this.isBusy = false;
       },
       (err) => {
         console.log(err);
-        this.snackbar.open(err.message, "close", { horizontalPosition: "end", verticalPosition: "top", duration: 5000, panelClass: ["red-snackbar"] });
+        this.snackbar.open(err.message, 'close', {
+          horizontalPosition: 'end',
+          verticalPosition: 'top',
+          duration: 5000,
+          panelClass: ['red-snackbar'],
+        });
         this.isBusy = false;
       }
     );

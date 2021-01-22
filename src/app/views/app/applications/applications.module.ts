@@ -35,7 +35,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
     TabsModule.forRoot(),
     ProgressbarModule.forRoot(),
     ModalModule.forRoot(),
-    BsDropdownModule.forRoot()
-  ]
+    BsDropdownModule.forRoot(),
+  ],
 })
-export class ApplicationsModule { }
+export class ApplicationsModule {}

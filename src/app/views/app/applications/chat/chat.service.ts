@@ -32,10 +32,7 @@ export interface IChatMessage {
 export class ChatService {
   constructor(private http: HttpClient) {}
 
-  searchContacts(
-    userId: number,
-    searchKey: string
-  ): Observable<IChatContact[]> {
+  searchContacts(userId: number, searchKey: string): Observable<IChatContact[]> {
     const url = `${environment.apiUrl}/contacts?search=${searchKey}`;
     return this.http.get(url).pipe(
       map((res: IServiceResponse<IChatContact>) => {

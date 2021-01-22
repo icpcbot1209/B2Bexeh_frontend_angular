@@ -1,26 +1,22 @@
-import { Component, OnInit } from "@angular/core";
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { IRespOffer } from "src/app/services/IRespOffer";
-import { OfferService } from "src/app/services/offer.service";
-import { ProductService } from "src/app/services/product.service";
+import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { IRespOffer } from 'src/app/interfaces/IRespOffer';
+import { OfferService } from 'src/app/services/offer.service';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
-  selector: "market-offers",
-  templateUrl: "./offers.component.html",
-  styleUrls: ["./offers.component.scss"],
+  selector: 'market-offers',
+  templateUrl: './offers.component.html',
+  styleUrls: ['./offers.component.scss'],
 })
 export class OffersComponent implements OnInit {
-  constructor(
-    private productService: ProductService,
-    private offerService: OfferService,
-    private snackbar: MatSnackBar
-  ) {}
+  constructor(private productService: ProductService, private offerService: OfferService, private snackbar: MatSnackBar) {}
 
   ngOnInit(): void {}
 
   categoryId;
   subcategoryId;
-  type = "All";
+  type = 'All';
   listingTime = 24000;
   handleCategoriesSelected({ categoryId, subcategoryId }) {
     this.categoryId = categoryId;
@@ -44,17 +40,17 @@ export class OffersComponent implements OnInit {
 
     this.offerService.getLatestOffers({ categoryId, subcategoryId }).subscribe(
       (resp) => {
-        this.offers = resp["data"]["rows"] || resp["data"];
+        this.offers = resp['data']['rows'] || resp['data'];
         this.updateWithFilters();
         this.isBusy = false;
       },
       (err) => {
         console.log(err);
-        this.snackbar.open(err.message, "close", {
-          horizontalPosition: "end",
-          verticalPosition: "top",
+        this.snackbar.open(err.message, 'close', {
+          horizontalPosition: 'end',
+          verticalPosition: 'top',
           duration: 5000,
-          panelClass: ["red-snackbar"],
+          panelClass: ['red-snackbar'],
         });
         this.isBusy = false;
       }
@@ -67,10 +63,10 @@ export class OffersComponent implements OnInit {
     this.buyOffers = [];
     this.sellOffers = [];
     this.offers.forEach((x) => {
-      if (this.type !== "All" && x.product_type !== this.type) return;
+      if (this.type !== 'All' && x.product_type !== this.type) return;
       if (this.listingTime < (Date.now() - new Date(x.release_date).getTime()) / 3600000) return;
 
-      if (x.request === "bids") this.buyOffers.push(x);
+      if (x.request === 'bids') this.buyOffers.push(x);
       else this.sellOffers.push(x);
     });
   }

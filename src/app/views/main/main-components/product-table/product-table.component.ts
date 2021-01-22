@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { IRespProduct } from 'src/app/services/IRespProduct';
+import { IRespProduct } from 'src/app/interfaces/IRespProduct';
 @Component({
   selector: 'main-product-table',
   templateUrl: './product-table.component.html',

@@ -1,10 +1,10 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { IRespProduct } from 'src/app/services/IRespProduct';
+import { IRespProduct } from 'src/app/interfaces/IRespProduct';
 import { productTypes } from 'src/app/constants/product_type';
 
 @Component({
-  selector: 'app-modal-create-offer',
+  selector: 'main-modal-create-offer',
   templateUrl: './modal-create-offer.component.html',
   styleUrls: ['./modal-create-offer.component.scss'],
 })

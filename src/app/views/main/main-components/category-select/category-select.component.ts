@@ -1,13 +1,13 @@
-import { Component, EventEmitter, OnInit, Output } from "@angular/core";
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { Observable } from "rxjs";
-import { ProductService } from "src/app/services/product.service";
-import { AuthService } from "src/app/shared/auth.service";
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable } from 'rxjs';
+import { ProductService } from 'src/app/services/product.service';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
-  selector: "main-category-select",
-  templateUrl: "./category-select.component.html",
-  styleUrls: ["./category-select.component.scss"],
+  selector: 'main-category-select',
+  templateUrl: './category-select.component.html',
+  styleUrls: ['./category-select.component.scss'],
 })
 export class CategorySelectComponent implements OnInit {
   @Output() categoriesSelected = new EventEmitter<{ categoryId; subcategoryId }>();
@@ -21,7 +21,7 @@ export class CategorySelectComponent implements OnInit {
   categories = [];
   init() {
     this.productService.getCategories().subscribe((resp) => {
-      this.categories = resp["data"]["rows"];
+      this.categories = resp['data']['rows'];
     });
   }
 
@@ -30,7 +30,7 @@ export class CategorySelectComponent implements OnInit {
   subcategory;
   onChangeCategory(category) {
     this.productService.getSubcategories(category.id).subscribe((resp) => {
-      this.subcategories = resp["data"]["rows"];
+      this.subcategories = resp['data']['rows'];
     });
     this.subcategory = null;
   }

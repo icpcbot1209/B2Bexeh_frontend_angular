@@ -1,14 +1,14 @@
-import { Input, ViewChild } from "@angular/core";
-import { Component, OnInit, Output } from "@angular/core";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatSort } from "@angular/material/sort";
-import { MatTableDataSource } from "@angular/material/table";
-import { IRespMyOffer } from "src/app/services/IRespMyOffer";
+import { Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { IRespMyOffer } from 'src/app/interfaces/IRespMyOffer';
 
 @Component({
-  selector: "main-my-offers-table",
-  templateUrl: "./my-offers-table.component.html",
-  styleUrls: ["./my-offers-table.component.scss"],
+  selector: 'main-my-offers-table',
+  templateUrl: './my-offers-table.component.html',
+  styleUrls: ['./my-offers-table.component.scss'],
 })
 export class MyOffersTableComponent implements OnInit {
   @Input() tag: string;
@@ -28,16 +28,7 @@ export class MyOffersTableComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  displayedColumns: string[] = [
-    "created_at",
-    "expiry_date",
-    "other_name",
-    "product_name",
-    "qty",
-    "amount",
-    "total",
-    "order_status",
-  ];
+  displayedColumns: string[] = ['created_at', 'expiry_date', 'other_name', 'product_name', 'qty', 'amount', 'total', 'order_status'];
 
   dataSource: MatTableDataSource<IRow>;
   updateTableRows(offers: IRespMyOffer[]) {
@@ -50,7 +41,7 @@ export class MyOffersTableComponent implements OnInit {
       let total = offer.qty * offer.amount;
 
       let other_name = offer.bidder_name;
-      if (offer.type_of == "ask") other_name = offer.seller_name;
+      if (offer.type_of == 'ask') other_name = offer.seller_name;
 
       let row: IRow = { ...offer, listing_dates, other_name, total };
       rows.push(row);

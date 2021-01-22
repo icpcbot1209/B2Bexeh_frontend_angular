@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { IRespOffer } from 'src/app/services/IRespOffer';
+import { IRespOffer } from 'src/app/interfaces/IRespOffer';
 
 @Component({
   selector: 'main-product-offers-table',

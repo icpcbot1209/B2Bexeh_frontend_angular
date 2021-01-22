@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ApiUrlConstant } from '../constants/api-url.constant';
 import { AuthService } from '../shared/auth.service';
+import { ChattingService } from './chatting.service';
 
 @Injectable({
   providedIn: 'root',

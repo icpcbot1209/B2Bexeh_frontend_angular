@@ -1,12 +1,13 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { AngularFireAuth } from "@angular/fire/auth";
-import { getUserRole } from "src/app/utils/util";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { getUserRole } from 'src/app/utils/util';
 
-import { from } from "rxjs";
-import { map } from "rxjs/operators";
-import { ApiUrlConstant } from "src/app/constants/api-url.constant";
-import { Router } from "@angular/router";
+import { from, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { ApiUrlConstant } from 'src/app/constants/api-url.constant';
+import { Router } from '@angular/router';
+import { UserService } from '../services/user.service';
 
 export interface ISignInCredentials {
   email: string;
@@ -24,33 +25,34 @@ export interface IPasswordReset {
   newPassword: string;
 }
 
-@Injectable({ providedIn: "root" })
+@Injectable({ providedIn: 'root' })
 export class AuthService {
   isAuthed = false;
-  userId = "";
-  constructor(private auth: AngularFireAuth, private http: HttpClient, private router: Router) {
+  userId = '';
+  constructor(private auth: AngularFireAuth, private http: HttpClient, private router: Router, private userService: UserService) {
     this.autoLogin();
   }
 
   private autoLogin() {
     if (this.getToken()) {
       this.isAuthed = true;
-      this.userId = localStorage.getItem("b2b_auth_userId");
+      this.userId = localStorage.getItem('b2b_auth_userId');
+      this.userService.getMe(this.userId);
     }
   }
 
   setToken(token: string) {
-    localStorage.setItem("b2b_auth_token", token);
+    localStorage.setItem('b2b_auth_token', token);
   }
   getToken() {
-    return localStorage.getItem("b2b_auth_token");
+    return localStorage.getItem('b2b_auth_token');
   }
 
   trySignOut() {
-    localStorage.removeItem("b2b_auth_token");
-    localStorage.removeItem("b2b_auth_role");
-    localStorage.removeItem("b2b_auth_username");
-    localStorage.removeItem("b2b_auth_userId");
+    localStorage.removeItem('b2b_auth_token');
+    localStorage.removeItem('b2b_auth_role');
+    localStorage.removeItem('b2b_auth_username');
+    localStorage.removeItem('b2b_auth_userId');
   }
 
   trySignup(data) {
@@ -65,17 +67,19 @@ export class AuthService {
     return this.http.post(ApiUrlConstant.LOGIN, data).pipe(
       map((res: any) => {
         if (res.code === 200) {
-          localStorage.setItem("b2b_auth_token", res["data"]["token"]);
-          let username = res.data.loginData.data[0].first_name + " " + res.data.loginData.data[0].last_name;
-          if (res.data.loginData.data[0].role == "admin") {
-            localStorage.setItem("b2b_auth_role", "admin");
-            localStorage.setItem("b2b_auth_username", username);
+          localStorage.setItem('b2b_auth_token', res['data']['token']);
+          let username = res.data.loginData.data[0].first_name + ' ' + res.data.loginData.data[0].last_name;
+          if (res.data.loginData.data[0].role == 'admin') {
+            localStorage.setItem('b2b_auth_role', 'admin');
+            localStorage.setItem('b2b_auth_username', username);
           } else {
-            localStorage.setItem("b2b_auth_role", "user");
-            localStorage.setItem("b2b_auth_username", username);
+            localStorage.setItem('b2b_auth_role', 'user');
+            localStorage.setItem('b2b_auth_username', username);
           }
-          this.userId = res["data"]["params"]["_id"];
-          localStorage.setItem("b2b_auth_userId", this.userId);
+          this.userId = res['data']['params']['_id'];
+          this.userService.getMe(this.userId);
+
+          localStorage.setItem('b2b_auth_userId', this.userId);
 
           this.isAuthed = true;
         }

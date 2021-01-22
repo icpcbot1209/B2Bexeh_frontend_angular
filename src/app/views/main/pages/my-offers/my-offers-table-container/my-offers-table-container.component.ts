@@ -1,22 +1,22 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { Router, Event, NavigationStart, NavigationEnd, NavigationError } from "@angular/router";
-import { Subscription } from "rxjs";
-import { OfferService } from "src/app/services/offer.service";
-import { AuthService } from "src/app/shared/auth.service";
-import { IRespMyOffer } from "src/app/services/IRespMyOffer";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router, Event, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { OfferService } from 'src/app/services/offer.service';
+import { AuthService } from 'src/app/shared/auth.service';
+import { IRespMyOffer } from 'src/app/interfaces/IRespMyOffer';
 
 @Component({
-  selector: "app-my-offers-table-container",
-  templateUrl: "./my-offers-table-container.component.html",
-  styleUrls: ["./my-offers-table-container.component.scss"],
+  selector: 'app-my-offers-table-container',
+  templateUrl: './my-offers-table-container.component.html',
+  styleUrls: ['./my-offers-table-container.component.scss'],
 })
 export class MyOffersTableContainerComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
   constructor(private router: Router, private offerService: OfferService, private snackbar: MatSnackBar) {
     this.subscription = this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
-        let lastUrl = event.urlAfterRedirects.split("/").pop();
+        let lastUrl = event.urlAfterRedirects.split('/').pop();
         this.getMyOffers(lastUrl);
       }
     });
@@ -36,16 +36,16 @@ export class MyOffersTableContainerComponent implements OnInit, OnDestroy {
     this.tag = tag;
     this.offerService.getMyOffers(tag).subscribe(
       (resp) => {
-        this.offers = resp["data"]["rows"] || resp["data"];
+        this.offers = resp['data']['rows'] || resp['data'];
         this.isBusy = false;
       },
       (err) => {
         console.log(err);
-        this.snackbar.open(err.message, "close", {
-          horizontalPosition: "end",
-          verticalPosition: "top",
+        this.snackbar.open(err.message, 'close', {
+          horizontalPosition: 'end',
+          verticalPosition: 'top',
           duration: 5000,
-          panelClass: ["red-snackbar"],
+          panelClass: ['red-snackbar'],
         });
         this.isBusy = false;
       }

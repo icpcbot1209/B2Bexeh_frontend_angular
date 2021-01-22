@@ -12,7 +12,6 @@ import { ListingTimeSelectComponent } from './listing-time-select/listing-time-s
 import { OffersTableComponent } from './offers-table/offers-table.component';
 import { MyOffersTableComponent } from './my-offers-table/my-offers-table.component';
 import { ProductOffersTableComponent } from './product-offers-table/product-offers-table.component';
-import { ModalCreateOfferComponent } from './modal-create-offer/modal-create-offer.component';
 
 @NgModule({
   declarations: [
@@ -24,9 +23,17 @@ import { ModalCreateOfferComponent } from './modal-create-offer/modal-create-off
     OffersTableComponent,
     MyOffersTableComponent,
     ProductOffersTableComponent,
-    ModalCreateOfferComponent,
   ],
   imports: [CommonModule, FormsModule, MaterialModule, ReactiveFormsModule, NgSelectModule],
-  exports: [ProductFilterComponent, ProductTableComponent, CategorySelectComponent, OfferTypeSelectComponent, ListingTimeSelectComponent, OffersTableComponent, MyOffersTableComponent, ProductOffersTableComponent, ModalCreateOfferComponent],
+  exports: [
+    ProductFilterComponent,
+    ProductTableComponent,
+    CategorySelectComponent,
+    OfferTypeSelectComponent,
+    ListingTimeSelectComponent,
+    OffersTableComponent,
+    MyOffersTableComponent,
+    ProductOffersTableComponent,
+  ],
 })
 export class MainComponentsModule {}

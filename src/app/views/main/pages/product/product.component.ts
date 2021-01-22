@@ -3,13 +3,13 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
-import { IRespOffer } from 'src/app/services/IRespOffer';
-import { IRespProduct } from 'src/app/services/IRespProduct';
+import { IRespOffer } from 'src/app/interfaces/IRespOffer';
+import { IRespProduct } from 'src/app/interfaces/IRespProduct';
 import { ProductService } from 'src/app/services/product.service';
 import { OfferService } from 'src/app/services/offer.service';
 import { AuthService } from 'src/app/shared/auth.service';
 
-import { ModalCreateOfferComponent } from 'src/app/views/main/main-components/modal-create-offer/modal-create-offer.component';
+import { ModalCreateOfferComponent } from './modal-create-offer/modal-create-offer.component';
 
 @Component({
   selector: 'app-product',

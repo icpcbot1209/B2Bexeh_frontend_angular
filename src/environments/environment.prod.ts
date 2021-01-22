@@ -2,10 +2,11 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-import { UserRole } from "../app/shared/auth.roles";
+import { UserRole } from '../app/shared/auth.roles';
 
 export let environment: {
   myApiUrl: string;
+  myApiUrl2: string;
   defaultMenuType: string;
   subHiddenBreakpoint: number;
   defaultRole: UserRole;
@@ -13,7 +14,7 @@ export let environment: {
   buyUrl: string;
   defaultDirection: string;
   themeColorStorageKey: string;
-  firebase: {
+  vienFirebase: {
     storageBucket: string;
     apiKey: string;
     messagingSenderId: string;
@@ -22,6 +23,16 @@ export let environment: {
     measurementId: string;
     databaseURL: string;
     authDomain: string;
+  };
+
+  firebase: {
+    apiKey: string;
+    authDomain: string;
+    databaseURL: string;
+    projectId: string;
+    storageBucket: string;
+    messagingSenderId: string;
+    appId: string;
   };
   menuHiddenBreakpoint: number;
   isDarkSwitchActive: boolean;
@@ -35,30 +46,41 @@ export let environment: {
 };
 environment = {
   production: true,
-  myApiUrl: "https://superfractor-5e4df.web.app/api/v1",
-  buyUrl: "https://1.envato.market/6NV1b",
+  myApiUrl: 'https://superfractor-5e4df.web.app/api/v1',
+  myApiUrl2: 'https://superfractor-5e4df.web.app/api/v2',
+  buyUrl: 'https://1.envato.market/6NV1b',
   SCARF_ANALYTICS: false,
-  adminRoot: "/app",
-  apiUrl: "https://api.coloredstrategies.com",
-  defaultMenuType: "menu-default",
+  adminRoot: '/app',
+  apiUrl: 'https://api.coloredstrategies.com',
+  defaultMenuType: 'menu-default',
   subHiddenBreakpoint: 1440,
   menuHiddenBreakpoint: 768,
-  themeColorStorageKey: "vien-themecolor",
+  themeColorStorageKey: 'vien-themecolor',
   isMultiColorActive: true,
-  defaultColor: "light.blueyale",
+  defaultColor: 'light.blueyale',
   isDarkSwitchActive: true,
-  defaultDirection: "ltr",
-  themeRadiusStorageKey: "vien-themeradius",
+  defaultDirection: 'ltr',
+  themeRadiusStorageKey: 'vien-themeradius',
   isAuthGuardActive: false,
   defaultRole: UserRole.Admin,
+  vienFirebase: {
+    apiKey: 'AIzaSyCqoNLB_jTw4nncO12qR-eDH9gAeWiZVaw',
+    authDomain: 'vien-angular-login.firebaseapp.com',
+    databaseURL: 'https://vien-angular-login.firebaseio.com',
+    projectId: 'vien-angular-login',
+    storageBucket: 'vien-angular-login.appspot.com',
+    messagingSenderId: '16217062888',
+    appId: '1:16217062888:web:6b08232ca0c9662fedb85d',
+    measurementId: 'G-8ETT79WRRN',
+  },
+
   firebase: {
-    apiKey: "AIzaSyCqoNLB_jTw4nncO12qR-eDH9gAeWiZVaw",
-    authDomain: "vien-angular-login.firebaseapp.com",
-    databaseURL: "https://vien-angular-login.firebaseio.com",
-    projectId: "vien-angular-login",
-    storageBucket: "vien-angular-login.appspot.com",
-    messagingSenderId: "16217062888",
-    appId: "1:16217062888:web:6b08232ca0c9662fedb85d",
-    measurementId: "G-8ETT79WRRN",
+    apiKey: 'AIzaSyAq3nryW8yb7AknyVZPmdzAceq1Xi-KOK0',
+    authDomain: 'superfractor-5e4df.firebaseapp.com',
+    databaseURL: 'https://superfractor-5e4df-default-rtdb.firebaseio.com',
+    projectId: 'superfractor-5e4df',
+    storageBucket: 'superfractor-5e4df.appspot.com',
+    messagingSenderId: '359490061017',
+    appId: '1:359490061017:web:c0485810df72e6fff834c8',
   },
 };
