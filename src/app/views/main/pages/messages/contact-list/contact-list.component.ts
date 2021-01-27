@@ -15,7 +15,6 @@ export class ContactListComponent implements OnInit {
   ngOnInit() {}
 
   onClickContact(contact: IUser) {
-    console.log('click');
     if (window.confirm(`Start chat with ${contact.first_name} ${contact.last_name}?`)) {
       this.chattingService.startChatWith(contact.id);
     }

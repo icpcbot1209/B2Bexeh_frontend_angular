@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase/app';
@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 import { IUser } from '../interfaces/IUser';
 import { IChat, IMsg, IRespChat } from '../interfaces/IChat';
 import { UserService } from './user.service';
+import { IOffer } from '../interfaces/IOffer';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,7 @@ export class ChattingService {
   chats$ = new Subject<IChat[]>();
   isLoading = false;
 
-  constructor(private afs: AngularFirestore, private router: Router, private userService: UserService) {}
+  constructor(private afs: AngularFirestore, private router: Router, private userService: UserService, private ngZone: NgZone) {}
 
   async doInit() {
     this.me = this.userService.me;
@@ -100,14 +101,15 @@ export class ChattingService {
       chatId = docRef.id;
     }
 
+    return chatId;
     // this.router.navigate(['/me/messages', chatId]);
   }
 
-  async sendMessage(chatId, txt) {
+  async sendMessage(chatId, content) {
     const senderId = this.me.id;
     const newMsg: IMsg = {
       senderId,
-      content: txt,
+      content,
       timestamp: Date.now(),
       isRead: false,
     };
@@ -128,6 +130,15 @@ export class ChattingService {
     const ref = this.afs.collection('chats').doc(chat.id);
     ref.update({
       msgs: chat.msgs,
+    });
+  }
+
+  async onOfferCreate(idOther, offer: IOffer) {
+    const chatId = await this.startChatWith(idOther);
+    await this.sendMessage(chatId, { action: 'offer_created', value: offer });
+
+    this.ngZone.run(() => {
+      this.router.navigate(['/main/messages/', chatId]);
     });
   }
 }

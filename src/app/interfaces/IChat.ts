@@ -17,7 +17,7 @@ export interface IChat {
 
 export interface IMsg {
   senderId: string;
-  content: string;
+  content: any;
   timestamp: number;
   isRead: boolean;
 }

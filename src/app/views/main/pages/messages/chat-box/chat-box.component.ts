@@ -14,11 +14,7 @@ export class ChatBoxComponent implements OnChanges, AfterViewInit {
   @ViewChild('scroll') scrollRef: PerfectScrollbarComponent;
 
   constructor(private chattingService: ChattingService) {}
-  ngAfterViewInit(): void {
-    // setTimeout(() => {
-    //   this.scrollToBottom();
-    // }, 300);
-  }
+  ngAfterViewInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
     setTimeout(() => {
@@ -26,13 +22,9 @@ export class ChatBoxComponent implements OnChanges, AfterViewInit {
     }, 300);
   }
 
-  getUser(id): IUser {
-    if (this.chat.me.id === id) return this.chat.me;
-    return this.chat.other;
-  }
-
   txt: string = '';
   sendMessage() {
+    if (this.txt.trim().length === 0) return;
     this.chattingService.sendMessage(this.chat.id, this.txt);
     this.txt = '';
   }

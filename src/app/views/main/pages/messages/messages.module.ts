@@ -13,10 +13,13 @@ import { LayoutContainersModule } from 'src/app/containers/layout/layout.contain
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { TranslateModule } from '@ngx-translate/core';
 
+import { OfferModalsModule } from 'src/app/views/main/offer-modals/offer-modals.module';
+
 import { MessagesComponent } from './messages.component';
 import { ChatListComponent } from './chat-list/chat-list.component';
 import { ChatBoxComponent } from './chat-box/chat-box.component';
 import { ContactListComponent } from './contact-list/contact-list.component';
+import { MsgBodyComponent } from './msg-body/msg-body.component';
 
 const routes: Routes = [
   { path: '', component: MessagesComponent },
@@ -24,7 +27,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [MessagesComponent, ChatListComponent, ContactListComponent, ChatBoxComponent],
+  declarations: [MsgBodyComponent, MessagesComponent, ChatListComponent, ContactListComponent, ChatBoxComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -38,6 +41,8 @@ const routes: Routes = [
     PerfectScrollbarModule,
     LayoutContainersModule,
     TranslateModule,
+
+    OfferModalsModule,
   ],
 })
 export class MessagesModule {}

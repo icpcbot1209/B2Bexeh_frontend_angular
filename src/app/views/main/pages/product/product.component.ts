@@ -10,6 +10,8 @@ import { OfferService } from 'src/app/services/offer.service';
 import { AuthService } from 'src/app/shared/auth.service';
 
 import { ModalCreateOfferComponent } from './modal-create-offer/modal-create-offer.component';
+import { ChattingService } from 'src/app/services/chatting.service';
+import { IOffer } from 'src/app/interfaces/IOffer';
 
 @Component({
   selector: 'app-product',
@@ -23,6 +25,7 @@ export class ProductComponent implements OnInit {
     private productService: ProductService,
     private offerService: OfferService,
     private authService: AuthService,
+    private chattingService: ChattingService,
     public dialog: MatDialog
   ) {}
 
@@ -106,8 +109,8 @@ export class ProductComponent implements OnInit {
       panelClass: 'custom-dialog-container',
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed', result);
+    dialogRef.afterClosed().subscribe((result: ICreateOfferData) => {
+      if (result) this.tryCreateOffer(result);
     });
   }
 
@@ -117,12 +120,29 @@ export class ProductComponent implements OnInit {
       panelClass: 'custom-dialog-container',
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed', result);
+    dialogRef.afterClosed().subscribe((result: ICreateOfferData) => {
+      if (result) this.tryCreateOffer(result);
     });
   }
 
   openPriceHistory() {}
 
   addToWatchlist() {}
+
+  async tryCreateOffer(offerData: ICreateOfferData) {
+    try {
+      const offer: IOffer = await this.offerService.createOffer('bid', this.product, offerData).toPromise();
+      this.chattingService.onOfferCreate(this.product.createdById, offer);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+}
+
+export interface ICreateOfferData {
+  productType: string;
+  unit: string;
+  qty: number;
+  price: number;
+  text: string;
 }

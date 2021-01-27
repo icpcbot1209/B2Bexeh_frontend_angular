@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductComponent } from './product.component';
 import { ModalCreateOfferComponent } from './modal-create-offer/modal-create-offer.component';
-
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/shared/material.module';

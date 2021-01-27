@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ApiUrlConstant } from '../constants/api-url.constant';
+import { ApiUrl2 } from '../constants/api-url2';
 import { AuthService } from '../shared/auth.service';
-import { ChattingService } from './chatting.service';
+import { ICreateOfferData } from '../views/main/pages/product/product.component';
+import { IRespProduct } from '../interfaces/IRespProduct';
+import { IOffer } from '../interfaces/IOffer';
 
 @Injectable({
   providedIn: 'root',
@@ -21,5 +24,9 @@ export class OfferService {
 
   getOffersByProductId(productId) {
     return this.http.post(ApiUrlConstant.GETOFFERSBYPRODUCTID, { productId });
+  }
+
+  createOffer(request: string, product: IRespProduct, data: ICreateOfferData) {
+    return this.http.post<IOffer>(ApiUrl2.createOffer, { request, product, ...data });
   }
 }
