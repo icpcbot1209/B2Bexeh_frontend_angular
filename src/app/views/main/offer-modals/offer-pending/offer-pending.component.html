@@ -1,0 +1,78 @@
+<div class="title">CA_B2B is offering to buy from VARUNK on 11/16/20</div>
+
+<ng-container *ngIf="offer">
+  <div class="subtitle">2020 DONRUSS BASEBALL</div>
+  <div class="product-detail">
+    <div class="form-group">
+      <label>Type</label>
+      <div>{{ offer.type }} {{ offer.producttype }}</div>
+    </div>
+    <div class="form-group">
+      <label>Qty</label>
+      <div>{{ offer.maxQuantity || offer.minQuantity }}</div>
+    </div>
+    <div class="form-group">
+      <label>Price/box</label>
+      <div>{{ offer.amount | currency }}</div>
+    </div>
+    <div class="form-group">
+      <label>Total</label>
+      <div>$7,200.00</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Message</label>
+    <div>{{ offer.note }}</div>
+  </div>
+
+  <ng-container *ngIf="offer.createdbyId == me.id; else elseTemplate">
+    <button class="btn btn-danger" (click)="onClickCancel()">Cancel Offer</button>
+  </ng-container>
+  <ng-template #elseTemplate>
+    <button class="btn btn-success" (click)="onClickAccept()">Accept</button>
+    <button class="btn btn-danger" style="margin-left: 24px" (click)="onClickDecline()">Decline</button>
+  </ng-template>
+
+  <div class="title">TERMS</div>
+  <div class="terms">
+    <div class="form-group">
+      <label>Offer Expires</label>
+      <div>1 Day</div>
+    </div>
+    <div class="form-group">
+      <label>Payment Timing</label>
+      <div>Prior to Shipping</div>
+    </div>
+    <div class="form-group">
+      <label>Payment</label>
+      <div>Credit Card</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Shipping Terms</label>
+    <div>
+      These are pulled from the seller’s profile. These are pulled from the seller’s profile. These are pulled from the seller’s profile. These are
+      pulled from the seller’s profile.
+    </div>
+  </div>
+
+  <div class="title">ORIGINAL SELL LISTING</div>
+  <div class="original">
+    <div class="form-group">
+      <label>Seller</label>
+      <div>VARUNK</div>
+    </div>
+    <div class="form-group">
+      <label>Type</label>
+      <div>Box Retail</div>
+    </div>
+    <div class="form-group">
+      <label>Qty</label>
+      <div>8</div>
+    </div>
+    <div class="form-group">
+      <label>Price/box</label>
+      <div>$900.00</div>
+    </div>
+  </div>
+</ng-container>

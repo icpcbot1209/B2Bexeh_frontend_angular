@@ -3,9 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { ApiUrlConstant } from '../constants/api-url.constant';
 import { ApiUrl2 } from '../constants/api-url2';
 import { AuthService } from '../shared/auth.service';
-import { ICreateOfferData } from '../views/main/pages/product/product.component';
 import { IRespProduct } from '../interfaces/IRespProduct';
 import { IOffer } from '../interfaces/IOffer';
+import { IHope } from '../interfaces/IHope';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +26,17 @@ export class OfferService {
     return this.http.post(ApiUrlConstant.GETOFFERSBYPRODUCTID, { productId });
   }
 
-  createOffer(request: string, product: IRespProduct, data: ICreateOfferData) {
-    return this.http.post<IOffer>(ApiUrl2.createOffer, { request, product, ...data });
+  createOffer() {}
+
+  acceptOffer(offerId) {
+    return this.http.post(ApiUrl2.acceptOffer, { offerId });
+  }
+
+  declineOffer(offerId) {
+    return this.http.post(ApiUrl2.declineOffer, { offerId });
+  }
+
+  createHope(hopeData: IHope) {
+    return this.http.post<IHope>(ApiUrl2.createHope, hopeData);
   }
 }

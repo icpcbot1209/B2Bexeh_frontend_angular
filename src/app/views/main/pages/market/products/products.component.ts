@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { IRespProduct } from 'src/app/interfaces/IRespProduct';
 import { ProductService } from 'src/app/services/product.service';
 import { AuthService } from 'src/app/shared/auth.service';
 @Component({
@@ -26,8 +27,10 @@ export class ProductsComponent implements OnInit {
     this.isBusy = true;
     observable.subscribe(
       (resp) => {
-        this.products = resp['data']['rows'] || resp['data'];
-
+        const products: IRespProduct[] = resp['data']['rows'] || resp['data'];
+        //TODO
+        //this.products = products;
+        this.products = products.filter((p) => p.createdById === '86');
         this.isBusy = false;
       },
       (err) => {

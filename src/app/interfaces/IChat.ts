@@ -1,3 +1,5 @@
+import { IUser } from './IUser';
+
 export interface IRespChat {
   id: string;
   users: string[];
@@ -8,8 +10,8 @@ export interface IRespChat {
 
 export interface IChat {
   id: string;
-  me: any;
-  other: any;
+  me: IUser;
+  other: IUser;
   msgs: IMsg[];
   lastMessageTime: string;
   date: string;
@@ -17,7 +19,7 @@ export interface IChat {
 
 export interface IMsg {
   senderId: string;
-  content: any;
+  content: any; // string || { action: string; value: any }
   timestamp: number;
   isRead: boolean;
 }

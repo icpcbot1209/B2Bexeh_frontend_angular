@@ -1,0 +1,47 @@
+:host {
+  max-width: 480px;
+  padding: 15px 25px;
+  font-family: Inter;
+
+  .title {
+    font-size: small;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 34px;
+    letter-spacing: 0px;
+    text-align: left;
+  }
+
+  .subtitle {
+    font-size: medium;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 34px;
+    letter-spacing: 0px;
+    text-align: left;
+  }
+
+  .product-detail {
+    display: grid;
+    grid-template-columns: 120px 60px 120px 120px;
+  }
+
+  .form-group {
+    label {
+      color: #547282;
+    }
+    div {
+      color: #2c2c2c;
+    }
+  }
+
+  .terms {
+    display: grid;
+    grid-template-columns: 120px 120px 120px;
+  }
+
+  .original {
+    display: grid;
+    grid-template-columns: 120px 120px 60px 120px;
+  }
+}

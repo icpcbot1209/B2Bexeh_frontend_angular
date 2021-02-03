@@ -12,6 +12,7 @@ import { AuthService } from 'src/app/shared/auth.service';
 import { ModalCreateOfferComponent } from './modal-create-offer/modal-create-offer.component';
 import { ChattingService } from 'src/app/services/chatting.service';
 import { IOffer } from 'src/app/interfaces/IOffer';
+import { IHope } from 'src/app/interfaces/IHope';
 
 @Component({
   selector: 'app-product',
@@ -109,8 +110,8 @@ export class ProductComponent implements OnInit {
       panelClass: 'custom-dialog-container',
     });
 
-    dialogRef.afterClosed().subscribe((result: ICreateOfferData) => {
-      if (result) this.tryCreateOffer(result);
+    dialogRef.afterClosed().subscribe((result: IHope) => {
+      if (result) this.tryCreateHope(result);
     });
   }
 
@@ -120,8 +121,8 @@ export class ProductComponent implements OnInit {
       panelClass: 'custom-dialog-container',
     });
 
-    dialogRef.afterClosed().subscribe((result: ICreateOfferData) => {
-      if (result) this.tryCreateOffer(result);
+    dialogRef.afterClosed().subscribe((result: IHope) => {
+      if (result) this.tryCreateHope(result);
     });
   }
 
@@ -129,20 +130,12 @@ export class ProductComponent implements OnInit {
 
   addToWatchlist() {}
 
-  async tryCreateOffer(offerData: ICreateOfferData) {
+  async tryCreateHope(hopeData: IHope) {
     try {
-      const offer: IOffer = await this.offerService.createOffer('bid', this.product, offerData).toPromise();
-      this.chattingService.onOfferCreate(this.product.createdById, offer);
+      const hope: IHope = await this.offerService.createHope(hopeData).toPromise();
+      console.log(hope);
     } catch (err) {
       console.log(err);
     }
   }
-}
-
-export interface ICreateOfferData {
-  productType: string;
-  unit: string;
-  qty: number;
-  price: number;
-  text: string;
 }

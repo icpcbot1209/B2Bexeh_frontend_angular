@@ -2,6 +2,7 @@ import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { IRespProduct } from 'src/app/interfaces/IRespProduct';
 import { productTypes } from 'src/app/constants/product_type';
+import { IHope } from 'src/app/interfaces/IHope';
 
 @Component({
   selector: 'main-modal-create-offer',
@@ -38,7 +39,14 @@ export class ModalCreateOfferComponent implements OnInit {
   }
 
   onClickCreate() {
-    this.dialogRef.close({ productType: this.productType.id, unit: this.unit, qty: this.qty, price: this.price, text: this.text });
+    const hopeData: IHope = {
+      isAsk: this.data.request === 'ask',
+      note: this.text,
+      productId: this.data.product.id,
+      price: this.price,
+      unit: this.unit,
+    };
+    this.dialogRef.close(hopeData);
   }
 }
 

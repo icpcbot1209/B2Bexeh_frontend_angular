@@ -19,8 +19,18 @@
         </div>
       </div>
     </div>
-    <div class="chat-text-left">
-      <p class="mb-0 text-semi-muted">{{ msg.content }}</p>
-    </div>
+
+    <ng-container *ngIf="msg.content.action; else textMsg">
+      <ng-container *ngIf="msg.content.action == OfferActions.offer_created">
+        <div class="offer-action">
+          <main-offer-pending [offer]="msg.content.value" [me]="chat.me"></main-offer-pending>
+        </div>
+      </ng-container>
+    </ng-container>
+    <ng-template #textMsg>
+      <div class="chat-text-left">
+        <p class="mb-0 text-semi-muted">{{ msg.content }}</p>
+      </div>
+    </ng-template>
   </div>
 </div>

@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 import { IUser } from '../interfaces/IUser';
 import { IChat, IMsg, IRespChat } from '../interfaces/IChat';
 import { UserService } from './user.service';
-import { IOffer } from '../interfaces/IOffer';
+import { IOffer, OfferActions } from '../interfaces/IOffer';
 
 @Injectable({
   providedIn: 'root',
@@ -78,8 +78,9 @@ export class ChattingService {
   }
 
   async startChatWith(idOther) {
+    if (idOther === this.me.id) return null;
     let chatId;
-    let k = this.chats.findIndex((x) => x.other._id === idOther);
+    let k = this.chats.findIndex((x) => x.other.id === idOther);
     if (k > -1) {
       chatId = this.chats[k].id;
     } else {
@@ -135,7 +136,8 @@ export class ChattingService {
 
   async onOfferCreate(idOther, offer: IOffer) {
     const chatId = await this.startChatWith(idOther);
-    await this.sendMessage(chatId, { action: 'offer_created', value: offer });
+    if (!chatId) return;
+    await this.sendMessage(chatId, { action: OfferActions.offer_created, value: offer });
 
     this.ngZone.run(() => {
       this.router.navigate(['/main/messages/', chatId]);
