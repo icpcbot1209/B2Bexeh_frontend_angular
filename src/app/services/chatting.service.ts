@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 import { IUser } from '../interfaces/IUser';
 import { IChat, IMsg, IRespChat } from '../interfaces/IChat';
 import { UserService } from './user.service';
-import { IOffer, OfferActions } from '../interfaces/IOffer';
+import { IOffer_v1, OfferActions } from '../interfaces/IOffer_v1';
 
 @Injectable({
   providedIn: 'root',
@@ -134,7 +134,7 @@ export class ChattingService {
     });
   }
 
-  async onOfferCreate(idOther, offer: IOffer) {
+  async onOfferCreate(idOther, offer: IOffer_v1) {
     const chatId = await this.startChatWith(idOther);
     if (!chatId) return;
     await this.sendMessage(chatId, { action: OfferActions.offer_created, value: offer });

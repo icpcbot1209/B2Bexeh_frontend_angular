@@ -1,7 +1,7 @@
 <div mat-dialog-content>
   <mat-icon class="close-button" (click)="onNoClick()">close</mat-icon>
 
-  <h1 mat-dialog-title>Create {{ data.request | titlecase }}</h1>
+  <h1 mat-dialog-title>Create {{ data.is_ask ? 'Ask' : 'Bid' }}</h1>
   <div style="display: flex">
     <img [src]="data.product.imageUrl" width="158" height="auto" />
 
@@ -33,9 +33,9 @@
         style="padding: 0"
         [clearable]="false"
         [placeholder]="'--- select type ---'"
-        [items]="productTypes"
+        [items]="deal_methods"
         bindLabel="label"
-        [(ngModel)]="productType"
+        [(ngModel)]="deal_method"
       >
       </ng-select>
     </div>
@@ -46,18 +46,18 @@
     </div>
 
     <div class="form-group" style="margin-left: 20px; flex: 1">
-      <label>{{ data.request | titlecase }} Price / {{ unit }}</label>
+      <label>{{ data.is_ask ? 'Ask' : 'Bid' }} Price / {{ unit }}</label>
       <input class="form-control" placeholder="" [(ngModel)]="price" />
     </div>
   </div>
 
   <div>
-    <textarea cols="80" rows="8" placeholder="Write message" [(ngModel)]="text"></textarea>
+    <textarea cols="80" rows="8" placeholder="Write message" [(ngModel)]="note"></textarea>
   </div>
 </div>
 <div mat-dialog-actions style="flex-direction: column">
   <div>
-    <button mat-raised-button color="primary" style="margin: 20px auto" (click)="onClickCreate()">Create {{ data.request | titlecase }}</button>
+    <button mat-raised-button color="primary" style="margin: 20px auto" (click)="onClickCreate()">Create {{ data.is_ask ? 'Ask' : 'Bid' }}</button>
   </div>
 
   <div style="text-align: center; color: gray; margin-bottom: 50px">

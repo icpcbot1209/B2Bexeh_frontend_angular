@@ -28,7 +28,7 @@ export interface IPasswordReset {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   isAuthed = false;
-  userId = '';
+  userId: any;
   constructor(private auth: AngularFireAuth, private http: HttpClient, private router: Router, private userService: UserService) {
     this.autoLogin();
   }

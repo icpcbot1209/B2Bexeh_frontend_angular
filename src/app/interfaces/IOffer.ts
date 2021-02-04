@@ -1,24 +1,15 @@
 export interface IOffer {
-  id: number;
-  productid: number;
-  producttype: string;
-  amount: number;
-  isdeleted: boolean;
-  createdAt: string;
-  createdbyId: string;
-  updatedAt: string;
-  updatedbyId: number;
-  request: string;
-  type: string;
+  id?: number;
+  hope_id?: number;
+  product_id?: number;
+  creator_id?: number;
+  qty: number;
+  price: number;
   note: string;
-  maxQuantity: number;
-  minQuantity: number;
-  subtype: string;
-  isactive: boolean;
-  isaddtocart: boolean;
-  isPrivate: boolean;
-}
-
-export class OfferActions {
-  public static offer_created = 'offer_created';
+  payment_method: number;
+  payment_timing: number;
+  is_active?: boolean;
+  is_accepted?: boolean;
+  created_at?: Date;
+  updated_at?: Date;
 }

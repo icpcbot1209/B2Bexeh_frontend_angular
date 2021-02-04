@@ -1,0 +1,78 @@
+<div mat-dialog-content>
+  <mat-icon class="close-button" (click)="onNoClick()">close</mat-icon>
+
+  <h1 mat-dialog-title>Counter Offer to {{ data.hope.is_ask ? 'Ask' : 'Bid' }}</h1>
+  <div style="display: flex">
+    <img [src]="data.product.imageUrl" width="158" height="auto" />
+
+    <div style="margin-left: 50px">
+      <strong style="font-size: large">{{ data.product.productName }}</strong>
+      <p>Released on {{ data.product.releaseDate | date: 'longDate' }}</p>
+      <label>Dealer</label>
+      <p>{{ data.hope.user_name }}</p>
+    </div>
+  </div>
+
+  <div style="display: flex; margin: 20px 0">
+    <div class="form-group" style="flex: 1">
+      <label>Type</label>
+      <p>{{ data.hope.deal_method }}</p>
+    </div>
+
+    <div class="form-group" style="margin-left: 20px; flex: 1">
+      <label>Qty</label>
+      <input class="form-control" placeholder="" [(ngModel)]="data.hope.qty" />
+    </div>
+
+    <div class="form-group" style="margin-left: 20px; flex: 1">
+      <label>{{ data.hope.is_ask ? 'Ask' : 'Bid' }} Price / {{ data.hope.unit }}</label>
+      <input class="form-control" placeholder="" [(ngModel)]="price" />
+    </div>
+  </div>
+
+  <div style="display: flex; margin: 20px 0">
+    <div class="form-group" style="flex: 1">
+      <label>Payment Method</label>
+      <ng-select
+        class="form-control"
+        style="padding: 0"
+        [clearable]="false"
+        [placeholder]="'--- select method ---'"
+        [items]="payment_methods"
+        [(ngModel)]="payment_method"
+        [bindLabel]="'title'"
+        [bindValue]="'id'"
+      >
+      </ng-select>
+    </div>
+
+    <div class="form-group" style="margin-left: 20px; flex: 1">
+      <label>Payment Timing</label>
+      <ng-select
+        class="form-control"
+        style="padding: 0"
+        [clearable]="false"
+        [placeholder]="'--- select timing ---'"
+        [items]="payment_timings"
+        [(ngModel)]="payment_timing"
+        [bindLabel]="'title'"
+        [bindValue]="'id'"
+      >
+      </ng-select>
+    </div>
+    <div style="flex: 1"></div>
+  </div>
+
+  <div>
+    <textarea cols="80" rows="8" placeholder="Write message" [(ngModel)]="note"></textarea>
+  </div>
+</div>
+<div mat-dialog-actions style="flex-direction: column">
+  <div>
+    <button mat-raised-button color="primary" style="margin: 20px auto" (click)="onClickCreate()">Send Offer</button>
+  </div>
+
+  <div style="text-align: center; color: gray; margin-bottom: 50px">
+    ALL OFFERS SENT ARE BINDING AND CANNOT BE CANCELED IF ACCEPTED BY THE OTHER PARTY
+  </div>
+</div>

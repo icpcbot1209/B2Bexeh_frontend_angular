@@ -1,18 +1,21 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 
-import { IRespOffer } from 'src/app/interfaces/IRespOffer';
 import { IRespProduct } from 'src/app/interfaces/IRespProduct';
 import { ProductService } from 'src/app/services/product.service';
 import { OfferService } from 'src/app/services/offer.service';
 import { AuthService } from 'src/app/shared/auth.service';
 
-import { ModalCreateOfferComponent } from './modal-create-offer/modal-create-offer.component';
+import { ModalCreateHopeComponent } from './modal-create-hope/modal-create-hope.component';
 import { ChattingService } from 'src/app/services/chatting.service';
-import { IOffer } from 'src/app/interfaces/IOffer';
+
 import { IHope } from 'src/app/interfaces/IHope';
+import { HopeService } from 'src/app/services/hope.service';
+import { UserService } from 'src/app/services/user.service';
+import { CreateOfferComponent } from '../../offer-modals/create-offer/create-offer.component';
+import { IOffer } from 'src/app/interfaces/IOffer';
 
 @Component({
   selector: 'app-product',
@@ -26,8 +29,11 @@ export class ProductComponent implements OnInit {
     private productService: ProductService,
     private offerService: OfferService,
     private authService: AuthService,
+    private userService: UserService,
     private chattingService: ChattingService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private hopeService: HopeService,
+    private router: Router
   ) {}
 
   productId;
@@ -38,7 +44,7 @@ export class ProductComponent implements OnInit {
       }
       this.productId = paramMap.get('productId');
       this.loadProduct(this.productId);
-      this.loadOffersByProductId(this.productId);
+      this.readHopesByProductId(this.productId);
     });
   }
 
@@ -59,14 +65,14 @@ export class ProductComponent implements OnInit {
     );
   }
 
-  offers: IRespOffer[];
-  loadOffersByProductId(productId) {
+  hopes: IHope[];
+  readHopesByProductId(productId) {
     this.isBusy = true;
-    this.offerService.getOffersByProductId(this.productId).subscribe(
+    this.hopeService.readByProductId(this.productId).subscribe(
       (resp) => {
         this.isBusy = false;
-        this.offers = resp['data']['rows'] || resp['data'];
-        this.separateOffers(this.offers, this.isPerCase);
+        this.hopes = resp;
+        this.separateHopes(this.hopes, this.isPerCase ? 'Case' : 'Box');
       },
       (err) => {
         this.isBusy = false;
@@ -77,36 +83,35 @@ export class ProductComponent implements OnInit {
 
   onChangeUnit(event: MatSlideToggleChange) {
     const isPerCase = event.checked;
-    this.separateOffers(this.offers, isPerCase);
+    this.separateHopes(this.hopes, isPerCase ? 'Case' : 'Box');
   }
 
-  offersBuy: IRespOffer[] = [];
-  offersSell: IRespOffer[] = [];
-  offersMyBuy: IRespOffer[] = [];
-  offersMySell: IRespOffer[] = [];
-  separateOffers(offers: IRespOffer[], isPerCase: boolean) {
-    const type = isPerCase ? 'Case' : 'Box';
+  asks: IHope[] = [];
+  bids: IHope[] = [];
+  myAsks: IHope[] = [];
+  myBids: IHope[] = [];
+  separateHopes(hopes: IHope[], unit: string) {
     const userId = this.authService.userId;
-    let offersBuy: IRespOffer[] = [];
-    let offersSell: IRespOffer[] = [];
-    let offersMyBuy: IRespOffer[] = [];
-    let offersMySell: IRespOffer[] = [];
-    offers.forEach((offer) => {
-      if (offer.type !== type) return;
-      if (offer.request === 'bids') offersBuy.push(offer);
-      if (offer.request === 'asks') offersSell.push(offer);
-      if (offer.request === 'bids' && offer.createdbyId === userId) offersMyBuy.push(offer);
-      if (offer.request === 'asks' && offer.createdbyId === userId) offersMySell.push(offer);
+    let asks: IHope[] = [];
+    let bids: IHope[] = [];
+    let myAsks: IHope[] = [];
+    let myBids: IHope[] = [];
+    hopes.forEach((hope) => {
+      if (hope.unit !== unit) return;
+      if (hope.is_ask) asks.push(hope);
+      if (!hope.is_ask) bids.push(hope);
+      if (hope.is_ask && hope.creator_id === userId) myAsks.push(hope);
+      if (!hope.is_ask && hope.creator_id === userId) myBids.push(hope);
     });
-    this.offersBuy = offersBuy;
-    this.offersSell = offersSell;
-    this.offersMyBuy = offersMyBuy;
-    this.offersMySell = offersMySell;
+    this.asks = asks;
+    this.bids = bids;
+    this.myAsks = myAsks;
+    this.myBids = myBids;
   }
 
-  openCreateBid() {
-    const dialogRef = this.dialog.open(ModalCreateOfferComponent, {
-      data: { request: 'bid', product: this.product },
+  openCreateHopeModal(is_ask) {
+    const dialogRef = this.dialog.open(ModalCreateHopeComponent, {
+      data: { is_ask, product: this.product },
       panelClass: 'custom-dialog-container',
     });
 
@@ -115,27 +120,38 @@ export class ProductComponent implements OnInit {
     });
   }
 
-  openCreateAsk() {
-    const dialogRef = this.dialog.open(ModalCreateOfferComponent, {
-      data: { request: 'ask', product: this.product },
+  async tryCreateHope(hopeData: IHope) {
+    try {
+      const hope: IHope = await this.hopeService.createHope(hopeData).toPromise();
+      hope.user_name = this.userService.me.user_name;
+      console.log(hope);
+
+      this.hopes.push(hope);
+      this.separateHopes(this.hopes, this.isPerCase ? 'Case' : 'Box');
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  openCreateOfferModal(hope: IHope) {
+    const dialogRef = this.dialog.open(CreateOfferComponent, {
+      data: { hope, product: this.product },
       panelClass: 'custom-dialog-container',
     });
 
-    dialogRef.afterClosed().subscribe((result: IHope) => {
-      if (result) this.tryCreateHope(result);
+    dialogRef.afterClosed().subscribe((result: IOffer) => {
+      if (result) {
+        console.log(result);
+
+        this.chattingService.startChatWith(result.id).then((chatId) => {
+          this.router.navigate(['main/messages', chatId]);
+        });
+      }
+      // if (result) this.tryCreateHope(result);
     });
   }
 
   openPriceHistory() {}
 
   addToWatchlist() {}
-
-  async tryCreateHope(hopeData: IHope) {
-    try {
-      const hope: IHope = await this.offerService.createHope(hopeData).toPromise();
-      console.log(hope);
-    } catch (err) {
-      console.log(err);
-    }
-  }
 }

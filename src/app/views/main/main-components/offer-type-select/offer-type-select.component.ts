@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { productTypes } from 'src/app/constants/product_type';
+import { deal_methods } from 'src/app/interfaces/IHope';
 
 @Component({
   selector: 'main-offer-type-select',
@@ -15,7 +15,7 @@ export class OfferTypeSelectComponent implements OnInit {
     this.theItem = this.items[0];
   }
 
-  items = productTypes;
+  items = deal_methods;
 
   theItem = null;
   onSelectItem(item) {

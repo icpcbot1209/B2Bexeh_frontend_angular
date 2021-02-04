@@ -4,8 +4,10 @@ import { ApiUrlConstant } from '../constants/api-url.constant';
 import { ApiUrl2 } from '../constants/api-url2';
 import { AuthService } from '../shared/auth.service';
 import { IRespProduct } from '../interfaces/IRespProduct';
-import { IOffer } from '../interfaces/IOffer';
+import { IOffer_v1 } from '../interfaces/IOffer_v1';
 import { IHope } from '../interfaces/IHope';
+import { IOffer } from '../interfaces/IOffer';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -26,8 +28,6 @@ export class OfferService {
     return this.http.post(ApiUrlConstant.GETOFFERSBYPRODUCTID, { productId });
   }
 
-  createOffer() {}
-
   acceptOffer(offerId) {
     return this.http.post(ApiUrl2.acceptOffer, { offerId });
   }
@@ -36,7 +36,8 @@ export class OfferService {
     return this.http.post(ApiUrl2.declineOffer, { offerId });
   }
 
-  createHope(hopeData: IHope) {
-    return this.http.post<IHope>(ApiUrl2.createHope, hopeData);
+  /** Version 2 */
+  createOffer(data: IOffer) {
+    return this.http.post(`${environment.myApiUrl2}/offer/createOne`, data);
   }
 }

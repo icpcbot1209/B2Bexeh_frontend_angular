@@ -3,7 +3,7 @@
 </ng-container>
 <ng-container [style.display]="!isBusy ? 'block' : 'none'">
   <div style="display: flex" *ngIf="product">
-    <img [src]="product?.imageUrl" height="208" width="158" />
+    <img [src]="product?.imageUrl" height="208" width="auto" />
     <div style="margin-left: 20px">
       <h2>{{ product.productName }}</h2>
       <p>Released on {{ product.releaseDate | date: 'longDate' }}</p>
@@ -25,8 +25,8 @@
         </div>
       </div>
       <div>
-        <button mat-button (click)="openCreateBid()">Create bid</button>
-        <button mat-button (click)="openCreateAsk()">Create ask</button>
+        <button mat-button (click)="openCreateHopeModal(false)">Create bid</button>
+        <button mat-button (click)="openCreateHopeModal(true)">Create ask</button>
         <button mat-button (click)="openPriceHistory()">Price history</button>
       </div>
     </div>
@@ -40,20 +40,20 @@
 
   <div class="table-grid">
     <div class="table-container">
-      <p>Buy Offers / Per {{ !isPerCase ? 'Box' : 'Case' }}</p>
-      <main-product-offers-table [offers]="offersBuy"></main-product-offers-table>
+      <p>Bids / Per {{ !isPerCase ? 'Box' : 'Case' }}</p>
+      <main-hopes-table [hopes]="bids" (sendOfferClicked)="openCreateOfferModal($event)"></main-hopes-table>
     </div>
     <div class="table-container">
-      <p>Sell Offers / Per {{ !isPerCase ? 'Box' : 'Case' }}</p>
-      <main-product-offers-table [offers]="offersSell"></main-product-offers-table>
+      <p>Asks / Per {{ !isPerCase ? 'Box' : 'Case' }}</p>
+      <main-hopes-table [hopes]="asks" (sendOfferClicked)="openCreateOfferModal($event)"></main-hopes-table>
     </div>
     <div class="table-container">
       <p>My Bids for this item / Per {{ !isPerCase ? 'Box' : 'Case' }}</p>
-      <main-product-offers-table [offers]="offersMyBuy"></main-product-offers-table>
+      <main-hopes-table [hopes]="myBids"></main-hopes-table>
     </div>
     <div class="table-container">
       <p>My Asks for this item / Per {{ !isPerCase ? 'Box' : 'Case' }}</p>
-      <main-product-offers-table [offers]="offersMySell"></main-product-offers-table>
+      <main-hopes-table [hopes]="myAsks"></main-hopes-table>
     </div>
   </div>
 </ng-container>
