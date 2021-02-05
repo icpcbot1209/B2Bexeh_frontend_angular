@@ -11,11 +11,6 @@ import { environment } from 'src/environments/environment';
 export class OfferService {
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  getMyOffers(tag: string) {
-    let userId = this.authService.userId;
-    return this.http.post(ApiUrlConstant.GETMYOFFERS, { userId, tag });
-  }
-
   getLatestOffers(data: { categoryId; subcategoryId }) {
     return this.http.post(ApiUrlConstant.GETLATESTOFFERS, data);
   }
@@ -25,6 +20,10 @@ export class OfferService {
   }
 
   /** Version 2 */
+  getMyOffers(tag: string) {
+    return this.http.post<IOffer[]>(`${environment.myApiUrl2}/offer/getMyOffers`, { tag });
+  }
+
   createOffer(data: IOffer) {
     return this.http.post<IOffer>(`${environment.myApiUrl2}/offer/createOne`, data);
   }

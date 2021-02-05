@@ -19,11 +19,13 @@ export interface IOffer {
   product_name?: string;
   seller_name?: string;
   buyer_name?: string;
+  other_name?: string;
   hope_is_ask?: boolean;
   hope_unit?: string;
   hope_deal_method?: string;
   hope_qty?: number;
   hope_price?: number;
+  total: number;
 }
 
 export class OfferActions {

@@ -13,19 +13,19 @@
 
   <ng-container matColumnDef="created_at">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>
-      {{ tag.indexOf("received") > -1 ? "Received" : "Sent" }}
+      {{ tag.indexOf('received') > -1 ? 'Received' : 'Sent' }}
     </th>
-    <td mat-cell *matCellDef="let element">{{ element.created_at | date: "longDate" }}</td>
+    <td mat-cell *matCellDef="let element">{{ element.created_at | date: 'longDate' }}</td>
   </ng-container>
 
   <ng-container matColumnDef="expiry_date">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Expires</th>
-    <td mat-cell *matCellDef="let element">{{ element.expiry_date | date: "longDate" }}</td>
+    <td mat-cell *matCellDef="let element">{{ element.expiry_date | date: 'longDate' }}</td>
   </ng-container>
 
   <ng-container matColumnDef="other_name">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>
-      {{ tag.indexOf("received") > -1 ? "From" : "To" }}
+      {{ tag.indexOf('received') > -1 ? 'From' : 'To' }}
     </th>
     <td mat-cell *matCellDef="let element">{{ element.other_name }}</td>
   </ng-container>
@@ -35,14 +35,19 @@
     <td mat-cell *matCellDef="let element">{{ element.product_name }}</td>
   </ng-container>
 
+  <ng-container matColumnDef="hope_unit">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Unit</th>
+    <td mat-cell *matCellDef="let element">{{ element.hope_unit }}</td>
+  </ng-container>
+
   <ng-container matColumnDef="qty">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Qty</th>
     <td mat-cell *matCellDef="let element">{{ element.qty }}</td>
   </ng-container>
 
-  <ng-container matColumnDef="amount">
+  <ng-container matColumnDef="price">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>
-    <td mat-cell *matCellDef="let element">{{ element.amount | currency }}</td>
+    <td mat-cell *matCellDef="let element">{{ element.price | currency }}</td>
   </ng-container>
 
   <ng-container matColumnDef="total">

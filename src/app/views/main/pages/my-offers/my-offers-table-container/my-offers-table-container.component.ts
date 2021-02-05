@@ -3,8 +3,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, Event, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { OfferService } from 'src/app/services/offer.service';
-import { AuthService } from 'src/app/shared/auth.service';
-import { IRespMyOffer } from 'src/app/interfaces/IRespMyOffer';
+import { IOffer } from 'src/app/interfaces/IOffer';
+import { SnackService } from 'src/app/services/snack.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-my-offers-table-container',
@@ -13,7 +14,7 @@ import { IRespMyOffer } from 'src/app/interfaces/IRespMyOffer';
 })
 export class MyOffersTableContainerComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
-  constructor(private router: Router, private offerService: OfferService, private snackbar: MatSnackBar) {
+  constructor(private router: Router, private offerService: OfferService, private userService: UserService, private snack: SnackService) {
     this.subscription = this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         let lastUrl = event.urlAfterRedirects.split('/').pop();
@@ -29,26 +30,24 @@ export class MyOffersTableContainerComponent implements OnInit, OnDestroy {
   }
 
   isBusy = false;
-  offers: IRespMyOffer[] = [];
+  offers: IOffer[] = [];
   tag: string;
-  getMyOffers(tag: string) {
+  async getMyOffers(tag: string) {
     console.log(tag);
     this.tag = tag;
-    this.offerService.getMyOffers(tag).subscribe(
-      (resp) => {
-        this.offers = resp['data']['rows'] || resp['data'];
-        this.isBusy = false;
-      },
-      (err) => {
-        console.log(err);
-        this.snackbar.open(err.message, 'close', {
-          horizontalPosition: 'end',
-          verticalPosition: 'top',
-          duration: 5000,
-          panelClass: ['red-snackbar'],
-        });
-        this.isBusy = false;
-      }
-    );
+    try {
+      const rows: IOffer[] = await this.offerService.getMyOffers(tag).toPromise();
+      rows.forEach(async (row) => {
+        row.buyer_name = (await this.userService.getUserById(row.buyer_id)).user_name;
+        row.seller_name = (await this.userService.getUserById(row.seller_id)).user_name;
+        if (row.buyer_id === this.userService.me.id) row.other_name = row.seller_name;
+        else row.other_name = row.buyer_name;
+      });
+      this.offers = rows;
+    } catch (err) {
+      console.error(err);
+      this.snack.error(err.message);
+    }
+    this.isBusy = false;
   }
 }
