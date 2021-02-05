@@ -1,10 +1,9 @@
 <!-- <div style="height: 300px">
   <perfect-scrollbar [config]="{ suppressScrollX: true }"> -->
 <table mat-table [dataSource]="dataSource" matSort style="width: 100%; background-color: transparent">
-  'user_name', 'deal_method', 'qty', 'price'
-  <ng-container matColumnDef="user_name">
+  <ng-container matColumnDef="dealer_name">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Dealer</th>
-    <td mat-cell *matCellDef="let element">{{ element.user_name }}</td>
+    <td mat-cell *matCellDef="let element">{{ element.dealer_name }}</td>
   </ng-container>
 
   <ng-container matColumnDef="deal_method">

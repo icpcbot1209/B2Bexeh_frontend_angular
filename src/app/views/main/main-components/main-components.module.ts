@@ -7,7 +7,6 @@ import { MaterialModule } from 'src/app/shared/material.module';
 import { CategorySelectComponent } from './category-select/category-select.component';
 import { OfferTypeSelectComponent } from './offer-type-select/offer-type-select.component';
 import { ListingTimeSelectComponent } from './listing-time-select/listing-time-select.component';
-import { OffersTableComponent } from './offers-table/offers-table.component';
 import { MyOffersTableComponent } from './my-offers-table/my-offers-table.component';
 import { ProductOffersTableComponent } from './product-offers-table/product-offers-table.component';
 
@@ -17,7 +16,6 @@ import { ProductOffersTableComponent } from './product-offers-table/product-offe
     CategorySelectComponent,
     OfferTypeSelectComponent,
     ListingTimeSelectComponent,
-    OffersTableComponent,
     MyOffersTableComponent,
     ProductOffersTableComponent,
   ],
@@ -27,7 +25,6 @@ import { ProductOffersTableComponent } from './product-offers-table/product-offe
     CategorySelectComponent,
     OfferTypeSelectComponent,
     ListingTimeSelectComponent,
-    OffersTableComponent,
     MyOffersTableComponent,
     ProductOffersTableComponent,
   ],

@@ -11,7 +11,7 @@ export interface IHope {
   unit: string;
   deal_method?: string;
   /**joined */
-  user_name?: string;
+  dealer_name?: string;
   product_name?: string;
   release_date?: Date;
 }

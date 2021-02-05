@@ -2755,7 +2755,7 @@ body.default-transition .menu .main-menu {
 /* 14.Main*/
 main {
   margin-left: $sub-menu-width + $main-menu-width + $main-margin;
-  margin-top: $navbar-height + $main-margin - 15;
+  padding-top: $navbar-height + $main-margin - 15;
   margin-right: $main-margin;
   margin-bottom: $main-margin - 20;
 

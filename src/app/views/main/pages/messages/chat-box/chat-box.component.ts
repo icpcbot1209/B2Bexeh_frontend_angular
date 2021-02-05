@@ -7,7 +7,7 @@ import { ChattingService } from 'src/app/services/chatting.service';
 @Component({
   selector: 'app-chat-box',
   templateUrl: './chat-box.component.html',
-  styleUrls: ['./chat-box.component.css'],
+  styleUrls: ['./chat-box.component.scss'],
 })
 export class ChatBoxComponent implements OnChanges, AfterViewInit {
   @Input() chat: IChat;

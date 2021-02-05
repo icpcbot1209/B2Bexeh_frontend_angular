@@ -123,7 +123,7 @@ export class ProductComponent implements OnInit {
   async tryCreateHope(hopeData: IHope) {
     try {
       const hope: IHope = await this.hopeService.createHope(hopeData).toPromise();
-      hope.user_name = this.userService.me.user_name;
+      hope.dealer_name = this.userService.me.user_name;
       console.log(hope);
 
       this.hopes.push(hope);

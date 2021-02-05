@@ -45,11 +45,11 @@ export class CreateOfferComponent implements OnInit {
     let seller_id, buyer_id;
 
     if (!this.data.hope.is_ask) {
-      seller_id = Number(this.data.hope.creator_id);
-      buyer_id = Number(this.userService.me.id);
+      seller_id = this.data.hope.creator_id;
+      buyer_id = this.userService.me.id;
     } else {
-      buyer_id = Number(this.data.hope.creator_id);
-      seller_id = Number(this.userService.me.id);
+      buyer_id = this.data.hope.creator_id;
+      seller_id = this.userService.me.id;
     }
 
     const data: IOffer = {
@@ -68,7 +68,7 @@ export class CreateOfferComponent implements OnInit {
       const offer: IOffer = await this.offerService.createOffer(data).toPromise();
       this.dialogRef.close(offer);
 
-      const idOther = this.userService.me.id === '' + offer.buyer_id ? '' + offer.buyer_id : '' + offer.seller_id;
+      const idOther = this.userService.me.id === offer.buyer_id ? offer.seller_id : offer.buyer_id;
       this.chattingService.onOfferCreate(idOther, offer.id);
     } catch (err) {
       console.log(err);

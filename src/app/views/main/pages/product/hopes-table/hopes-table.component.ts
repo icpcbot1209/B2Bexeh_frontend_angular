@@ -27,7 +27,7 @@ export class HopesTableComponent implements OnChanges {
     }
   }
 
-  displayedColumns: string[] = ['user_name', 'deal_method', 'qty', 'price', 'actions'];
+  displayedColumns: string[] = ['dealer_name', 'deal_method', 'qty', 'price', 'actions'];
   dataSource: MatTableDataSource<IHope>;
   updateTableRows(hopes: IHope[]) {
     if (!hopes) return;
