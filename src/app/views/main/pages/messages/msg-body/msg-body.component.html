@@ -23,10 +23,37 @@
     <ng-container *ngIf="msg.content.action; else textMsg">
       <ng-container *ngIf="msg.content.action == OfferActions.offer_created">
         <div class="offer-action">
-          <main-offer-pending [offerId]="msg.content.value" [me]="chat.me"></main-offer-pending>
+          <main-offer-pending [offerId]="msg.content.value" [me]="chat.me" [other]="chat.other"></main-offer-pending>
         </div>
       </ng-container>
+
+      <ng-container *ngIf="msg.content.action == OfferActions.offer_accepted">
+        <ng-container *ngIf="chat.me.id != msg.senderId; else elseTemplate">
+          <div class="chat-text-left">
+            <p class="mb-0 text-semi-muted">Offer accepted, please wait for the payment confirmation.</p>
+          </div>
+        </ng-container>
+        <ng-template #elseTemplate>
+          <div class="offer-action">
+            <main-offer-payment [offerId]="msg.content.value" [me]="chat.me" [other]="chat.other"></main-offer-payment>
+          </div>
+        </ng-template>
+      </ng-container>
+
+      <ng-container *ngIf="msg.content.action == OfferActions.offer_paid">
+        <ng-container *ngIf="chat.me.id == msg.senderId; else elseTemplate">
+          <div class="chat-text-left">
+            <p class="mb-0 text-semi-muted">Offer paid, please wait for the shipment confirmation.</p>
+          </div>
+        </ng-container>
+        <ng-template #elseTemplate>
+          <div class="offer-action">
+            <main-offer-shipment [offerId]="msg.content.value" [me]="chat.me" [other]="chat.other"></main-offer-shipment>
+          </div>
+        </ng-template>
+      </ng-container>
     </ng-container>
+
     <ng-template #textMsg>
       <div class="chat-text-left">
         <p class="mb-0 text-semi-muted">{{ msg.content }}</p>

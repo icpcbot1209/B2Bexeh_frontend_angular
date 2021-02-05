@@ -14,6 +14,7 @@ import { payment_methods, payment_timings } from 'src/app/constants/main';
 export class OfferPendingComponent implements OnChanges {
   @Input() offerId: string;
   @Input() me: IUser;
+  @Input() other: IUser;
 
   payment_methods = payment_methods;
   payment_timings = payment_timings;
@@ -40,8 +41,18 @@ export class OfferPendingComponent implements OnChanges {
 
   onClickCancel() {}
 
-  onClickAccept() {
-    this.offerService.acceptOffer(this.offer.id);
+  async onClickAccept() {
+    try {
+      await this.offerService.acceptOffer(this.offer.id).toPromise();
+
+      const idOther = this.other.id;
+      this.chattingService.onOfferAccept(idOther, this.offerId);
+    } catch (err) {
+      console.error(err);
+      /**TODO:
+       * sanckbar
+       */
+    }
   }
 
   onClickDecline() {

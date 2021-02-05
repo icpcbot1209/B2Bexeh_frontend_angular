@@ -77,7 +77,6 @@ export class ChattingService {
   }
 
   async startChatWith(idOther: string) {
-    console.log(typeof idOther);
     if (idOther === this.me.id) return null;
     let chatId;
     let k = this.chats.findIndex((x) => x.other.id === idOther);
@@ -138,6 +137,26 @@ export class ChattingService {
     const chatId = await this.startChatWith(idOther);
     if (!chatId) return;
     await this.sendMessage(chatId, { action: OfferActions.offer_created, value: idOffer });
+
+    this.ngZone.run(() => {
+      this.router.navigate(['/main/messages/', chatId]);
+    });
+  }
+
+  async onOfferAccept(idOther, offerId) {
+    const chatId = await this.startChatWith(idOther);
+    if (!chatId) return;
+    await this.sendMessage(chatId, { action: OfferActions.offer_accepted, value: offerId });
+
+    this.ngZone.run(() => {
+      this.router.navigate(['/main/messages/', chatId]);
+    });
+  }
+
+  async onOfferPayment(idOther, offerId) {
+    const chatId = await this.startChatWith(idOther);
+    if (!chatId) return;
+    await this.sendMessage(chatId, { action: OfferActions.offer_paid, value: offerId });
 
     this.ngZone.run(() => {
       this.router.navigate(['/main/messages/', chatId]);

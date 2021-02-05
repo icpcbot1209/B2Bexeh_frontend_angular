@@ -18,7 +18,3 @@ export interface IOffer_v1 {
   isaddtocart: boolean;
   isPrivate: boolean;
 }
-
-export class OfferActions {
-  public static offer_created = 'offer_created';
-}

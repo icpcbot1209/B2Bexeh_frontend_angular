@@ -142,8 +142,6 @@ export class ProductComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: IOffer) => {
       if (result) {
         console.log(result);
-
-        this.chattingService.onOfferCreate('' + hope.creator_id, result.id);
       }
     });
   }

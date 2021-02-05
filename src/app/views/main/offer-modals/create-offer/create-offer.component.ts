@@ -7,6 +7,7 @@ import { payment_methods, payment_timings } from 'src/app/constants/main';
 import { IOffer } from 'src/app/interfaces/IOffer';
 import { OfferService } from 'src/app/services/offer.service';
 import { UserService } from 'src/app/services/user.service';
+import { ChattingService } from 'src/app/services/chatting.service';
 
 @Component({
   selector: 'app-create-offer',
@@ -27,7 +28,8 @@ export class CreateOfferComponent implements OnInit {
     public dialogRef: MatDialogRef<ModalCreateHopeComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private offerService: OfferService,
-    private userService: UserService
+    private userService: UserService,
+    private chattingService: ChattingService
   ) {}
 
   ngOnInit() {
@@ -63,8 +65,11 @@ export class CreateOfferComponent implements OnInit {
     };
 
     try {
-      const offer = await this.offerService.createOffer(data).toPromise();
+      const offer: IOffer = await this.offerService.createOffer(data).toPromise();
       this.dialogRef.close(offer);
+
+      const idOther = this.userService.me.id === '' + offer.buyer_id ? '' + offer.buyer_id : '' + offer.seller_id;
+      this.chattingService.onOfferCreate(idOther, offer.id);
     } catch (err) {
       console.log(err);
     }

@@ -28,20 +28,20 @@ export class OfferService {
     return this.http.post(ApiUrlConstant.GETOFFERSBYPRODUCTID, { productId });
   }
 
-  acceptOffer(offerId) {
-    return this.http.post(ApiUrl2.acceptOffer, { offerId });
-  }
-
-  declineOffer(offerId) {
-    return this.http.post(ApiUrl2.declineOffer, { offerId });
-  }
-
   /** Version 2 */
   createOffer(data: IOffer) {
-    return this.http.post(`${environment.myApiUrl2}/offer/createOne`, data);
+    return this.http.post<IOffer>(`${environment.myApiUrl2}/offer/createOne`, data);
   }
 
   getOfferById(offerId: string) {
     return this.http.post<IOffer>(`${environment.myApiUrl2}/offer/getOne`, { offerId });
+  }
+
+  acceptOffer(offerId) {
+    return this.http.post(`${environment.myApiUrl2}/offer/accept`, { offerId });
+  }
+
+  declineOffer(offerId) {
+    return this.http.post(`${environment.myApiUrl2}/offer/decline`, { offerId });
   }
 }

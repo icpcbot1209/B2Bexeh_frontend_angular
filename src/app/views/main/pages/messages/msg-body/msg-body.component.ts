@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { IChat, IMsg } from 'src/app/interfaces/IChat';
-import { OfferActions } from 'src/app/interfaces/IOffer_v1';
+import { OfferActions } from 'src/app/interfaces/IOffer';
 
 @Component({
   selector: 'main-msg-body',

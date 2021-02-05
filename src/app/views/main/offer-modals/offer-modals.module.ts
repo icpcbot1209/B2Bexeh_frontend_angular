@@ -6,10 +6,12 @@ import { NgSelectModule } from '@ng-select/ng-select';
 
 import { OfferPendingComponent } from './offer-pending/offer-pending.component';
 import { CreateOfferComponent } from './create-offer/create-offer.component';
+import { OfferPaymentComponent } from './offer-payment/offer-payment.component';
+import { OfferShipmentComponent } from './offer-shipment/offer-shipment.component';
 
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule, MaterialModule, NgSelectModule],
-  declarations: [OfferPendingComponent, CreateOfferComponent],
-  exports: [OfferPendingComponent],
+  declarations: [OfferPendingComponent, CreateOfferComponent, OfferPaymentComponent, OfferShipmentComponent],
+  exports: [OfferPendingComponent, CreateOfferComponent, OfferPaymentComponent, OfferShipmentComponent],
 })
 export class OfferModalsModule {}
