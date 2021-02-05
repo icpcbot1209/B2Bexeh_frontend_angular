@@ -23,7 +23,7 @@
     <ng-container *ngIf="msg.content.action; else textMsg">
       <ng-container *ngIf="msg.content.action == OfferActions.offer_created">
         <div class="offer-action">
-          <main-offer-pending [offer]="msg.content.value" [me]="chat.me"></main-offer-pending>
+          <main-offer-pending [offerId]="msg.content.value" [me]="chat.me"></main-offer-pending>
         </div>
       </ng-container>
     </ng-container>

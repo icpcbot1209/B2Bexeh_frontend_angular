@@ -40,4 +40,8 @@ export class OfferService {
   createOffer(data: IOffer) {
     return this.http.post(`${environment.myApiUrl2}/offer/createOne`, data);
   }
+
+  getOfferById(offerId: string) {
+    return this.http.post<IOffer>(`${environment.myApiUrl2}/offer/getOne`, { offerId });
+  }
 }

@@ -143,11 +143,8 @@ export class ProductComponent implements OnInit {
       if (result) {
         console.log(result);
 
-        this.chattingService.startChatWith(result.id).then((chatId) => {
-          this.router.navigate(['main/messages', chatId]);
-        });
+        this.chattingService.onOfferCreate('' + hope.creator_id, result.id);
       }
-      // if (result) this.tryCreateHope(result);
     });
   }
 

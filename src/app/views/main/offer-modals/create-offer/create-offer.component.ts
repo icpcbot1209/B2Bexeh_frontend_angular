@@ -6,6 +6,7 @@ import { ModalCreateHopeComponent } from '../../pages/product/modal-create-hope/
 import { payment_methods, payment_timings } from 'src/app/constants/main';
 import { IOffer } from 'src/app/interfaces/IOffer';
 import { OfferService } from 'src/app/services/offer.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-create-offer',
@@ -25,7 +26,8 @@ export class CreateOfferComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<ModalCreateHopeComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private offerService: OfferService
+    private offerService: OfferService,
+    private userService: UserService
   ) {}
 
   ngOnInit() {
@@ -38,6 +40,16 @@ export class CreateOfferComponent implements OnInit {
   }
 
   async onClickCreate() {
+    let seller_id, buyer_id;
+
+    if (!this.data.hope.is_ask) {
+      seller_id = Number(this.data.hope.creator_id);
+      buyer_id = Number(this.userService.me.id);
+    } else {
+      buyer_id = Number(this.data.hope.creator_id);
+      seller_id = Number(this.userService.me.id);
+    }
+
     const data: IOffer = {
       note: this.note,
       qty: this.qty,
@@ -46,6 +58,8 @@ export class CreateOfferComponent implements OnInit {
       payment_timing: this.payment_timing,
       hope_id: this.data.hope.id,
       product_id: this.data.product.id,
+      seller_id,
+      buyer_id,
     };
 
     try {

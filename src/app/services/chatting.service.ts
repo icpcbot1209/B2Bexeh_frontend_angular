@@ -4,11 +4,10 @@ import { Router } from '@angular/router';
 import * as firebase from 'firebase/app';
 import { Subject, Subscription } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
 import { IUser } from '../interfaces/IUser';
 import { IChat, IMsg, IRespChat } from '../interfaces/IChat';
 import { UserService } from './user.service';
-import { IOffer_v1, OfferActions } from '../interfaces/IOffer_v1';
+import { IOffer, OfferActions } from '../interfaces/IOffer';
 
 @Injectable({
   providedIn: 'root',
@@ -77,7 +76,8 @@ export class ChattingService {
       );
   }
 
-  async startChatWith(idOther) {
+  async startChatWith(idOther: string) {
+    console.log(typeof idOther);
     if (idOther === this.me.id) return null;
     let chatId;
     let k = this.chats.findIndex((x) => x.other.id === idOther);
@@ -134,10 +134,10 @@ export class ChattingService {
     });
   }
 
-  async onOfferCreate(idOther, offer: IOffer_v1) {
+  async onOfferCreate(idOther: string, idOffer: string) {
     const chatId = await this.startChatWith(idOther);
     if (!chatId) return;
-    await this.sendMessage(chatId, { action: OfferActions.offer_created, value: offer });
+    await this.sendMessage(chatId, { action: OfferActions.offer_created, value: idOffer });
 
     this.ngZone.run(() => {
       this.router.navigate(['/main/messages/', chatId]);

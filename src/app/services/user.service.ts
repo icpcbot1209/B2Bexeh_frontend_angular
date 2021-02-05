@@ -31,7 +31,7 @@ export class UserService {
   }
 
   private users: IUser[] = [];
-  async getUserById(userId: string) {
+  async getUserById(userId: any) {
     let k = this.users.findIndex((x) => x.id === userId);
     if (k > -1) return this.users[k];
 
