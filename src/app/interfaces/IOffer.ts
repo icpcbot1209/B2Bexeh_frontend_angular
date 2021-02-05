@@ -25,7 +25,7 @@ export interface IOffer {
   hope_deal_method?: string;
   hope_qty?: number;
   hope_price?: number;
-  total: number;
+  total?: number;
 }
 
 export class OfferActions {
