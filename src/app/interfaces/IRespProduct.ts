@@ -7,7 +7,7 @@ export interface IRespProduct {
   categoryName: string;
   createdAt: string;
   createdById: string;
-  id: number;
+  id: string;
   imageUrl: string;
   isActivate: boolean;
   is_featured: boolean;

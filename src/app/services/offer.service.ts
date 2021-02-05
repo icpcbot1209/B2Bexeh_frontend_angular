@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ApiUrlConstant } from '../constants/api-url.constant';
-import { ApiUrl2 } from '../constants/api-url2';
 import { AuthService } from '../shared/auth.service';
-import { IRespProduct } from '../interfaces/IRespProduct';
-import { IOffer_v1 } from '../interfaces/IOffer_v1';
-import { IHope } from '../interfaces/IHope';
 import { IOffer } from '../interfaces/IOffer';
 import { environment } from 'src/environments/environment';
 

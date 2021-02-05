@@ -17,4 +17,8 @@ export class HopeService {
   createHope(hopeData: IHope) {
     return this.http.post<IHope>(`${env.myApiUrl2}/hope/createOne`, hopeData);
   }
+
+  getByCategory(category_id: string, subcategory_id: string) {
+    return this.http.post<IHope[]>(`${env.myApiUrl2}/hope/getByCategory`, { category_id, subcategory_id });
+  }
 }

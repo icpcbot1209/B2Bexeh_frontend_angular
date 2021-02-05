@@ -1,10 +1,11 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { map } from "rxjs/operators";
-import { ApiUrlConstant } from "../constants/api-url.constant";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
+import { ApiUrlConstant } from '../constants/api-url.constant';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class ProductService {
   constructor(private http: HttpClient) {}
@@ -12,14 +13,14 @@ export class ProductService {
   categories = [];
   sportId2Name(id: string) {
     let category = this.categories.find((x) => x.id === id);
-    if (!category) return "";
+    if (!category) return '';
     return category.categoryName;
   }
 
   getCategories() {
     return this.http.post(ApiUrlConstant.CATEGARTLIST, null).pipe(
       map((resp) => {
-        this.categories = resp["data"]["rows"] || resp["data"];
+        this.categories = resp['data']['rows'] || resp['data'];
         return resp;
       })
     );
@@ -30,7 +31,7 @@ export class ProductService {
   }
 
   getProductsByCategory(category_id: string, subcategory_id: string) {
-    return this.http.post(ApiUrlConstant.PRODUCTBYEARLIST, { category_id, subcategory_id });
+    return this.http.post(`${environment.myApiUrl2}/product/getByCategory`, { category_id, subcategory_id });
   }
 
   getProductsPopular() {

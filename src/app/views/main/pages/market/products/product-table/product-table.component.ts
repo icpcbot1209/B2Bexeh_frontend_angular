@@ -2,18 +2,18 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { IRespProduct } from 'src/app/interfaces/IRespProduct';
+import { IProduct } from 'src/app/interfaces/IProduct';
 @Component({
-  selector: 'main-product-table',
+  selector: 'market-product-table',
   templateUrl: './product-table.component.html',
   styleUrls: ['./product-table.component.scss'],
 })
 export class ProductTableComponent implements OnInit {
-  private _products: IRespProduct[];
-  @Input() set products(value: IRespProduct[]) {
+  private _products: IProduct[];
+  @Input() set products(value: IProduct[]) {
     this.updateTableRows(value);
   }
-  get products(): IRespProduct[] {
+  get products(): IProduct[] {
     return this._products;
   }
 
@@ -26,14 +26,14 @@ export class ProductTableComponent implements OnInit {
   ngOnInit(): void {}
 
   displayedColumns: string[] = ['productName', 'listingDates', 'releaseDate', 'boxhighestbid', 'boxlowestask'];
-  dataSource: MatTableDataSource<IRow>;
-  updateTableRows(products: IRespProduct[]) {
+  dataSource: MatTableDataSource<IProduct>;
+  updateTableRows(products: IProduct[]) {
     if (!products) return;
-    let rows: IRow[] = [];
+    let rows: IProduct[] = [];
     products.forEach((product) => {
       let differenceInTime = new Date().getTime() - new Date(product.releaseDate).getTime();
       let listingDates = (differenceInTime / (1000 * 3600 * 24)).toFixed();
-      let row: IRow = { ...product, listingDates: listingDates };
+      let row: IProduct = { ...product, listingDates: listingDates };
       rows.push(row);
     });
 
@@ -51,30 +51,7 @@ export class ProductTableComponent implements OnInit {
     }
   }
 
-  onClickRow(row: IRow) {
+  onClickRow(row: IProduct) {
     this.productClicked.emit(row.id);
   }
-}
-
-interface IRow {
-  boxhighestbid: number;
-  boxlowestask: number;
-  casehighestbid: number;
-  caselowestask: number;
-  categoryId: string;
-  categoryName: string;
-  createdAt: string;
-  createdById: string;
-  id: number;
-  imageUrl: string;
-  isActivate: boolean;
-  is_featured: boolean;
-  isdeleted: boolean;
-  productName: string;
-  product_id: string;
-  releaseDate: string;
-  subcategoryId: string;
-  updatedAt: string;
-  updatedById: any;
-  listingDates: any;
 }

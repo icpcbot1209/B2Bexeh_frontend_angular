@@ -28,9 +28,7 @@ export class ProductsComponent implements OnInit {
     observable.subscribe(
       (resp) => {
         const products: IRespProduct[] = resp['data']['rows'] || resp['data'];
-        //TODO
-        //this.products = products;
-        this.products = products.filter((p) => p.createdById === '86');
+        this.products = products;
         this.isBusy = false;
       },
       (err) => {

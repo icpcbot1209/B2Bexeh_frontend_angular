@@ -1,10 +1,10 @@
 export interface IOffer {
   id?: string;
-  hope_id?: number;
-  product_id?: number;
-  creator_id?: number;
-  seller_id?: number;
-  buyer_id?: number;
+  hope_id?: string;
+  product_id?: string;
+  creator_id?: string;
+  seller_id?: string;
+  buyer_id?: string;
   qty: number;
   price: number;
   note: string;
