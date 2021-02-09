@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+
 import { IHope } from 'src/app/interfaces/IHope';
 import { ConfigsService } from 'src/app/services/configs.service';
 import { UserService } from 'src/app/services/user.service';
@@ -9,6 +11,13 @@ import { UserService } from 'src/app/services/user.service';
   selector: 'main-hopes-table',
   templateUrl: './hopes-table.component.html',
   styleUrls: ['./hopes-table.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class HopesTableComponent implements OnChanges {
   private _hopes: IHope[];
@@ -17,8 +26,12 @@ export class HopesTableComponent implements OnChanges {
   }
   @Output() productClicked = new EventEmitter<any>();
   @Output() sendOfferClicked = new EventEmitter<any>();
+  @Output() deleteHopeClicked = new EventEmitter<any>();
+  @Output() saveHopeClicked = new EventEmitter<any>();
 
   @ViewChild(MatSort) sort: MatSort;
+
+  expandedElement: IHope | null;
 
   constructor(public userService: UserService, public configs: ConfigsService) {}
 
@@ -28,7 +41,7 @@ export class HopesTableComponent implements OnChanges {
     }
   }
 
-  displayedColumns: string[] = ['dealer_name', 'deal_method', 'qty', 'price', 'unit', 'actions'];
+  displayedColumns: string[] = ['dealer_name', 'deal_method', 'qty', 'price', 'unit', 'note'];
   dataSource: MatTableDataSource<IHope>;
   updateTableRows(hopes: IHope[]) {
     if (!hopes) return;
@@ -36,11 +49,22 @@ export class HopesTableComponent implements OnChanges {
     this.dataSource.sort = this.sort;
   }
 
-  onClickRow(row: IHope) {
-    this.productClicked.emit(row.id);
-  }
-
   onClickSendOffer(hope: IHope) {
     this.sendOfferClicked.emit(hope);
+  }
+
+  onToggleNote(element: IHope, event) {
+    event.stopPropagation();
+    this.expandedElement = this.expandedElement === element ? null : element;
+  }
+
+  onClickDeleteHope(hope: IHope) {
+    if (confirm('Confirm delete this bid/ask?')) {
+      this.deleteHopeClicked.emit(hope);
+    }
+  }
+
+  onClickSaveHope(hope: IHope) {
+    this.saveHopeClicked.emit(hope);
   }
 }

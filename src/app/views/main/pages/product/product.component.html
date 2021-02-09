@@ -29,32 +29,44 @@
       </div>
     </div>
     <div style="display: flex; flex-wrap: wrap; justify-content: space-around; align-items: flex-start">
-      <button mat-raised-button color="primary" style="color: white" (click)="openCreateHopeModal(false)">Create bid</button>
-      <button mat-raised-button color="primary" style="color: white" (click)="openCreateHopeModal(true)">Create ask</button>
-      <button mat-button (click)="openPriceHistory()">Price history</button>
-      <button mat-button (click)="addToWatchlist()">
+      <div class="button" (click)="addToWatchlist()">
         <mat-icon>remove_red_eye</mat-icon>
         Add to watchlist
-      </button>
+      </div>
     </div>
   </div>
 
+  <div style="margin-top: 30px; display: grid; grid-template-columns: 120px 120px 120px">
+    <div class="button" (click)="openCreateHopeModal(false)">Create bid</div>
+    <div class="button" (click)="openCreateHopeModal(true)">Create ask</div>
+    <div class="button" (click)="openPriceHistory()">Price history</div>
+  </div>
   <div class="table-grid mt-48">
     <div class="table-container">
       <p>Bids</p>
-      <main-hopes-table [hopes]="bids" (sendOfferClicked)="openCreateOfferModal($event)"></main-hopes-table>
+      <main-hopes-table
+        [hopes]="bids"
+        (sendOfferClicked)="openCreateOfferModal($event)"
+        (saveHopeClicked)="handleSaveHope($event)"
+        (deleteHopeClicked)="handleDeleteHope($event)"
+      ></main-hopes-table>
     </div>
     <div class="table-container">
       <p>Asks</p>
-      <main-hopes-table [hopes]="asks" (sendOfferClicked)="openCreateOfferModal($event)"></main-hopes-table>
+      <main-hopes-table
+        [hopes]="asks"
+        (sendOfferClicked)="openCreateOfferModal($event)"
+        (saveHopeClicked)="handleSaveHope($event)"
+        (deleteHopeClicked)="handleDeleteHope($event)"
+      ></main-hopes-table>
     </div>
     <div class="table-container">
       <p>My Bids for this item</p>
-      <main-hopes-table [hopes]="myBids"></main-hopes-table>
+      <main-hopes-table [hopes]="myBids" (saveHopeClicked)="handleSaveHope($event)" (deleteHopeClicked)="handleDeleteHope($event)"></main-hopes-table>
     </div>
     <div class="table-container">
       <p>My Asks for this item</p>
-      <main-hopes-table [hopes]="myAsks"></main-hopes-table>
+      <main-hopes-table [hopes]="myAsks" (saveHopeClicked)="handleSaveHope($event)" (deleteHopeClicked)="handleDeleteHope($event)"></main-hopes-table>
     </div>
   </div>
 </ng-container>

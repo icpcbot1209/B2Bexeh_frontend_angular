@@ -1,7 +1,10 @@
 <div mat-dialog-content>
-  <mat-icon class="close-button" (click)="onNoClick()">close</mat-icon>
+  <div style="display: flex">
+    <h1 mat-dialog-title>Send Offer to {{ data.hope.is_ask ? 'Buyer' : 'Seller' }} {{ data.hope.dealer_name }}</h1>
+    <div style="flex: 1"></div>
+    <mat-icon class="close-button" (click)="onNoClick()">close</mat-icon>
+  </div>
 
-  <h1 mat-dialog-title>Counter Offer to {{ data.hope.is_ask ? 'Ask' : 'Bid' }}</h1>
   <div style="display: flex">
     <img [src]="data.product.imageUrl" width="158" height="auto" />
 
@@ -16,12 +19,12 @@
   <div style="display: flex; margin: 20px 0">
     <div class="form-group" style="flex: 1">
       <label>Type</label>
-      <p>{{ data.hope.deal_method }}</p>
+      <p style="margin: 10px">{{ configs.dictVal(data.hope.deal_method, configs.dict_deal_method) }}</p>
     </div>
 
     <div class="form-group" style="margin-left: 20px; flex: 1">
       <label>Qty</label>
-      <input class="form-control" placeholder="" [(ngModel)]="data.hope.qty" />
+      <input class="form-control" placeholder="" [(ngModel)]="qty" />
     </div>
 
     <div class="form-group" style="margin-left: 20px; flex: 1">
@@ -30,7 +33,7 @@
     </div>
   </div>
 
-  <div style="display: flex; margin: 20px 0">
+  <!-- <div style="display: flex; margin: 20px 0">
     <div class="form-group" style="flex: 1">
       <label>Payment Method</label>
       <ng-select
@@ -61,7 +64,7 @@
       </ng-select>
     </div>
     <div style="flex: 1"></div>
-  </div>
+  </div> -->
 
   <div>
     <textarea cols="80" rows="8" placeholder="Write message" [(ngModel)]="note"></textarea>

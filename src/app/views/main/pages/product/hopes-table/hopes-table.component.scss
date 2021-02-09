@@ -1,0 +1,47 @@
+table {
+  width: 100%;
+}
+
+th {
+  font-weight: 900 !important;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+tr.example-element-row {
+  cursor: pointer;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+  overflow: hidden;
+}
+
+.note {
+  flex: 1;
+  white-space: pre-line;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: small;
+
+  background-color: #efefef;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+div.button {
+  font-weight: 900;
+}

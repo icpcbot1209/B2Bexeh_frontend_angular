@@ -140,4 +140,17 @@ export class ProductComponent implements OnInit {
   openPriceHistory() {}
 
   addToWatchlist() {}
+
+  handleDeleteHope(hope: IHope) {
+    // TODO: api
+    this.hopes = this.hopes.filter((x) => x.id !== hope.id);
+    console.log(this.hopes.length);
+    this.separateHopes(this.hopes);
+  }
+
+  handleSaveHope(hope: IHope) {
+    // TODO: api
+    let k = this.hopes.findIndex((x) => x.id === hope.id);
+    if (k > -1) this.hopes[k] = hope;
+  }
 }

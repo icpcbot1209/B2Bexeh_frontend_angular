@@ -33,7 +33,6 @@ export class MyOffersTableContainerComponent implements OnInit, OnDestroy {
   offers: IOffer[] = [];
   tag: string;
   async getMyOffers(tag: string) {
-    console.log(tag);
     this.tag = tag;
     try {
       const rows: IOffer[] = await this.offerService.getMyOffers(tag).toPromise();

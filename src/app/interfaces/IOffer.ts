@@ -1,19 +1,29 @@
 export interface IOffer {
   id?: string;
+  created_at?: Date;
+  updated_at?: Date;
+
   hope_id?: string;
   product_id?: string;
   creator_id?: string;
   seller_id?: string;
   buyer_id?: string;
+
+  status: string;
+
   qty: number;
   price: number;
+  unit?: string;
+  deal_method: string;
   note: string;
-  payment_method: number;
-  payment_timing: number;
-  is_active?: boolean;
-  is_accepted?: boolean;
-  created_at?: Date;
-  updated_at?: Date;
+  payment_terms?: any;
+  shipping_terms?: any;
+
+  is_paid?: boolean;
+  is_shipped?: boolean;
+
+  feedback2seller?: string;
+  feedback2buyer?: string;
 
   /** joined */
   product_name?: string;

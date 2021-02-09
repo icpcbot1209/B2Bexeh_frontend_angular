@@ -39,3 +39,17 @@ button {
 .custom-dialog-container .mat-dialog-container .mat-dialog-content {
   overflow: visible;
 }
+
+div.button {
+  width: fit-content;
+  color: #0280ff;
+  font-size: medium;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
