@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewC
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { IHope } from 'src/app/interfaces/IHope';
+import { ConfigsService } from 'src/app/services/configs.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -19,7 +20,7 @@ export class HopesTableComponent implements OnChanges {
 
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(public userService: UserService) {}
+  constructor(public userService: UserService, public configs: ConfigsService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.hopes && changes.hopes.currentValue !== changes.hopes.previousValue) {
@@ -27,7 +28,7 @@ export class HopesTableComponent implements OnChanges {
     }
   }
 
-  displayedColumns: string[] = ['dealer_name', 'deal_method', 'qty', 'price', 'actions'];
+  displayedColumns: string[] = ['dealer_name', 'deal_method', 'qty', 'price', 'unit', 'actions'];
   dataSource: MatTableDataSource<IHope>;
   updateTableRows(hopes: IHope[]) {
     if (!hopes) return;

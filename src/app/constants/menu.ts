@@ -426,28 +426,28 @@ let mydata: IMenuItem[] = [
     icon: 'iconsminds-magnifi-glass',
     label: 'Browse Market',
     to: `/main/market`,
-    // roles: [UserRole.Editor],
+    // roles: [UserRole.Admin, UserRole.Editor],
   },
   {
     icon: 'iconsminds-tag-3',
     label: 'My Offers',
     to: `/main/myoffers`,
-    // roles: [UserRole.Editor],
+    // roles: [UserRole.Admin, UserRole.Editor],
   },
   {
     icon: 'iconsminds-mail',
     label: 'Messages',
     to: `/main/messages`,
-    // roles: [UserRole.Editor],
+    // roles: [UserRole.Admin, UserRole.Editor],
   },
   {
     icon: 'iconsminds-information',
     label: 'Help',
     to: `/main/help`,
-    // roles: [UserRole.Editor],
+    // roles: [UserRole.Admin, UserRole.Editor],
   },
 ];
 
-if (!environment.production) mydata = [...mydata, ...data];
+// if (!environment.production) mydata = [...mydata, ...data];
 
 export default mydata;

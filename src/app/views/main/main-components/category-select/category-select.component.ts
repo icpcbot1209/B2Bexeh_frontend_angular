@@ -1,8 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Observable } from 'rxjs';
 import { ProductService } from 'src/app/services/product.service';
-import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'main-category-select',

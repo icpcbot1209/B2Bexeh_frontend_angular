@@ -16,7 +16,7 @@ export class HopesComponent implements OnInit {
 
   categoryId;
   subcategoryId;
-  type = 'All';
+  type = '';
   listingTime = 24000;
   handleCategoriesSelected({ categoryId, subcategoryId }) {
     this.categoryId = categoryId;
@@ -57,6 +57,7 @@ export class HopesComponent implements OnInit {
   updateWithFilters() {
     this.asks = [];
     this.bids = [];
+
     this.hopes.forEach((x) => {
       if (this.type !== 'All' && x.deal_method !== this.type) return;
       if (this.listingTime < (Date.now() - new Date(x.release_date).getTime()) / 3600000) return;

@@ -1,7 +1,6 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { IRespProduct } from 'src/app/interfaces/IRespProduct';
-import { deal_methods } from 'src/app/interfaces/IHope';
 import { IHope } from 'src/app/interfaces/IHope';
 
 @Component({
@@ -10,8 +9,7 @@ import { IHope } from 'src/app/interfaces/IHope';
   styleUrls: ['./modal-create-hope.component.scss'],
 })
 export class ModalCreateHopeComponent implements OnInit {
-  deal_methods = deal_methods;
-  deal_method = deal_methods[0];
+  deal_method = '';
   unit: string = 'Box';
   qty: number = 1;
   price: number;
@@ -46,7 +44,7 @@ export class ModalCreateHopeComponent implements OnInit {
       qty: this.qty,
       price: this.price,
       unit: this.unit,
-      deal_method: this.deal_method.id,
+      deal_method: this.deal_method,
     };
     this.dialogRef.close(hopeData);
   }

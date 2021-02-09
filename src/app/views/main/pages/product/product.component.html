@@ -2,35 +2,36 @@
   <mat-spinner></mat-spinner>
 </ng-container>
 <ng-container [style.display]="!isBusy ? 'block' : 'none'">
-  <div style="display: flex" *ngIf="product">
-    <img [src]="product?.imageUrl" height="208" width="auto" />
-    <div style="margin-left: 20px">
+  <div style="display: grid; grid-template-columns: 250px 30px 250px auto; grid-template-rows: auto" *ngIf="product">
+    <img [src]="product?.imageUrl" width="250" height="auto" />
+    <div></div>
+    <div>
       <h2>{{ product.productName }}</h2>
       <p>Released on {{ product.releaseDate | date: 'longDate' }}</p>
 
-      <div class="toggle-container">
-        <label>Per box</label>
-        <mat-slide-toggle [(ngModel)]="isPerCase" (change)="onChangeUnit($event)" color="primary"></mat-slide-toggle>
-        <label>Per case</label>
-      </div>
-
-      <div style="display: grid; grid-template-columns: 100px 100px">
+      <div style="display: grid; grid-template-columns: 100px 100px; grid-template-rows: 50px 50px">
         <div class="sell-price">
-          <label>Highest sell</label>
-          <p>{{ (!isPerCase ? product.boxhighestbid : product.casehighestbid) | currency }}</p>
+          <label>Highest / Box</label>
+          <p>{{ product.boxhighestbid | currency }}</p>
         </div>
         <div class="buy-price">
-          <label>Lowest buy</label>
-          <p>{{ (!isPerCase ? product.boxlowestask : product.caselowestask) | currency }}</p>
+          <label>Lowest / Box</label>
+          <p>{{ product.boxlowestask | currency }}</p>
+        </div>
+        <div class="sell-price">
+          <label>Highest / Case</label>
+          <p>{{ product.casehighestbid | currency }}</p>
+        </div>
+        <div class="buy-price">
+          <label>Lowest / Case</label>
+          <p>{{ product.caselowestask | currency }}</p>
         </div>
       </div>
-      <div>
-        <button mat-button (click)="openCreateHopeModal(false)">Create bid</button>
-        <button mat-button (click)="openCreateHopeModal(true)">Create ask</button>
-        <button mat-button (click)="openPriceHistory()">Price history</button>
-      </div>
     </div>
-    <div>
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-around; align-items: flex-start">
+      <button mat-raised-button color="primary" style="color: white" (click)="openCreateHopeModal(false)">Create bid</button>
+      <button mat-raised-button color="primary" style="color: white" (click)="openCreateHopeModal(true)">Create ask</button>
+      <button mat-button (click)="openPriceHistory()">Price history</button>
       <button mat-button (click)="addToWatchlist()">
         <mat-icon>remove_red_eye</mat-icon>
         Add to watchlist
@@ -38,21 +39,21 @@
     </div>
   </div>
 
-  <div class="table-grid">
+  <div class="table-grid mt-48">
     <div class="table-container">
-      <p>Bids / Per {{ !isPerCase ? 'Box' : 'Case' }}</p>
+      <p>Bids</p>
       <main-hopes-table [hopes]="bids" (sendOfferClicked)="openCreateOfferModal($event)"></main-hopes-table>
     </div>
     <div class="table-container">
-      <p>Asks / Per {{ !isPerCase ? 'Box' : 'Case' }}</p>
+      <p>Asks</p>
       <main-hopes-table [hopes]="asks" (sendOfferClicked)="openCreateOfferModal($event)"></main-hopes-table>
     </div>
     <div class="table-container">
-      <p>My Bids for this item / Per {{ !isPerCase ? 'Box' : 'Case' }}</p>
+      <p>My Bids for this item</p>
       <main-hopes-table [hopes]="myBids"></main-hopes-table>
     </div>
     <div class="table-container">
-      <p>My Asks for this item / Per {{ !isPerCase ? 'Box' : 'Case' }}</p>
+      <p>My Asks for this item</p>
       <main-hopes-table [hopes]="myAsks"></main-hopes-table>
     </div>
   </div>

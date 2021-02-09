@@ -23,7 +23,6 @@ import { IOffer } from 'src/app/interfaces/IOffer';
   styleUrls: ['./product.component.scss'],
 })
 export class ProductComponent implements OnInit {
-  isPerCase = false;
   constructor(
     private activatedRoute: ActivatedRoute,
     private productService: ProductService,
@@ -72,7 +71,7 @@ export class ProductComponent implements OnInit {
       (resp) => {
         this.isBusy = false;
         this.hopes = resp;
-        this.separateHopes(this.hopes, this.isPerCase ? 'Case' : 'Box');
+        this.separateHopes(this.hopes);
       },
       (err) => {
         this.isBusy = false;
@@ -81,23 +80,17 @@ export class ProductComponent implements OnInit {
     );
   }
 
-  onChangeUnit(event: MatSlideToggleChange) {
-    const isPerCase = event.checked;
-    this.separateHopes(this.hopes, isPerCase ? 'Case' : 'Box');
-  }
-
   asks: IHope[] = [];
   bids: IHope[] = [];
   myAsks: IHope[] = [];
   myBids: IHope[] = [];
-  separateHopes(hopes: IHope[], unit: string) {
+  separateHopes(hopes: IHope[]) {
     const userId = this.authService.userId;
     let asks: IHope[] = [];
     let bids: IHope[] = [];
     let myAsks: IHope[] = [];
     let myBids: IHope[] = [];
     hopes.forEach((hope) => {
-      if (hope.unit !== unit) return;
       if (hope.is_ask) asks.push(hope);
       if (!hope.is_ask) bids.push(hope);
       if (hope.is_ask && hope.creator_id === userId) myAsks.push(hope);
@@ -124,10 +117,9 @@ export class ProductComponent implements OnInit {
     try {
       const hope: IHope = await this.hopeService.createHope(hopeData).toPromise();
       hope.dealer_name = this.userService.me.user_name;
-      console.log(hope);
 
       this.hopes.push(hope);
-      this.separateHopes(this.hopes, this.isPerCase ? 'Case' : 'Box');
+      this.separateHopes(this.hopes);
     } catch (err) {
       console.log(err);
     }
@@ -141,7 +133,6 @@ export class ProductComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: IOffer) => {
       if (result) {
-        console.log(result);
       }
     });
   }

@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { MaterialModule } from 'src/app/shared/material.module';
 import { CategorySelectComponent } from './category-select/category-select.component';
-import { OfferTypeSelectComponent } from './offer-type-select/offer-type-select.component';
+import { DealMethodSelectComponent } from './deal-method-select/deal-method-select.component';
 import { ListingTimeSelectComponent } from './listing-time-select/listing-time-select.component';
 import { MyOffersTableComponent } from './my-offers-table/my-offers-table.component';
 import { ProductOffersTableComponent } from './product-offers-table/product-offers-table.component';
@@ -14,7 +14,7 @@ import { ProductOffersTableComponent } from './product-offers-table/product-offe
   declarations: [
     ProductFilterComponent,
     CategorySelectComponent,
-    OfferTypeSelectComponent,
+    DealMethodSelectComponent,
     ListingTimeSelectComponent,
     MyOffersTableComponent,
     ProductOffersTableComponent,
@@ -23,7 +23,7 @@ import { ProductOffersTableComponent } from './product-offers-table/product-offe
   exports: [
     ProductFilterComponent,
     CategorySelectComponent,
-    OfferTypeSelectComponent,
+    DealMethodSelectComponent,
     ListingTimeSelectComponent,
     MyOffersTableComponent,
     ProductOffersTableComponent,

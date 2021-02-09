@@ -1,6 +1,6 @@
-<div class="input-group" style="width: 250px">
+<div class="input-group" style="width: 100%">
   <div class="input-group-prepend">
-    <div class="input-group-text" style="width: 70px">Type:</div>
+    <div class="input-group-text">Type:</div>
   </div>
   <ng-select
     class="form-control"
@@ -8,7 +8,7 @@
     [clearable]="false"
     [placeholder]="'--- select type ---'"
     [items]="items"
-    bindLabel="label"
+    bindLabel="value"
     [(ngModel)]="theItem"
     (change)="onSelectItem($event)"
   >
