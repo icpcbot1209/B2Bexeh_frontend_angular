@@ -1,5 +1,5 @@
-<div class="row app-row">
-  <div class="col-12 chat-app">
+<div class="row app-row" style="border: 1px solid lightgray">
+  <div class="col-8 chat-app">
     <div class="d-flex flex-row justify-content-between mb-3" *ngIf="chat">
       <div class="d-flex flex-row chat-heading">
         <a class="d-flex" href="javascript:;">
@@ -33,6 +33,10 @@
         </ng-container>
       </perfect-scrollbar>
     </ng-container>
+  </div>
+
+  <div class="col-4" style="border-left: 1px solid lightgray">
+    <chat-offer-stepper></chat-offer-stepper>
   </div>
 </div>
 

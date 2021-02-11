@@ -82,4 +82,5 @@ export class CreateOfferComponent implements OnInit {
 interface DialogData {
   product: IRespProduct;
   hope: IHope;
+  isAccept: boolean;
 }

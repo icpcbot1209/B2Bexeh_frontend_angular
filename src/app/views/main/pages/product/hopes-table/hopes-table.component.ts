@@ -49,8 +49,10 @@ export class HopesTableComponent implements OnChanges {
     this.dataSource.sort = this.sort;
   }
 
-  onClickSendOffer(hope: IHope) {
-    this.sendOfferClicked.emit(hope);
+  onClickSendOffer(hope: IHope, isAccept: boolean, event) {
+    event.stopPropagation();
+
+    this.sendOfferClicked.emit({ hope, isAccept });
   }
 
   onToggleNote(element: IHope, event) {
@@ -58,13 +60,17 @@ export class HopesTableComponent implements OnChanges {
     this.expandedElement = this.expandedElement === element ? null : element;
   }
 
-  onClickDeleteHope(hope: IHope) {
+  onClickDeleteHope(hope: IHope, event) {
+    event.stopPropagation();
+
     if (confirm('Confirm delete this bid/ask?')) {
       this.deleteHopeClicked.emit(hope);
     }
   }
 
-  onClickSaveHope(hope: IHope) {
+  onClickSaveHope(hope: IHope, event) {
+    event.stopPropagation();
+
     this.saveHopeClicked.emit(hope);
   }
 }

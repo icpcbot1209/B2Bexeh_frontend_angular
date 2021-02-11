@@ -24,12 +24,22 @@
 
     <div class="form-group" style="margin-left: 20px; flex: 1">
       <label>Qty</label>
-      <input class="form-control" placeholder="" [(ngModel)]="qty" />
+      <ng-container *ngIf="data.isAccept; else elseTemplate">
+        <p style="margin: 10px">{{ qty }}</p>
+      </ng-container>
+      <ng-template #elseTemplate>
+        <input class="form-control" placeholder="" [(ngModel)]="qty" />
+      </ng-template>
     </div>
 
     <div class="form-group" style="margin-left: 20px; flex: 1">
       <label>{{ data.hope.is_ask ? 'Ask' : 'Bid' }} Price / {{ data.hope.unit }}</label>
-      <input class="form-control" placeholder="" [(ngModel)]="price" />
+      <ng-container *ngIf="data.isAccept; else elseTemplate1">
+        <p style="margin: 10px">{{ price }}</p>
+      </ng-container>
+      <ng-template #elseTemplate1>
+        <input class="form-control" placeholder="" [(ngModel)]="price" />
+      </ng-template>
     </div>
   </div>
 

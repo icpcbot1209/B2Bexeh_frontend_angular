@@ -125,9 +125,9 @@ export class ProductComponent implements OnInit {
     }
   }
 
-  openCreateOfferModal(hope: IHope) {
+  openCreateOfferModal({ hope, isAccept }) {
     const dialogRef = this.dialog.open(CreateOfferComponent, {
-      data: { hope, product: this.product },
+      data: { isAccept, hope, product: this.product },
       panelClass: 'custom-dialog-container',
     });
 

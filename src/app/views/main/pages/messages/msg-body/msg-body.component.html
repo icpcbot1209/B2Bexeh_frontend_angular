@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <ng-container *ngIf="msg.content.action; else textMsg">
+    <!-- <ng-container *ngIf="msg.content.action; else textMsg">
       <ng-container *ngIf="msg.content.action == OfferActions.offer_created">
         <div class="offer-action">
           <main-offer-pending [offerId]="msg.content.value" [me]="chat.me" [other]="chat.other"></main-offer-pending>
@@ -52,11 +52,11 @@
           </div>
         </ng-template>
       </ng-container>
-    </ng-container>
+    </ng-container> -->
 
     <ng-template #textMsg>
       <div class="chat-text-left">
-        <p class="mb-0 text-semi-muted">{{ msg.content }}</p>
+        <p class="mb-0 text-semi-muted">{{ msg.content.text }}</p>
       </div>
     </ng-template>
   </div>
