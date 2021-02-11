@@ -1,0 +1,55 @@
+<div class="offer-box">
+  <div class="title">
+    <label>Offer(No.{{ offer.id }}) by {{ creatorName(offer) }}</label>
+  </div>
+  <div class="term">
+    <label>product: </label>
+    <span>{{ offer.product_name }}</span>
+  </div>
+  <div class="term">
+    <label>Buyer: </label>
+    <span>{{ offer.buyer_name }}</span>
+  </div>
+  <div class="term">
+    <label>Seller: </label>
+    <span>{{ offer.seller_name }}</span>
+  </div>
+  <div class="term">
+    <label>Qty </label>
+    <span>{{ offer.qty }}</span>
+  </div>
+  <div class="term">
+    <label>Price </label>
+    <span>{{ offer.price | currency }}</span>
+  </div>
+  <div class="term">
+    <label>Unit </label>
+    <span>{{ offer.unit }}</span>
+  </div>
+  <div class="term">
+    <label>Deal Type</label>
+    <span>{{ configs.dictVal(offer.deal_method, configs.dict_deal_method) }}</span>
+  </div>
+  <div class="term">
+    <label>Note</label>
+    <span>"{{ offer.note }}"</span>
+  </div>
+
+  <hr />
+
+  <ng-container *ngIf="!offer.is_accepted">
+    <ng-container *ngIf="offer.creator_id == userService.me.id; else else0">
+      <div class="buttons">
+        <button class="btn btn-primary">Edit</button>
+        <button class="btn btn-danger">Cancel</button>
+      </div>
+    </ng-container>
+
+    <ng-template #else0>
+      <div class="buttons">
+        <button class="btn btn-success" (click)="onClickAccept()">Accept</button>
+        <button class="btn btn-danger" (click)="onClickDecline()">Decline</button>
+      </div>
+    </ng-template>
+  </ng-container>
+</div>

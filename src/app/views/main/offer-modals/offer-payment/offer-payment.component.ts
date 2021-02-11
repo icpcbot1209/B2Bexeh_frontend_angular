@@ -1,6 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { IOffer } from 'src/app/interfaces/IOffer';
 import { IUser } from 'src/app/interfaces/IUser';
 import { ChattingService } from 'src/app/services/chatting.service';
+import { OfferService } from 'src/app/services/offer.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'main-offer-payment',
@@ -8,26 +11,19 @@ import { ChattingService } from 'src/app/services/chatting.service';
   styleUrls: ['./offer-payment.component.scss'],
 })
 export class OfferPaymentComponent implements OnInit {
-  @Input() offerId: string;
-  @Input() me: IUser;
-  @Input() other: IUser;
+  @Input() offer: IOffer;
+  @Output() offerChanged = new EventEmitter<any>();
 
-  constructor(private chattingService: ChattingService) {}
+  constructor(public userService: UserService, private offerService: OfferService) {}
 
   ngOnInit() {}
 
   async onClickConfirm() {
-    if (confirm('Confirm payment?')) {
-      try {
-        // TODO: transaction pay api
-        const idOther = this.other.id;
-        this.chattingService.onOfferPayment(idOther, this.offerId);
-      } catch (err) {
-        console.error(err);
-        /**TODO:
-         * sanckbar
-         */
-      }
+    if (confirm('paid?')) {
+      this.offerService.markAsPaid(this.offer.id).subscribe((resp) => {
+        this.offer.is_paid = true;
+        this.offerChanged.emit(this.offer);
+      });
     }
   }
 }

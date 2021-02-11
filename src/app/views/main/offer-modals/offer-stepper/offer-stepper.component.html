@@ -1,0 +1,42 @@
+<div mat-dialog-content>
+  <div style="display: flex">
+    <h1 mat-dialog-title>Offer Status</h1>
+    <div style="flex: 1"></div>
+    <mat-icon class="close-button" (click)="onNoClick()">close</mat-icon>
+  </div>
+
+  <div>
+    <!-- <button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
+  {{ !isLinear ? 'Enable linear mode' : 'Disable linear mode' }}
+</button> -->
+    <mat-horizontal-stepper [linear]="true" #stepper>
+      <mat-step label="Contract" [completed]="data.offer.is_accepted" [state]="statusState(data.offer, 0)">
+        <main-offer-contract [offer]="data.offer" (offerChanged)="handleOfferChanged($event)"></main-offer-contract>
+      </mat-step>
+
+      <mat-step label="Pay / Ship" [completed]="data.offer.is_paid && data.offer.is_shipped" [state]="statusState(data.offer, 1)">
+        <main-offer-payment [offer]="data.offer" (offerChanged)="handleOfferChanged($event)"></main-offer-payment>
+        <main-offer-shipment [offer]="data.offer" (offerChanged)="handleOfferChanged($event)"></main-offer-shipment>
+      </mat-step>
+
+      <mat-step label="Feedback" [completed]="data.offer.feedback2buyer && data.offer.feedback2seller" [state]="statusState(data.offer, 2)">
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </mat-step>
+
+      <!-- Icon overrides. -->
+      <ng-template matStepperIcon="number">
+        <mat-icon>panorama_fish_eye</mat-icon>
+      </ng-template>
+
+      <ng-template matStepperIcon="edit">
+        <mat-icon>forum</mat-icon>
+      </ng-template>
+
+      <ng-template matStepperIcon="done">
+        <mat-icon>done_all</mat-icon>
+      </ng-template>
+    </mat-horizontal-stepper>
+  </div>
+</div>
+<div mat-dialog-actions style="flex-direction: column"></div>

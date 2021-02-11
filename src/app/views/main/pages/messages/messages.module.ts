@@ -21,7 +21,6 @@ import { ChatBoxComponent } from './chat-box/chat-box.component';
 import { ContactListComponent } from './contact-list/contact-list.component';
 import { MsgBodyComponent } from './msg-body/msg-body.component';
 import { MaterialModule } from 'src/app/shared/material.module';
-import { OfferStepperComponent } from './offer-stepper/offer-stepper.component';
 
 const routes: Routes = [
   { path: '', component: MessagesComponent },
@@ -29,7 +28,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [MsgBodyComponent, MessagesComponent, ChatListComponent, ContactListComponent, ChatBoxComponent, OfferStepperComponent],
+  declarations: [MsgBodyComponent, MessagesComponent, ChatListComponent, ContactListComponent, ChatBoxComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

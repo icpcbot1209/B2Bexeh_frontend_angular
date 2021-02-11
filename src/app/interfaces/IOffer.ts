@@ -9,8 +9,6 @@ export interface IOffer {
   seller_id?: string;
   buyer_id?: string;
 
-  status: string;
-
   qty: number;
   price: number;
   unit?: string;
@@ -19,11 +17,15 @@ export interface IOffer {
   payment_terms?: any;
   shipping_terms?: any;
 
+  is_accepted?: boolean;
   is_paid?: boolean;
   is_shipped?: boolean;
 
   feedback2seller?: string;
   feedback2buyer?: string;
+
+  is_canceled?: boolean;
+  is_deleted?: boolean;
 
   /** joined */
   product_name?: string;

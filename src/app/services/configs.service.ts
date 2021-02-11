@@ -3,6 +3,9 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IDictItem } from '../interfaces/IDictItem';
+import { IOffer } from '../interfaces/IOffer';
+import { IUser } from '../interfaces/IUser';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +19,7 @@ export class ConfigsService {
   dict_payment_method: IDictItem[] = [];
   dict_payment_timing: IDictItem[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private userService: UserService) {}
 
   initWithMockData() {
     const dict_deal_method: IDictItem[] = [

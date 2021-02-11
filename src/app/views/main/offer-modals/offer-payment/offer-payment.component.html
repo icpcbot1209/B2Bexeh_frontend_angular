@@ -6,7 +6,17 @@
     <input style="width: 200px" placeholder="Payment Details: PayPal Transaction ID, Check" />
   </div>
   <div style="margin: 20px 0">
-    <button class="btn btn-primary" (click)="onClickConfirm()">Mark as Paid</button>
+    <ng-container *ngIf="!offer.is_paid; else elseTemplate">
+      <ng-container *ngIf="offer.seller_id == userService.me.id; else elseTemplate1">
+        <button class="btn btn-primary" (click)="onClickConfirm()">Mark as Paid</button>
+      </ng-container>
+      <ng-template #elseTemplate1>
+        <button class="btn btn-primary" disabled>Pending Their Confirm Payment</button>
+      </ng-template>
+    </ng-container>
+    <ng-template #elseTemplate>
+      <button class="btn btn-primary" disabled>Payment Confirmed</button>
+    </ng-template>
   </div>
 
   <strong>PAYMENT TO</strong>

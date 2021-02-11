@@ -448,6 +448,6 @@ let mydata: IMenuItem[] = [
   },
 ];
 
-// if (!environment.production) mydata = [...mydata, ...data];
+if (!environment.production) mydata = [...mydata, ...data];
 
 export default mydata;

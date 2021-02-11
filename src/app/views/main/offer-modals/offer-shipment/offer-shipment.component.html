@@ -7,7 +7,17 @@
     <input style="width: 200px" placeholder="Tracking Number" />
   </div>
   <div style="margin: 20px 0">
-    <button class="btn btn-primary" (click)="onClickConfirm()">Mark as Shipped</button>
+    <ng-container *ngIf="!offer.is_shipped; else elseTemplate2">
+      <ng-container *ngIf="offer.buyer_id == userService.me.id; else elseTemplate3">
+        <button class="btn btn-primary" (click)="onClickConfirm()">Mark as Shipped</button>
+      </ng-container>
+      <ng-template #elseTemplate3>
+        <button class="btn btn-primary" disabled>Pending Their Confirm</button>
+      </ng-template>
+    </ng-container>
+    <ng-template #elseTemplate2>
+      <button class="btn btn-primary" disabled>Shipping Confirmed</button>
+    </ng-template>
   </div>
 
   <strong>SHIP TO</strong>

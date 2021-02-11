@@ -38,8 +38,6 @@ export class CreateOfferComponent implements OnInit {
   }
 
   async onClickCreate() {
-    let status = this.configs.dict_offer_status[0].uid;
-
     let seller_id, buyer_id;
 
     if (!this.data.hope.is_ask) {
@@ -56,15 +54,11 @@ export class CreateOfferComponent implements OnInit {
       seller_id,
       buyer_id,
 
-      status,
       note: this.note,
       qty: this.qty,
       price: this.price,
       unit: this.data.hope.unit,
       deal_method: this.data.hope.deal_method,
-
-      is_paid: false,
-      is_shipped: false,
     };
 
     try {

@@ -1,29 +1,31 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { MyOffersComponent } from "./my-offers.component";
-import { RouterModule, Routes } from "@angular/router";
-import { MatTabsModule } from "@angular/material/tabs";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule, Routes } from '@angular/router';
 
-import { MyOffersTableContainerComponent } from "./my-offers-table-container/my-offers-table-container.component";
-import { MatSnackBarModule } from "@angular/material/snack-bar";
-import { MainComponentsModule } from "../../main-components/main-components.module";
+import { MaterialModule } from 'src/app/shared/material.module';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
+import { MyOffersComponent } from './my-offers.component';
+import { MyOffersTableContainerComponent } from './my-offers-table-container/my-offers-table-container.component';
+import { MyOffersTableComponent } from './my-offers-table/my-offers-table.component';
+import { OfferModalsModule } from '../../offer-modals/offer-modals.module';
 
 const routes: Routes = [
   {
-    path: "",
+    path: '',
     component: MyOffersComponent,
     children: [
-      { path: "", pathMatch: "full", redirectTo: "active-received" },
-      { path: "active-received", component: MyOffersTableContainerComponent },
-      { path: "active-sent", component: MyOffersTableContainerComponent },
-      { path: "closed-received", component: MyOffersTableContainerComponent },
-      { path: "closed-sent", component: MyOffersTableContainerComponent },
+      { path: '', pathMatch: 'full', redirectTo: 'active-received' },
+      { path: 'active-received', component: MyOffersTableContainerComponent },
+      { path: 'active-sent', component: MyOffersTableContainerComponent },
+      { path: 'closed-received', component: MyOffersTableContainerComponent },
+      { path: 'closed-sent', component: MyOffersTableContainerComponent },
     ],
   },
 ];
 
 @NgModule({
-  declarations: [MyOffersComponent, MyOffersTableContainerComponent],
-  imports: [CommonModule, RouterModule.forChild(routes), MainComponentsModule, MatTabsModule, MatSnackBarModule],
+  declarations: [MyOffersComponent, MyOffersTableContainerComponent, MyOffersTableComponent],
+  imports: [CommonModule, RouterModule.forChild(routes), MaterialModule, OfferModalsModule],
 })
 export class MyOffersModule {}

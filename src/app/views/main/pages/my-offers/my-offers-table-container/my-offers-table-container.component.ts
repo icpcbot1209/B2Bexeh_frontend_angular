@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, Event, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -6,15 +6,23 @@ import { OfferService } from 'src/app/services/offer.service';
 import { IOffer } from 'src/app/interfaces/IOffer';
 import { SnackService } from 'src/app/services/snack.service';
 import { UserService } from 'src/app/services/user.service';
+import { MatDialog } from '@angular/material/dialog';
+import { OfferStepperComponent } from '../../../offer-modals/offer-stepper/offer-stepper.component';
 
 @Component({
-  selector: 'app-my-offers-table-container',
+  selector: 'main-my-offers-table-container',
   templateUrl: './my-offers-table-container.component.html',
   styleUrls: ['./my-offers-table-container.component.scss'],
 })
 export class MyOffersTableContainerComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
-  constructor(private router: Router, private offerService: OfferService, private userService: UserService, private snack: SnackService) {
+  constructor(
+    private router: Router,
+    private offerService: OfferService,
+    private userService: UserService,
+    private snack: SnackService,
+    public dialog: MatDialog
+  ) {
     this.subscription = this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         let lastUrl = event.urlAfterRedirects.split('/').pop();
@@ -48,5 +56,18 @@ export class MyOffersTableContainerComponent implements OnInit, OnDestroy {
       this.snack.error(err.message);
     }
     this.isBusy = false;
+  }
+
+  handleOfferClicked(offer: IOffer) {
+    const dialogRef = this.dialog.open(OfferStepperComponent, {
+      data: { offer },
+      height: '80vh',
+      panelClass: 'custom-dialog-container',
+    });
+
+    dialogRef.afterClosed().subscribe((result: IOffer) => {
+      if (result) {
+      }
+    });
   }
 }

@@ -24,12 +24,7 @@
 
     <div class="form-group" style="margin-left: 20px; flex: 1">
       <label>Qty</label>
-      <ng-container *ngIf="data.isAccept; else elseTemplate">
-        <p style="margin: 10px">{{ qty }}</p>
-      </ng-container>
-      <ng-template #elseTemplate>
-        <input class="form-control" placeholder="" [(ngModel)]="qty" />
-      </ng-template>
+      <input class="form-control" placeholder="" [(ngModel)]="qty" />
     </div>
 
     <div class="form-group" style="margin-left: 20px; flex: 1">

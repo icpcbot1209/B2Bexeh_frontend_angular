@@ -1,0 +1,40 @@
+:host {
+  .offer-box {
+    border: 1px solid blue;
+    border-radius: 20px;
+    padding: 20px;
+
+    .title {
+      font-size: large;
+      color: blue;
+    }
+
+    .term {
+      padding: 10px 20px;
+      display: grid;
+      grid-template-columns: 100px auto;
+
+      label {
+        color: gray;
+        font-weight: 700;
+      }
+
+      span {
+        font-size: medium;
+      }
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-evenly;
+    }
+
+    textarea {
+      border: 1px solid lightgray;
+      padding: 10px;
+      border-radius: 5px;
+    }
+  }
+}
