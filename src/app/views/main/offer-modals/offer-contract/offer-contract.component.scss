@@ -1,40 +1,67 @@
-:host {
-  .offer-box {
-    border: 1px solid blue;
-    border-radius: 20px;
-    padding: 20px;
+.card {
+  background-color: rgb(236, 236, 236);
+  padding: 10px;
+}
 
-    .title {
-      font-size: large;
-      color: blue;
+.title {
+  font-size: 21px;
+  font-weight: 600;
+  font-family: Inter;
+
+  color: #0f1b41, 100%;
+}
+
+.terms {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .term {
+    flex-direction: column;
+    margin-right: 24px;
+
+    label {
+      font-size: 16px;
+      line-height: 10px;
+      font-family: Inter;
+      font-style: normal;
+      font-weight: normal;
+      color: #547282;
     }
 
-    .term {
-      padding: 10px 20px;
-      display: grid;
-      grid-template-columns: 100px auto;
-
-      label {
-        color: gray;
-        font-weight: 700;
-      }
-
-      span {
-        font-size: medium;
-      }
-    }
-
-    .buttons {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-evenly;
-    }
-
-    textarea {
-      border: 1px solid lightgray;
-      padding: 10px;
-      border-radius: 5px;
+    p {
+      font-size: 15px;
+      line-height: 26px;
+      font-family: Inter;
+      font-style: normal;
+      font-weight: normal;
+      color: #2c2c2c;
     }
   }
+}
+
+.actions {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+
+  .action {
+    flex: 1;
+    padding: 20px;
+  }
+
+  .rborder {
+    border-right: 1px solid lightgray;
+  }
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.expandable {
+  overflow-y: hidden;
+  transition: height 0.5s linear;
 }

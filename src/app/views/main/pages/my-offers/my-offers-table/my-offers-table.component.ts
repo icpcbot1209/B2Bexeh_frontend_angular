@@ -39,9 +39,6 @@ export class MyOffersTableComponent implements OnInit {
   dataSource: MatTableDataSource<IOffer>;
   updateTableRows(offers: IOffer[]) {
     if (!offers) return;
-    offers.forEach((offer) => {
-      offer.total = offer.qty * offer.price;
-    });
     this.dataSource = new MatTableDataSource(offers);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;

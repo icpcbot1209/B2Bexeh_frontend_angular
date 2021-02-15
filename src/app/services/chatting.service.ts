@@ -133,14 +133,16 @@ export class ChattingService {
     });
   }
 
-  async onOfferCreate(idOther: string, idOffer: string) {
+  async onOfferCreate(idOther: string, idOffer: string, note: string) {
     const chatId = await this.startChatWith(idOther);
     if (!chatId) return;
-    await this.sendMessage(chatId, { action: OfferActions.offer_created, value: idOffer });
+    // await this.sendMessage(chatId, { action: OfferActions.offer_created, value: idOffer });
 
-    this.ngZone.run(() => {
-      this.router.navigate(['/main/messages/', chatId]);
-    });
+    await this.sendMessage(chatId, note);
+
+    // this.ngZone.run(() => {
+    //   this.router.navigate(['/main/messages/', chatId]);
+    // });
   }
 
   async onOfferAccept(idOther, offerId) {

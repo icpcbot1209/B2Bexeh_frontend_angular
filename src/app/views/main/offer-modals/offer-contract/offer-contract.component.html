@@ -1,55 +1,103 @@
-<div class="offer-box">
-  <div class="title">
-    <label>Offer(No.{{ offer.id }}) by {{ creatorName(offer) }}</label>
+<div class="card">
+  <div class="title">{{ makeTitle(offer) }}</div>
+  <div class="title" style="margin-top: 32px">
+    {{ offer.product_name }}
   </div>
-  <div class="term">
-    <label>product: </label>
-    <span>{{ offer.product_name }}</span>
+
+  <div class="terms">
+    <div class="term">
+      <label>Type</label>
+      <p>{{ offer.unit }} {{ configs.dictVal(offer.deal_method, configs.dict_deal_method) }}</p>
+    </div>
+    <div class="term">
+      <label>Qty </label>
+      <p class="bold">{{ offer.qty }}</p>
+    </div>
+    <div class="term">
+      <label>Price / {{ offer.unit }}</label>
+      <p class="bold">{{ offer.price | currency }}</p>
+    </div>
+    <div class="term">
+      <label>Total </label>
+      <p class="bold">{{ offer.price * offer.qty | currency }}</p>
+    </div>
   </div>
-  <div class="term">
-    <label>Buyer: </label>
-    <span>{{ offer.buyer_name }}</span>
+
+  <div class="terms">
+    <div class="term">
+      <label>Note</label>
+      <p>{{ offer.note }}</p>
+    </div>
   </div>
-  <div class="term">
-    <label>Seller: </label>
-    <span>{{ offer.seller_name }}</span>
+
+  <div class="terms" *ngIf="!offer.is_accepted && offer.creator_id == userService.me.id">
+    <div style="flex: 1"></div>
+    <button *ngIf="!isEditing" mat-stroked-button color="primary" (click)="onClickEdit()"><mat-icon>edit</mat-icon> Change Terms</button>
+    <button *ngIf="isEditing" mat-stroked-button color="primary" (click)="onClickSave()"><mat-icon>save</mat-icon> Save Changes</button>
   </div>
-  <div class="term">
-    <label>Qty </label>
-    <span>{{ offer.qty }}</span>
-  </div>
-  <div class="term">
-    <label>Price </label>
-    <span>{{ offer.price | currency }}</span>
-  </div>
-  <div class="term">
-    <label>Unit </label>
-    <span>{{ offer.unit }}</span>
-  </div>
-  <div class="term">
-    <label>Deal Type</label>
-    <span>{{ configs.dictVal(offer.deal_method, configs.dict_deal_method) }}</span>
-  </div>
-  <div class="term">
-    <label>Note</label>
-    <span>"{{ offer.note }}"</span>
+
+  <div class="expandable" [style.height]="!isEditing ? '0' : '100px'">
+    <div class="terms">
+      <div class="term">
+        <label>Qty</label>
+        <input type="number" class="form-control" [(ngModel)]="newQty" />
+      </div>
+      <div class="term">
+        <label>Price / {{ offer.unit }}</label>
+        <input type="number" class="form-control" [(ngModel)]="newPrice" />
+      </div>
+    </div>
   </div>
 
   <hr />
 
-  <ng-container *ngIf="!offer.is_accepted">
-    <ng-container *ngIf="offer.creator_id == userService.me.id; else else0">
-      <div class="buttons">
-        <button class="btn btn-primary">Edit</button>
-        <button class="btn btn-danger">Cancel</button>
-      </div>
+  <div class="actions" *ngIf="!isEditing">
+    <div class="action rborder">
+      <label>Buyer</label>
+      <p class="title">{{ offer.buyer_name | uppercase }}</p>
+
+      <ng-container *ngIf="offer.creator_id == offer.buyer_id; else acceptedBadge">
+        <alert type="success">Offered on {{ offer.created_at | date }}</alert>
+      </ng-container>
+
+      <ng-container *ngIf="isBuyer()" [ngTemplateOutlet]="actionButtons"></ng-container>
+    </div>
+
+    <div class="action">
+      <label>Seller</label>
+      <p class="title">{{ offer.seller_name | uppercase }}</p>
+
+      <ng-container *ngIf="offer.creator_id == offer.seller_id; else acceptedBadge">
+        <alert type="success">Offered on {{ offer.created_at | date }}</alert>
+      </ng-container>
+
+      <ng-container *ngIf="!isBuyer()" [ngTemplateOutlet]="actionButtons"></ng-container>
+    </div>
+  </div>
+
+  <ng-template #actionButtons>
+    <ng-container *ngIf="!offer.is_accepted && !offer.is_canceled">
+      <ng-container *ngIf="offer.creator_id == userService.me.id; else else0">
+        <div class="buttons">
+          <button mat-raised-button color="warn" (click)="onClickDecline()">Cancel Offer</button>
+        </div>
+      </ng-container>
+
+      <ng-template #else0>
+        <div class="buttons">
+          <button mat-raised-button color="primary" (click)="onClickAccept()">Accept</button>
+          <button mat-raised-button color="warn" (click)="onClickDecline()">Decline</button>
+        </div>
+      </ng-template>
     </ng-container>
 
-    <ng-template #else0>
-      <div class="buttons">
-        <button class="btn btn-success" (click)="onClickAccept()">Accept</button>
-        <button class="btn btn-danger" (click)="onClickDecline()">Decline</button>
-      </div>
-    </ng-template>
-  </ng-container>
+    <ng-container *ngIf="offer.is_canceled">
+      <alert type="dark">Canceled on {{ offer.updated_at | date }}</alert>
+    </ng-container>
+  </ng-template>
+
+  <ng-template #acceptedBadge>
+    <alert type="success" *ngIf="offer.is_accepted">Accepted</alert>
+    <alert type="warning" *ngIf="!offer.is_accepted">Pending Approval</alert>
+  </ng-template>
 </div>

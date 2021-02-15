@@ -44,4 +44,5 @@ export class OfferActions {
   public static offer_created = 'offer_created';
   public static offer_accepted = 'offer_accepted';
   public static offer_paid = 'offer_paid';
+  public static offer_shipped = 'offer_shipped';
 }

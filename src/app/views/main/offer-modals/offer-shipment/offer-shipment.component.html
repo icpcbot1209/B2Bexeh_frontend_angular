@@ -1,32 +1,23 @@
 <div>
-  <div style="margin: 10px 0px">
-    <strong>ADD SHIPMENT DETAILS</strong>
-  </div>
-  <div>
-    <input style="width: 200px" placeholder="Shipping Company" />
-    <input style="width: 200px" placeholder="Tracking Number" />
-  </div>
   <div style="margin: 20px 0">
     <ng-container *ngIf="!offer.is_shipped; else elseTemplate2">
       <ng-container *ngIf="offer.buyer_id == userService.me.id; else elseTemplate3">
-        <button class="btn btn-primary" (click)="onClickConfirm()">Mark as Shipped</button>
+        <button mat-raised-button color="primary" (click)="onClickConfirm()">Mark as Shipped</button>
       </ng-container>
       <ng-template #elseTemplate3>
-        <button class="btn btn-primary" disabled>Pending Their Confirm</button>
+        <alert type="warning" disabled>Pending Their Confirm</alert>
       </ng-template>
     </ng-container>
     <ng-template #elseTemplate2>
-      <button class="btn btn-primary" disabled>Shipping Confirmed</button>
+      <alert type="success" disabled>Shipping Confirmed</alert>
     </ng-template>
   </div>
 
-  <strong>SHIP TO</strong>
-  <p>Micahel Hsu (CA-B2B)</p>
-
-  <div>
-    <p>8726 S Sepulveda Blvd Ste D #247</p>
-    <p>Los Angeles CA 90045</p>
-    <p>626-215-6165</p>
-    <p>hi@theravine.la</p>
+  <div *ngIf="buyer" style="border: 1px solid lightgray; padding: 20px 20px">
+    <p style="font-weight: 900">SHIP TO</p>
+    <p>{{ buyer.first_name }} {{ buyer.last_name }} ({{ seller.user_name }})</p>
+    <p>Shipping Address: {{ buyer.shippingaddress1 }}</p>
+    <p>Phone Number: {{ buyer.phone_number }}</p>
+    <p>Emali Address: {{ buyer.email }}</p>
   </div>
 </div>

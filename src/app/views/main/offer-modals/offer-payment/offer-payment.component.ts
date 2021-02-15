@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { IOffer } from 'src/app/interfaces/IOffer';
 import { IUser } from 'src/app/interfaces/IUser';
 import { ChattingService } from 'src/app/services/chatting.service';
@@ -10,11 +10,25 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './offer-payment.component.html',
   styleUrls: ['./offer-payment.component.scss'],
 })
-export class OfferPaymentComponent implements OnInit {
+export class OfferPaymentComponent implements OnChanges {
   @Input() offer: IOffer;
   @Output() offerChanged = new EventEmitter<any>();
 
+  seller: IUser;
+  buyer: IUser;
+
   constructor(public userService: UserService, private offerService: OfferService) {}
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.offer) {
+      let offer: IOffer = changes.offer.currentValue;
+      this.userService.getUserById(offer.seller_id).then((user) => {
+        this.seller = user;
+      });
+      this.userService.getUserById(offer.buyer_id).then((user) => {
+        this.buyer = user;
+      });
+    }
+  }
 
   ngOnInit() {}
 

@@ -18,4 +18,6 @@ export class MsgBodyComponent {
   getUser(id: string) {
     return this.chat.me.id === id ? this.chat.me : this.chat.other;
   }
+
+  showOffer(offerId) {}
 }

@@ -1,47 +1,66 @@
-import { Component, OnInit, OnDestroy, HostListener } from "@angular/core";
-import { Subscription } from "rxjs";
-import { SidebarService, ISidebar } from "../sidebar/sidebar.service";
-import { Router } from "@angular/router";
-import { LangService, Language } from "src/app/shared/lang.service";
-import { AuthService } from "src/app/shared/auth.service";
-import { environment } from "src/environments/environment";
-import { getThemeColor, setThemeColor } from "src/app/utils/util";
+import { NotifService } from './../../../services/notif.service';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { SidebarService, ISidebar } from '../sidebar/sidebar.service';
+import { Router } from '@angular/router';
+import { LangService, Language } from 'src/app/shared/lang.service';
+import { AuthService } from 'src/app/shared/auth.service';
+import { environment } from 'src/environments/environment';
+import { getThemeColor, setThemeColor } from 'src/app/utils/util';
 
-import { Colors } from "src/app/constants/colors.service";
+import { Colors } from 'src/app/constants/colors.service';
+import { INotif } from 'src/app/interfaces/INotif';
 
 @Component({
-  selector: "app-topnav",
-  templateUrl: "./topnav.component.html",
+  selector: 'app-topnav',
+  templateUrl: './topnav.component.html',
 })
 export class TopnavComponent implements OnInit, OnDestroy {
   buyUrl = environment.buyUrl;
   adminRoot = environment.adminRoot;
   sidebar: ISidebar;
   subscription: Subscription;
-  displayName = "Sarah Cortney";
+  displayName = 'Sarah Cortney';
   languages: Language[];
   currentLanguage: string;
   isSingleLang;
   isFullScreen = false;
   isDarkModeActive = false;
-  searchKey = "";
+  searchKey = '';
 
   themeColor1 = Colors.getColors().themeColor1;
   foregroundColor = Colors.getColors().foregroundColor;
 
-  constructor(private sidebarService: SidebarService, private authService: AuthService, private router: Router, private langService: LangService) {
+  constructor(
+    private sidebarService: SidebarService,
+    private authService: AuthService,
+    private router: Router,
+    private langService: LangService,
+    public notifService: NotifService
+  ) {
     this.languages = this.langService.supportedLanguages;
     this.currentLanguage = this.langService.languageShorthand;
     this.isSingleLang = this.langService.isSingleLang;
-    this.isDarkModeActive = getThemeColor().indexOf("dark") > -1 ? true : false;
+    this.isDarkModeActive = getThemeColor().indexOf('dark') > -1 ? true : false;
+
+    this.notifs = this.notifService.notifs;
+    this.subsNotifs = this.notifService.notifs$.subscribe((notifs) => {
+      this.notifs = notifs;
+    });
   }
+
+  /** JastiDev */
+
+  notifs: INotif[] = [];
+  subsNotifs: Subscription;
+  /** */
 
   onDarkModeChange(event): void {
     let color = getThemeColor();
-    if (color.indexOf("dark") > -1) {
-      color = color.replace("dark", "light");
-    } else if (color.indexOf("light") > -1) {
-      color = color.replace("light", "dark");
+    if (color.indexOf('dark') > -1) {
+      color = color.replace('dark', 'light');
+    } else if (color.indexOf('light') > -1) {
+      color = color.replace('light', 'dark');
     }
     setThemeColor(color);
     setTimeout(() => {
@@ -57,7 +76,7 @@ export class TopnavComponent implements OnInit, OnDestroy {
     }
   }
 
-  @HostListener("document:fullscreenchange", ["$event"])
+  @HostListener('document:fullscreenchange', ['$event'])
   handleFullscreen(event): void {
     if (document.fullscreenElement) {
       this.isFullScreen = true;
@@ -89,6 +108,8 @@ export class TopnavComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+
+    this.subsNotifs.unsubscribe();
   }
 
   menuButtonClick = (e: { stopPropagation: () => void }, menuClickCount: number, containerClassnames: string) => {
@@ -97,8 +118,8 @@ export class TopnavComponent implements OnInit, OnDestroy {
     }
 
     setTimeout(() => {
-      const event = document.createEvent("HTMLEvents");
-      event.initEvent("resize", false, false);
+      const event = document.createEvent('HTMLEvents');
+      event.initEvent('resize', false, false);
       window.dispatchEvent(event);
     }, 350);
 
@@ -114,18 +135,18 @@ export class TopnavComponent implements OnInit, OnDestroy {
 
   onSignOut(): void {
     this.authService.trySignOut();
-    this.router.navigate(["/"]);
+    this.router.navigate(['/']);
   }
 
   searchKeyUp(event: KeyboardEvent): void {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       this.search();
-    } else if (event.key === "Escape") {
-      const input = document.querySelector(".mobile-view");
+    } else if (event.key === 'Escape') {
+      const input = document.querySelector('.mobile-view');
       if (input && input.classList) {
-        input.classList.remove("mobile-view");
+        input.classList.remove('mobile-view');
       }
-      this.searchKey = "";
+      this.searchKey = '';
     }
   }
 
@@ -135,19 +156,19 @@ export class TopnavComponent implements OnInit, OnDestroy {
   searchClick(event): void {
     if (window.innerWidth < environment.menuHiddenBreakpoint) {
       let elem = event.target;
-      if (!event.target.classList.contains("search")) {
-        if (event.target.parentElement.classList.contains("search")) {
+      if (!event.target.classList.contains('search')) {
+        if (event.target.parentElement.classList.contains('search')) {
           elem = event.target.parentElement;
-        } else if (event.target.parentElement.parentElement.classList.contains("search")) {
+        } else if (event.target.parentElement.parentElement.classList.contains('search')) {
           elem = event.target.parentElement.parentElement;
         }
       }
 
-      if (elem.classList.contains("mobile-view")) {
+      if (elem.classList.contains('mobile-view')) {
         this.search();
-        elem.classList.remove("mobile-view");
+        elem.classList.remove('mobile-view');
       } else {
-        elem.classList.add("mobile-view");
+        elem.classList.add('mobile-view');
       }
     } else {
       this.search();
@@ -157,19 +178,19 @@ export class TopnavComponent implements OnInit, OnDestroy {
 
   search(): void {
     if (this.searchKey && this.searchKey.length > 1) {
-      this.router.navigate([this.adminRoot + "/pages/miscellaneous/search"], {
+      this.router.navigate([this.adminRoot + '/pages/miscellaneous/search'], {
         queryParams: { key: this.searchKey.toLowerCase().trim() },
       });
-      this.searchKey = "";
+      this.searchKey = '';
     }
   }
 
-  @HostListener("document:click", ["$event"])
+  @HostListener('document:click', ['$event'])
   handleDocumentClick(event): void {
-    const input = document.querySelector(".mobile-view");
+    const input = document.querySelector('.mobile-view');
     if (input && input.classList) {
-      input.classList.remove("mobile-view");
+      input.classList.remove('mobile-view');
     }
-    this.searchKey = "";
+    this.searchKey = '';
   }
 }

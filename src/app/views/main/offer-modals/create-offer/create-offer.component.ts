@@ -64,9 +64,6 @@ export class CreateOfferComponent implements OnInit {
     try {
       const offer: IOffer = await this.offerService.createOffer(data).toPromise();
       this.dialogRef.close(offer);
-
-      const idOther = this.userService.me.id === offer.buyer_id ? offer.seller_id : offer.buyer_id;
-      this.chattingService.onOfferCreate(idOther, offer.id);
     } catch (err) {
       console.log(err);
     }

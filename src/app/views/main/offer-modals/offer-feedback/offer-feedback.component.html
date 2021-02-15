@@ -1,0 +1,13 @@
+<div class="title">Your Feedback to {{ isBuyer() ? 'Seller' : 'Buyer' }}</div>
+
+<div class="row" *ngIf="!myFeedback(); else givenTemplate">
+  <i class="button fas fa-smile fa-5x" style="color: rgb(52, 234, 95)" (click)="giveFeedback('like')"></i>
+  <i class="button fas fa-meh fa-5x" style="color: rgb(243, 254, 131)" (click)="giveFeedback('soso')"></i>
+  <i class="button fas fa-frown fa-5x" style="color: rgb(243, 94, 110)" (click)="giveFeedback('dislike')"></i>
+</div>
+
+<ng-template #givenTemplate>
+  <i class="fas fa-smile fa-5x" style="color: rgb(52, 234, 95)" [ngStyle]="{ display: myFeedback() == 'like' ? 'block' : 'none' }"></i>
+  <i class="fas fa-meh fa-5x" style="color: rgb(243, 254, 131)" [ngStyle]="{ display: myFeedback() == 'soso' ? 'block' : 'none' }"></i>
+  <i class="fas fa-frown fa-5x" style="color: rgb(243, 94, 110)" [ngStyle]="{ display: myFeedback() == 'dislike' ? 'block' : 'none' }"></i>
+</ng-template>

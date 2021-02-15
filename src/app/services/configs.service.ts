@@ -15,9 +15,9 @@ export class ConfigsService {
   subjectLoaded = new Subject<boolean>();
 
   dict_deal_method: IDictItem[] = [];
-  dict_offer_status: IDictItem[] = [];
   dict_payment_method: IDictItem[] = [];
   dict_payment_timing: IDictItem[] = [];
+  dict_feedback: IDictItem[] = [];
 
   constructor(private http: HttpClient, private userService: UserService) {}
 
@@ -41,12 +41,6 @@ export class ConfigsService {
       { uid: 'x_gaming_only', value: 'x (Gaming Only)' },
     ];
 
-    const dict_offer_status: IDictItem[] = [
-      { uid: 'sent', value: 'sent' },
-      { uid: 'accepted', value: 'accepted' },
-      { uid: 'completed', value: 'completed' },
-      { uid: 'canceled', value: 'canceled' },
-    ];
     const dict_payment_method: IDictItem[] = [
       { uid: 'paypal', value: 'PayPal' },
       { uid: 'check', value: 'Check' },
@@ -58,10 +52,16 @@ export class ConfigsService {
       { uid: 'net14', value: 'net 14' },
     ];
 
+    const dict_feedback: IDictItem[] = [
+      { uid: 'like', value: 'fa-smile' },
+      { uid: 'soso', value: 'fa-meh' },
+      { uid: 'dislike', value: 'fa-frown' },
+    ];
+
     this.addRow('dict_deal_method', JSON.stringify(dict_deal_method));
-    this.addRow('dict_offer_status', JSON.stringify(dict_offer_status));
     this.addRow('dict_payment_method', JSON.stringify(dict_payment_method));
     this.addRow('dict_payment_timing', JSON.stringify(dict_payment_timing));
+    this.addRow('dict_feedback', JSON.stringify(dict_feedback));
   }
 
   addRow(json_key: string, json_value: string) {
@@ -75,9 +75,9 @@ export class ConfigsService {
       if (rows.length === 0) this.initWithMockData();
       rows.forEach((row: IRow) => {
         if (row.json_key === 'dict_deal_method') this.dict_deal_method = JSON.parse(row.json_value);
-        if (row.json_key === 'dict_offer_status') this.dict_offer_status = JSON.parse(row.json_value);
         if (row.json_key === 'dict_payment_method') this.dict_payment_method = JSON.parse(row.json_value);
         if (row.json_key === 'dict_payment_timing') this.dict_payment_timing = JSON.parse(row.json_value);
+        if (row.json_key === 'dict_feedback') this.dict_feedback = JSON.parse(row.json_value);
       });
 
       this.loaded = true;
