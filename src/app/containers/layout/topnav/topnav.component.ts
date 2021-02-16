@@ -10,6 +10,7 @@ import { getThemeColor, setThemeColor } from 'src/app/utils/util';
 
 import { Colors } from 'src/app/constants/colors.service';
 import { INotif } from 'src/app/interfaces/INotif';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-topnav',
@@ -34,6 +35,7 @@ export class TopnavComponent implements OnInit, OnDestroy {
   constructor(
     private sidebarService: SidebarService,
     private authService: AuthService,
+    public userService: UserService,
     private router: Router,
     private langService: LangService,
     public notifService: NotifService
@@ -91,11 +93,6 @@ export class TopnavComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
-    if (await this.authService.getUser()) {
-      this.displayName = await this.authService.getUser().then((user) => {
-        return user.displayName;
-      });
-    }
     this.subscription = this.sidebarService.getSidebar().subscribe(
       (res) => {
         this.sidebar = res;

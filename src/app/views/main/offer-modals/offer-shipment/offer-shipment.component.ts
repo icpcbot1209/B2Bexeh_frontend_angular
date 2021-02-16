@@ -29,10 +29,13 @@ export class OfferShipmentComponent implements OnChanges {
     }
   }
 
+  shippedInfo = '';
   async onClickConfirm() {
     if (confirm('shipped?')) {
-      this.offerService.markAsShipped(this.offer.id).subscribe((resp) => {
+      this.offerService.markAsShipped(this.offer.id, this.shippedInfo).subscribe((resp) => {
         this.offer.is_shipped = true;
+        this.offer.shipped_info = this.shippedInfo;
+        this.offer.shipped_at = new Date();
         this.offerChanged.emit(this.offer);
       });
     }

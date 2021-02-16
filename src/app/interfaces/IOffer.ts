@@ -1,3 +1,5 @@
+import { dateSelectionJoinTransformer } from '@fullcalendar/angular';
+
 export interface IOffer {
   id?: string;
   created_at?: Date;
@@ -16,6 +18,11 @@ export interface IOffer {
   note: string;
   payment_terms?: any;
   shipping_terms?: any;
+
+  paid_info?: string;
+  paid_at?: Date;
+  shipped_info?: string;
+  shipped_at?: Date;
 
   is_accepted?: boolean;
   is_paid?: boolean;

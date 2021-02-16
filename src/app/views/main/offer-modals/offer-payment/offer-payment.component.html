@@ -1,7 +1,27 @@
 <div>
-  <div style="margin: 20px 0">
+  <div *ngIf="seller" style="border: 1px solid lightgray; padding: 20px 20px">
+    <p style="font-weight: 900">PAYMENT TO</p>
+    <p>{{ seller.first_name }} {{ seller.last_name }} ({{ seller.user_name }})</p>
+    <p>Billing Address: {{ seller.billingaddress1 }}</p>
+    <p>Phone Number: {{ seller.phone_number }}</p>
+    <p>Email Address: {{ seller.email }}</p>
+
+    <div class="terms" *ngIf="offer.is_paid">
+      <div class="term">
+        <label>Paid Date</label>
+        <p>{{ offer.paid_at | date }}</p>
+      </div>
+      <div class="term">
+        <label>Payment Info</label>
+        <p>{{ offer.paid_info }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin: 20px 0; display: flex">
     <ng-container *ngIf="!offer.is_paid; else elseTemplate">
-      <ng-container *ngIf="offer.seller_id == userService.me.id; else elseTemplate1">
+      <ng-container *ngIf="offer.buyer_id == userService.me.id; else elseTemplate1">
+        <input class="info" type="text" placeholder="Payment Details: PayPal transaction ID, Check #" [(ngModel)]="paidInfo" />
         <button mat-raised-button color="primary" (click)="onClickConfirm()">Mark as Paid</button>
       </ng-container>
       <ng-template #elseTemplate1>
@@ -11,13 +31,5 @@
     <ng-template #elseTemplate>
       <alert type="success" class="fit-width">Payment confirmed</alert>
     </ng-template>
-  </div>
-
-  <div *ngIf="seller" style="border: 1px solid lightgray; padding: 20px 20px">
-    <p style="font-weight: 900">PAYMENT TO</p>
-    <p>{{ seller.first_name }} {{ seller.last_name }} ({{ seller.user_name }})</p>
-    <p>Billing Address: {{ seller.billingaddress1 }}</p>
-    <p>Phone Number: {{ seller.phone_number }}</p>
-    <p>Email Address: {{ seller.email }}</p>
   </div>
 </div>

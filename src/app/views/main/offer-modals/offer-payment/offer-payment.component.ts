@@ -32,10 +32,13 @@ export class OfferPaymentComponent implements OnChanges {
 
   ngOnInit() {}
 
+  paidInfo = '';
   async onClickConfirm() {
     if (confirm('paid?')) {
-      this.offerService.markAsPaid(this.offer.id).subscribe((resp) => {
+      this.offerService.markAsPaid(this.offer.id, this.paidInfo).subscribe((resp) => {
         this.offer.is_paid = true;
+        this.offer.paid_info = this.paidInfo;
+        this.offer.paid_at = new Date();
         this.offerChanged.emit(this.offer);
       });
     }

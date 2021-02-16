@@ -41,12 +41,12 @@ export class OfferService {
     return this.http.post(`${environment.myApiUrl2}/offer/decline`, { offerId });
   }
 
-  markAsPaid(offerId) {
-    return this.http.post(`${environment.myApiUrl2}/offer/markAsPaid`, { offerId });
+  markAsPaid(offer_id, paid_info) {
+    return this.http.post(`${environment.myApiUrl2}/offer/markAsPaid`, { offer_id, paid_info });
   }
 
-  markAsShipped(offerId) {
-    return this.http.post(`${environment.myApiUrl2}/offer/markAsShipped`, { offerId });
+  markAsShipped(offer_id, shipped_info) {
+    return this.http.post(`${environment.myApiUrl2}/offer/markAsShipped`, { offer_id, shipped_info });
   }
 
   giveFeedback2Seller(offerId, feedback2seller) {

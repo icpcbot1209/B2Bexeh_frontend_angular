@@ -30,24 +30,26 @@
     </div>
   </div>
 
-  <div class="terms" *ngIf="!offer.is_accepted && offer.creator_id == userService.me.id">
-    <div style="flex: 1"></div>
-    <button *ngIf="!isEditing" mat-stroked-button color="primary" (click)="onClickEdit()"><mat-icon>edit</mat-icon> Change Terms</button>
-    <button *ngIf="isEditing" mat-stroked-button color="primary" (click)="onClickSave()"><mat-icon>save</mat-icon> Save Changes</button>
-  </div>
-
-  <div class="expandable" [style.height]="!isEditing ? '0' : '100px'">
+  <ng-container *ngIf="!offer.is_accepted && !offer.is_canceled && offer.creator_id == userService.me.id">
     <div class="terms">
-      <div class="term">
-        <label>Qty</label>
-        <input type="number" class="form-control" [(ngModel)]="newQty" />
-      </div>
-      <div class="term">
-        <label>Price / {{ offer.unit }}</label>
-        <input type="number" class="form-control" [(ngModel)]="newPrice" />
+      <div style="flex: 1"></div>
+      <button *ngIf="!isEditing" mat-stroked-button color="primary" (click)="onClickEdit()"><mat-icon>edit</mat-icon> Change Terms</button>
+      <button *ngIf="isEditing" mat-stroked-button color="primary" (click)="onClickSave()"><mat-icon>save</mat-icon> Save Changes</button>
+    </div>
+
+    <div class="expandable" [style.height]="!isEditing ? '0' : '100px'">
+      <div class="terms">
+        <div class="term">
+          <label>Qty</label>
+          <input type="number" class="form-control" [(ngModel)]="newQty" />
+        </div>
+        <div class="term">
+          <label>Price / {{ offer.unit }}</label>
+          <input type="number" class="form-control" [(ngModel)]="newPrice" />
+        </div>
       </div>
     </div>
-  </div>
+  </ng-container>
 
   <hr />
 

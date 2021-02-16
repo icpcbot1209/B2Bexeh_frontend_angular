@@ -1,23 +1,35 @@
 <div>
-  <div style="margin: 20px 0">
+  <div *ngIf="buyer" style="border: 1px solid lightgray; padding: 20px 20px">
+    <p style="font-weight: 900">SHIP TO</p>
+    <p>{{ buyer.first_name }} {{ buyer.last_name }} ({{ buyer.user_name }})</p>
+    <p>Shipping Address: {{ buyer.shippingaddress1 }}</p>
+    <p>Phone Number: {{ buyer.phone_number }}</p>
+    <p>Email Address: {{ buyer.email }}</p>
+
+    <div class="terms" *ngIf="offer.is_shipped">
+      <div class="term">
+        <label>Shipped Date</label>
+        <p>{{ offer.shipped_at | date }}</p>
+      </div>
+      <div class="term">
+        <label>Shipping Info</label>
+        <p>{{ offer.shipped_info }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin: 20px 0; display: flex">
     <ng-container *ngIf="!offer.is_shipped; else elseTemplate2">
-      <ng-container *ngIf="offer.buyer_id == userService.me.id; else elseTemplate3">
+      <ng-container *ngIf="offer.seller_id == userService.me.id; else elseTemplate3">
+        <input type="text" class="info" placeholder="Shipping Company, Tracking Number" [(ngModel)]="shippedInfo" />
         <button mat-raised-button color="primary" (click)="onClickConfirm()">Mark as Shipped</button>
       </ng-container>
       <ng-template #elseTemplate3>
-        <alert type="warning" disabled>Pending Their Confirm</alert>
+        <alert type="warning" disabled>Pending Their Shipping Confirmation</alert>
       </ng-template>
     </ng-container>
     <ng-template #elseTemplate2>
       <alert type="success" disabled>Shipping Confirmed</alert>
     </ng-template>
-  </div>
-
-  <div *ngIf="buyer" style="border: 1px solid lightgray; padding: 20px 20px">
-    <p style="font-weight: 900">SHIP TO</p>
-    <p>{{ buyer.first_name }} {{ buyer.last_name }} ({{ seller.user_name }})</p>
-    <p>Shipping Address: {{ buyer.shippingaddress1 }}</p>
-    <p>Phone Number: {{ buyer.phone_number }}</p>
-    <p>Emali Address: {{ buyer.email }}</p>
   </div>
 </div>
