@@ -40,7 +40,7 @@ export class CreateOfferComponent implements OnInit {
   async onClickCreate() {
     let seller_id, buyer_id;
 
-    if (!this.data.hope.is_ask) {
+    if (this.data.hope.is_ask) {
       seller_id = this.data.hope.creator_id;
       buyer_id = this.userService.me.id;
     } else {

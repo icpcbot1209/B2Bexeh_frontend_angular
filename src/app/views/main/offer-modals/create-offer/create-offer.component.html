@@ -1,6 +1,6 @@
 <div mat-dialog-content>
   <div style="display: flex">
-    <h1 mat-dialog-title>Send Offer to {{ data.hope.is_ask ? 'Buyer' : 'Seller' }} {{ data.hope.dealer_name }}</h1>
+    <h1 mat-dialog-title>Send Offer to {{ !data.hope.is_ask ? 'Buyer' : 'Seller' }} {{ data.hope.dealer_name }}</h1>
     <div style="flex: 1"></div>
     <mat-icon class="close-button" (click)="onNoClick()">close</mat-icon>
   </div>
@@ -28,7 +28,7 @@
     </div>
 
     <div class="form-group" style="margin-left: 20px; flex: 1">
-      <label>{{ data.hope.is_ask ? 'Ask' : 'Bid' }} Price / {{ data.hope.unit }}</label>
+      <label>Price / {{ data.hope.unit }}</label>
       <ng-container *ngIf="data.isAccept; else elseTemplate1">
         <p style="margin: 10px">{{ price }}</p>
       </ng-container>
