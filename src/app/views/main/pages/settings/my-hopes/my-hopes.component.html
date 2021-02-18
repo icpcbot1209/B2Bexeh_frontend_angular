@@ -1,8 +1,14 @@
-<div class="row">
+<div class="row mb-0">
   <div class="col-md-6">
-    <main-my-hopes-table [isAsk]="true"></main-my-hopes-table>
+    <mat-card>
+      <div class="title">My Bids</div>
+      <main-my-hopes-table [isAsk]="false"></main-my-hopes-table>
+    </mat-card>
   </div>
   <div class="col-md-6">
-    <main-my-hopes-table [isAsk]="false"></main-my-hopes-table>
+    <mat-card>
+      <div class="title">My Asks</div>
+      <main-my-hopes-table [isAsk]="true"></main-my-hopes-table>
+    </mat-card>
   </div>
 </div>
