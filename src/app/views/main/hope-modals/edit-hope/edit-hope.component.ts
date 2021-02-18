@@ -4,19 +4,26 @@ import { IRespProduct } from 'src/app/interfaces/IRespProduct';
 import { IHope } from 'src/app/interfaces/IHope';
 
 @Component({
-  selector: 'main-modal-create-hope',
-  templateUrl: './modal-create-hope.component.html',
-  styleUrls: ['./modal-create-hope.component.scss'],
+  templateUrl: './edit-hope.component.html',
+  styleUrls: ['./edit-hope.component.scss'],
 })
-export class ModalCreateHopeComponent implements OnInit {
+export class EditHopeComponent implements OnInit {
   deal_method = '';
   unit: string = 'Box';
   qty: number = 1;
   price: number;
-  note: string;
+  note: string = '';
 
-  constructor(public dialogRef: MatDialogRef<ModalCreateHopeComponent>, @Inject(MAT_DIALOG_DATA) public data: DialogData) {
-    this.resetPrice();
+  constructor(public dialogRef: MatDialogRef<EditHopeComponent>, @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+    if (data.isEditing) {
+      this.deal_method = data.hope.deal_method;
+      this.unit = data.hope.unit;
+      this.qty = data.hope.qty;
+      this.price = data.hope.price;
+      this.note = data.hope.note;
+    } else {
+      this.resetPrice();
+    }
   }
 
   ngOnInit(): void {}
@@ -36,7 +43,7 @@ export class ModalCreateHopeComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  onClickCreate() {
+  onSubmit() {
     const hopeData: IHope = {
       is_ask: this.data.is_ask,
       note: this.note,
@@ -53,4 +60,6 @@ export class ModalCreateHopeComponent implements OnInit {
 interface DialogData {
   is_ask: boolean;
   product: IRespProduct;
+  isEditing: boolean;
+  hope: IHope;
 }

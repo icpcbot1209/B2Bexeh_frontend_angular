@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ProductComponent } from './product.component';
-import { ModalCreateHopeComponent } from './modal-create-hope/modal-create-hope.component';
 import { HopesTableComponent } from './hopes-table/hopes-table.component';
 
 import { RouterModule, Routes } from '@angular/router';
@@ -15,7 +14,7 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 const routes: Routes = [{ path: '', component: ProductComponent }];
 
 @NgModule({
-  declarations: [ProductComponent, ModalCreateHopeComponent, HopesTableComponent],
+  declarations: [ProductComponent, HopesTableComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

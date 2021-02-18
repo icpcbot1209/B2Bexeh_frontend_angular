@@ -1,16 +1,13 @@
 import { OnInit } from '@angular/core';
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { IHope } from 'src/app/interfaces/IHope';
-import { IRespProduct } from 'src/app/interfaces/IRespProduct';
-import { ModalCreateHopeComponent } from '../../pages/product/modal-create-hope/modal-create-hope.component';
 import { IOffer } from 'src/app/interfaces/IOffer';
 import { OfferService } from 'src/app/services/offer.service';
 import { UserService } from 'src/app/services/user.service';
-import { ChattingService } from 'src/app/services/chatting.service';
 import { ConfigsService } from 'src/app/services/configs.service';
 
 import { STEPPER_GLOBAL_OPTIONS, StepState } from '@angular/cdk/stepper';
+import { CreateOfferComponent } from '../create-offer/create-offer.component';
 
 @Component({
   selector: 'main-offer-stepper',
@@ -26,7 +23,7 @@ import { STEPPER_GLOBAL_OPTIONS, StepState } from '@angular/cdk/stepper';
 export class OfferStepperComponent implements OnInit {
   isLinear = false;
   constructor(
-    public dialogRef: MatDialogRef<ModalCreateHopeComponent>,
+    public dialogRef: MatDialogRef<CreateOfferComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private offerService: OfferService,
     public userService: UserService,
@@ -56,9 +53,10 @@ export class OfferStepperComponent implements OnInit {
   setSelectedStepId(offer: IOffer, id?: number) {
     if (id) this.selectedStepId = id;
     else {
-      if (!offer.is_accepted) this.selectedStepId = 0;
+      if (offer.is_canceled) this.selectedStepId = 0;
+      else if (!offer.is_accepted) this.selectedStepId = 0;
       else if (!offer.is_paid || !offer.is_shipped) this.selectedStepId = 1;
-      else if (!offer.is_canceled) this.selectedStepId = 0;
+      else this.selectedStepId = 2;
     }
   }
 

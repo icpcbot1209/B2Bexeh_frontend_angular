@@ -8,7 +8,6 @@ import { ProductService } from 'src/app/services/product.service';
 import { OfferService } from 'src/app/services/offer.service';
 import { AuthService } from 'src/app/shared/auth.service';
 
-import { ModalCreateHopeComponent } from './modal-create-hope/modal-create-hope.component';
 import { ChattingService } from 'src/app/services/chatting.service';
 
 import { IHope } from 'src/app/interfaces/IHope';
@@ -16,6 +15,8 @@ import { HopeService } from 'src/app/services/hope.service';
 import { UserService } from 'src/app/services/user.service';
 import { CreateOfferComponent } from '../../offer-modals/create-offer/create-offer.component';
 import { IOffer } from 'src/app/interfaces/IOffer';
+import { SnackService } from 'src/app/services/snack.service';
+import { EditHopeComponent } from '../../hope-modals/edit-hope/edit-hope.component';
 
 @Component({
   selector: 'app-product',
@@ -32,7 +33,7 @@ export class ProductComponent implements OnInit {
     private chattingService: ChattingService,
     public dialog: MatDialog,
     private hopeService: HopeService,
-    private router: Router
+    private snack: SnackService
   ) {}
 
   productId;
@@ -53,9 +54,7 @@ export class ProductComponent implements OnInit {
     this.isBusy = true;
     this.productService.getProductById(productId).subscribe(
       (resp) => {
-        this.isBusy = false;
-        let arr: any[] = resp['data']['rows'] || resp['data'];
-        if (arr && arr.length > 0) this.product = arr[0];
+        this.product = resp;
       },
       (err) => {
         this.isBusy = false;
@@ -102,29 +101,6 @@ export class ProductComponent implements OnInit {
     this.myBids = myBids;
   }
 
-  openCreateHopeModal(is_ask) {
-    const dialogRef = this.dialog.open(ModalCreateHopeComponent, {
-      data: { is_ask, product: this.product },
-      panelClass: 'custom-dialog-container',
-    });
-
-    dialogRef.afterClosed().subscribe((result: IHope) => {
-      if (result) this.tryCreateHope(result);
-    });
-  }
-
-  async tryCreateHope(hopeData: IHope) {
-    try {
-      const hope: IHope = await this.hopeService.createHope(hopeData).toPromise();
-      hope.dealer_name = this.userService.me.user_name;
-
-      this.hopes.push(hope);
-      this.separateHopes(this.hopes);
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
   openCreateOfferModal({ hope, isAccept }) {
     const dialogRef = this.dialog.open(CreateOfferComponent, {
       data: { isAccept, hope, product: this.product },
@@ -141,16 +117,63 @@ export class ProductComponent implements OnInit {
 
   addToWatchlist() {}
 
-  handleDeleteHope(hope: IHope) {
-    // TODO: api
-    this.hopes = this.hopes.filter((x) => x.id !== hope.id);
-    console.log(this.hopes.length);
-    this.separateHopes(this.hopes);
+  openCreateHopeModal(is_ask: boolean, isEditing: boolean = false, hope: IHope = null) {
+    const dialogRef = this.dialog.open(EditHopeComponent, {
+      data: { is_ask, product: this.product, isEditing, hope },
+      panelClass: 'custom-dialog-container',
+    });
+
+    dialogRef.afterClosed().subscribe((result: IHope) => {
+      if (!result) return;
+      if (!isEditing) this.tryCreateHope(result);
+      else this.tryUpdateHope(result, hope.id);
+    });
   }
 
-  handleSaveHope(hope: IHope) {
-    // TODO: api
-    let k = this.hopes.findIndex((x) => x.id === hope.id);
-    if (k > -1) this.hopes[k] = hope;
+  async tryCreateHope(hopeData: IHope) {
+    try {
+      const hope: IHope = await this.hopeService.createHope(hopeData).toPromise();
+      hope.dealer_name = this.userService.me.user_name;
+
+      this.hopes.push(hope);
+      this.separateHopes(this.hopes);
+      this.snack.success('Successfully created.');
+    } catch (err) {
+      console.log(err);
+      this.snack.error(err.message);
+    }
+  }
+
+  async tryUpdateHope(hopeData: IHope, hopeId) {
+    try {
+      const hope: IHope = await this.hopeService.updateHope(hopeData, hopeId).toPromise();
+      hope.dealer_name = this.userService.me.user_name;
+
+      let k = this.hopes.findIndex((x) => x.id === hope.id);
+      if (k > -1) this.hopes[k] = hope;
+      this.separateHopes(this.hopes);
+
+      this.snack.success('Successfully updated.');
+    } catch (err) {
+      console.log(err);
+      this.snack.error(err.message);
+    }
+  }
+
+  async handleDeleteHope(hope: IHope) {
+    try {
+      await this.hopeService.deleteHope(hope.id).toPromise();
+      this.hopes = this.hopes.filter((x) => x.id !== hope.id);
+      this.separateHopes(this.hopes);
+
+      this.snack.success('Successfully deleted.');
+    } catch (err) {
+      console.log(err);
+      this.snack.error(err.message);
+    }
+  }
+
+  handleEditHope(hope: IHope) {
+    this.openCreateHopeModal(hope.is_ask, true, hope);
   }
 }

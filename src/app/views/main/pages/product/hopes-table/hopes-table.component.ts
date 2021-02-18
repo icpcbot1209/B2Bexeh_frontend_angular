@@ -27,7 +27,7 @@ export class HopesTableComponent implements OnChanges {
   @Output() productClicked = new EventEmitter<any>();
   @Output() sendOfferClicked = new EventEmitter<any>();
   @Output() deleteHopeClicked = new EventEmitter<any>();
-  @Output() saveHopeClicked = new EventEmitter<any>();
+  @Output() editHopeClicked = new EventEmitter<any>();
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -68,9 +68,9 @@ export class HopesTableComponent implements OnChanges {
     }
   }
 
-  onClickSaveHope(hope: IHope, event) {
+  onClickEditHope(hope: IHope, event) {
     event.stopPropagation();
 
-    this.saveHopeClicked.emit(hope);
+    this.editHopeClicked.emit(hope);
   }
 }

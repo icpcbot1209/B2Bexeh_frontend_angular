@@ -7,11 +7,10 @@ import { MaterialModule } from 'src/app/shared/material.module';
 import { CategorySelectComponent } from './category-select/category-select.component';
 import { DealMethodSelectComponent } from './deal-method-select/deal-method-select.component';
 import { ListingTimeSelectComponent } from './listing-time-select/listing-time-select.component';
-import { ProductOffersTableComponent } from './product-offers-table/product-offers-table.component';
 
 @NgModule({
-  declarations: [ProductFilterComponent, CategorySelectComponent, DealMethodSelectComponent, ListingTimeSelectComponent, ProductOffersTableComponent],
+  declarations: [ProductFilterComponent, CategorySelectComponent, DealMethodSelectComponent, ListingTimeSelectComponent],
   imports: [CommonModule, FormsModule, MaterialModule, ReactiveFormsModule, NgSelectModule],
-  exports: [ProductFilterComponent, CategorySelectComponent, DealMethodSelectComponent, ListingTimeSelectComponent, ProductOffersTableComponent],
+  exports: [ProductFilterComponent, CategorySelectComponent, DealMethodSelectComponent, ListingTimeSelectComponent],
 })
 export class MainComponentsModule {}

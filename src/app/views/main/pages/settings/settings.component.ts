@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 export class SettingsComponent implements OnInit {
   tabs = [
     { label: 'Account', url: '/main/settings/account' },
-    { label: 'Bids / Asks', url: '/main/settings/bids-asks' },
+    { label: 'Bids / Asks', url: '/main/settings/my-bids-asks' },
     { label: 'Billing', url: '/main/settings/billing' },
   ];
 

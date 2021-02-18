@@ -18,7 +18,19 @@ export class HopeService {
     return this.http.post<IHope>(`${env.myApiUrl2}/hope/createOne`, hopeData);
   }
 
+  updateHope(hopeData: IHope, hopeId: string) {
+    return this.http.post<IHope>(`${env.myApiUrl2}/hope/updateOne`, { hopeData, hopeId });
+  }
+
+  deleteHope(hopeId: string) {
+    return this.http.post<IHope>(`${env.myApiUrl2}/hope/deleteOne`, { hopeId });
+  }
+
   getByCategory(category_id: string, subcategory_id: string) {
     return this.http.post<IHope[]>(`${env.myApiUrl2}/hope/getByCategory`, { category_id, subcategory_id });
+  }
+
+  getMyHopes(is_ask: boolean) {
+    return this.http.post<IHope[]>(`${env.myApiUrl2}/hope/getMyHopes`, { is_ask });
   }
 }

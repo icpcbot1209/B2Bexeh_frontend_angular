@@ -73,7 +73,11 @@ export class OfferService {
       text = `Pending ${who} Approval`;
       num = 0;
     } else if (!offer.is_paid || !offer.is_shipped) {
-      text = 'Ship / Pay';
+      if (!offer.is_paid && offer.buyer_id === me.id) text = 'Pending Your Payment';
+      else if (!offer.is_shipped && offer.seller_id === me.id) text = 'Pending Your Shipping';
+      else if (!offer.is_paid && offer.buyer_id !== me.id) text = 'Pending Their Payment';
+      else if (!offer.is_shipped && offer.seller_id !== me.id) text = 'Pending Their Shipping';
+
       num = 1;
     } else if (offer.is_paid && offer.is_shipped) {
       if ((offer.seller_id === me.id && !offer.feedback2buyer) || (offer.buyer_id === me.id && !offer.feedback2seller)) {

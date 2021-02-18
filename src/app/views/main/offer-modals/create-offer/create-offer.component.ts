@@ -2,7 +2,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { IHope } from 'src/app/interfaces/IHope';
 import { IRespProduct } from 'src/app/interfaces/IRespProduct';
-import { ModalCreateHopeComponent } from '../../pages/product/modal-create-hope/modal-create-hope.component';
 import { IOffer } from 'src/app/interfaces/IOffer';
 import { OfferService } from 'src/app/services/offer.service';
 import { UserService } from 'src/app/services/user.service';
@@ -20,7 +19,7 @@ export class CreateOfferComponent implements OnInit {
   note: string = '';
 
   constructor(
-    public dialogRef: MatDialogRef<ModalCreateHopeComponent>,
+    public dialogRef: MatDialogRef<CreateOfferComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private offerService: OfferService,
     private userService: UserService,

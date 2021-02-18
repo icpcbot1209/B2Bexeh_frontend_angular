@@ -47,7 +47,7 @@
       <main-hopes-table
         [hopes]="bids"
         (sendOfferClicked)="openCreateOfferModal($event)"
-        (saveHopeClicked)="handleSaveHope($event)"
+        (editHopeClicked)="handleEditHope($event)"
         (deleteHopeClicked)="handleDeleteHope($event)"
       ></main-hopes-table>
     </div>
@@ -56,17 +56,17 @@
       <main-hopes-table
         [hopes]="asks"
         (sendOfferClicked)="openCreateOfferModal($event)"
-        (saveHopeClicked)="handleSaveHope($event)"
+        (editHopeClicked)="handleEditHope($event)"
         (deleteHopeClicked)="handleDeleteHope($event)"
       ></main-hopes-table>
     </div>
     <div class="table-container">
       <p>My Bids for this item</p>
-      <main-hopes-table [hopes]="myBids" (saveHopeClicked)="handleSaveHope($event)" (deleteHopeClicked)="handleDeleteHope($event)"></main-hopes-table>
+      <main-hopes-table [hopes]="myBids" (editHopeClicked)="handleEditHope($event)" (deleteHopeClicked)="handleDeleteHope($event)"></main-hopes-table>
     </div>
     <div class="table-container">
       <p>My Asks for this item</p>
-      <main-hopes-table [hopes]="myAsks" (saveHopeClicked)="handleSaveHope($event)" (deleteHopeClicked)="handleDeleteHope($event)"></main-hopes-table>
+      <main-hopes-table [hopes]="myAsks" (editHopeClicked)="handleEditHope($event)" (deleteHopeClicked)="handleDeleteHope($event)"></main-hopes-table>
     </div>
   </div>
 </ng-container>

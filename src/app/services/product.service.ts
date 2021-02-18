@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { ApiUrlConstant } from '../constants/api-url.constant';
+import { IProduct } from '../interfaces/IProduct';
 
 @Injectable({
   providedIn: 'root',
@@ -47,6 +48,12 @@ export class ProductService {
   }
 
   getProductById(productId) {
-    return this.http.post(ApiUrlConstant.GETPRODUCTBYID, { id: productId });
+    return this.http.post(ApiUrlConstant.GETPRODUCTBYID, { id: productId }).pipe(
+      map((resp) => {
+        let arr: any[] = resp['data']['rows'] || resp['data'];
+        if (arr && arr.length > 0) return arr[0];
+        return null;
+      })
+    );
   }
 }

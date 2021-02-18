@@ -6,8 +6,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/shared/material.module';
 import { ComponentsStateButtonModule } from 'src/app/components/state-button/components.state-button.module';
 
+import { HopeModalsModule } from 'src/app/views/main/hope-modals/hope-modals.module';
+import { TablesModule } from 'src/app/views/main/tables/tables.module';
+
 import { AccountComponent } from './account/account.component';
-import { BidsAsksComponent } from './bids-asks/bids-asks.component';
+import { MyHopesComponent } from './my-hopes/my-hopes.component';
 import { BillingComponent } from './billing/billing.component';
 
 const routes: Routes = [
@@ -17,14 +20,23 @@ const routes: Routes = [
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'account' },
       { path: 'account', component: AccountComponent },
-      { path: 'bids-asks', component: BidsAsksComponent },
+      { path: 'my-bids-asks', component: MyHopesComponent },
       { path: 'billing', component: BillingComponent },
     ],
   },
 ];
 
 @NgModule({
-  declarations: [SettingsComponent, AccountComponent, BidsAsksComponent, BillingComponent],
-  imports: [CommonModule, RouterModule.forChild(routes), FormsModule, ReactiveFormsModule, MaterialModule, ComponentsStateButtonModule],
+  declarations: [SettingsComponent, AccountComponent, MyHopesComponent, BillingComponent],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
+    FormsModule,
+    ReactiveFormsModule,
+    MaterialModule,
+    ComponentsStateButtonModule,
+    HopeModalsModule,
+    TablesModule,
+  ],
 })
 export class SettingsModule {}

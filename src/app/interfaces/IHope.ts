@@ -13,5 +13,6 @@ export interface IHope {
   /**joined */
   dealer_name?: string;
   product_name?: string;
+  product_img_url?: string;
   release_date?: Date;
 }
