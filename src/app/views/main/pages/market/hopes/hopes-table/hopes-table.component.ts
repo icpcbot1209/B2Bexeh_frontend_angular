@@ -29,7 +29,7 @@ export class HopesTableComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  displayedColumns: string[] = ['select', 'dealer_name', 'product_name', 'deal_method', 'qty', 'price', 'unit'];
+  displayedColumns: string[] = ['select', 'dealer_name', 'product_name', 'deal_method', 'qty', 'price', 'total', 'unit'];
 
   dataSource: MatTableDataSource<IHope>;
   updateTableRows(hopes: IHope[]) {

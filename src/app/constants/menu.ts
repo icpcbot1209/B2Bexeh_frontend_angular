@@ -441,6 +441,12 @@ let mydata: IMenuItem[] = [
     // roles: [UserRole.Admin, UserRole.Editor],
   },
   {
+    icon: 'iconsminds-gear',
+    label: 'Settings',
+    to: `/main/settings`,
+    // roles: [UserRole.Admin, UserRole.Editor],
+  },
+  {
     icon: 'iconsminds-information',
     label: 'Help',
     to: `/main/help`,
@@ -448,6 +454,6 @@ let mydata: IMenuItem[] = [
   },
 ];
 
-if (!environment.production) mydata = [...mydata, ...data];
+// if (!environment.production) mydata = [...mydata, ...data];
 
 export default mydata;

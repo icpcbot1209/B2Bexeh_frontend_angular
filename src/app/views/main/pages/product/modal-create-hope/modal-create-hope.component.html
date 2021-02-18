@@ -48,8 +48,16 @@
       <input class="form-control" placeholder="" [(ngModel)]="price" />
     </div>
   </div>
+  <div>
+    <div class="input-group" style="margin: 10px; width: 200px">
+      <div class="input-group-prepend">
+        <div class="input-group-text">Total</div>
+      </div>
+      <div class="form-control" style="padding: 12px">{{ qty * price | currency }}</div>
+    </div>
+  </div>
 
-  <div style="margin: 10px; text-align: center">
+  <div style="margin: 30px 0 10px 0; text-align: center">
     <textarea cols="45" rows="8" placeholder="Write message" [(ngModel)]="note"></textarea>
   </div>
 </div>

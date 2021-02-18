@@ -1,16 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 
 import { ApiUrl2 } from 'src/app/constants/api-url2';
+import { environment } from 'src/environments/environment';
 import { IUser } from '../interfaces/IUser';
+
+import { FileUploadService, makeFileName } from './file-upload.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private uploadService: FileUploadService) {}
 
   //test purpose
   async getTenUsers(): Promise<IUser[]> {
@@ -50,5 +53,22 @@ export class UserService {
       console.log(err);
       return null;
     }
+  }
+
+  updateUser(data: IUser) {
+    return this.http.post(`${environment.myApiUrl2}/user/updateUser`, data).pipe(
+      finalize(() => {
+        this.me = data;
+        this.me$.next(data);
+      })
+    );
+  }
+
+  async uploadUserAvatar(file: File, email: string) {
+    const dirPath = '/user-profiles';
+    const fileName = makeFileName(file, email);
+
+    const downloadURL = await this.uploadService.pushFileToStorage(file, dirPath, fileName);
+    return downloadURL;
   }
 }

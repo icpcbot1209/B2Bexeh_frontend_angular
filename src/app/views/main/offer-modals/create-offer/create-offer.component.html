@@ -36,6 +36,11 @@
         <input class="form-control" placeholder="" [(ngModel)]="price" />
       </ng-template>
     </div>
+
+    <div class="form-group" style="margin-left: 20px; flex: 1">
+      <label>Total</label>
+      <p style="margin: 10px">{{ price * qty | currency }}</p>
+    </div>
   </div>
 
   <!-- <div style="display: flex; margin: 20px 0">

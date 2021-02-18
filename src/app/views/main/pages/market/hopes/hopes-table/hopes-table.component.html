@@ -37,8 +37,13 @@
   </ng-container>
 
   <ng-container matColumnDef="deal_method">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Product Type</th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Deal Type</th>
     <td mat-cell *matCellDef="let element">{{ element.deal_method }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="unit">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Unit</th>
+    <td mat-cell *matCellDef="let element">{{ element.unit }}</td>
   </ng-container>
 
   <ng-container matColumnDef="qty">
@@ -51,9 +56,9 @@
     <td mat-cell *matCellDef="let element">{{ element.price || 0 | currency }}</td>
   </ng-container>
 
-  <ng-container matColumnDef="unit">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Unit</th>
-    <td mat-cell *matCellDef="let element">{{ element.unit }}</td>
+  <ng-container matColumnDef="total">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Total</th>
+    <td mat-cell *matCellDef="let element">{{ element.price * element.qty | currency }}</td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
