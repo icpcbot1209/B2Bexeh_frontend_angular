@@ -19,7 +19,7 @@ export class UserService {
     let resp = await this.http.post(`${environment.myApiUrl2}/user/getTenUsers`, {}).toPromise();
     let arr = resp['data']['rows'] || resp['data'];
     arr.forEach((user) => {
-      if (!user.profile_image_url || user.profile_image_url === '') user.profile_image_url = 'assets/img/profiles/profile.png';
+      if (!user.profile_image_url || user.profile_image_url === '') user.profile_image_url = 'assets/img/profiles/profile.jpg';
     });
     return arr;
   }
@@ -41,7 +41,7 @@ export class UserService {
       const resp = await this.http.post(`${environment.myApiUrl2}/user/getUserById`, { userId }).toPromise();
       if (resp['data'] && resp['data']['rows'] && resp['data']['rows'].length > 0) {
         const user: IUser = resp['data']['rows'][0];
-        if (!user.profile_image_url || user.profile_image_url === '') user.profile_image_url = 'assets/img/profiles/profile.png';
+        if (!user.profile_image_url || user.profile_image_url === '') user.profile_image_url = 'assets/img/profiles/profile.jpg';
         this.users.push(user);
         return user;
       } else {

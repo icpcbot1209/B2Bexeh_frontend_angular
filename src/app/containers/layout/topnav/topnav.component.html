@@ -24,7 +24,7 @@
       class="menu-button-mobile d-xs-block d-sm-block d-md-none"
     >
       <button id="button-basic" type="button" class="header-icon btn btn-empty">
-        <i class="simple-icon-list"></i>
+        <i class="fas fa-bars"></i>
       </button>
     </a>
 
@@ -32,67 +32,14 @@
       <span class="logo d-none d-xs-block"></span>
       <span class="logo-mobile d-block d-xs-none"></span>
     </a>
-
-    <div class="search" (click)="searchAreaClick($event)">
-      <input placeholder="Search..." [(ngModel)]="searchKey" (keyup)="searchKeyUp($event)" />
-      <span class="search-icon" (click)="searchClick($event)" [style.color]="foregroundColor">
-        <i class="simple-icon-magnifier"></i>
-      </span>
-    </div>
   </div>
 
   <div class="navbar-right">
     <div class="header-icons d-inline-block align-middle">
-      <!-- <div class="d-none d-md-inline-block align-text-bottom mr-1">
-        <div class="custom-control custom-switch" tooltip="Dark Mode" placement="left">
-          <input type="checkbox" class="custom-control-input" id="darkModeSwitch" [checked]="isDarkModeActive" (change)="onDarkModeChange($event)" />
-          <label class="custom-control-label" for="darkModeSwitch"></label>
-        </div>
-      </div> -->
-
-      <!-- <div class="position-relative d-none d-sm-inline-block">
-        <div dropdown>
-          <button dropdownToggle type="button" class="header-icon btn btn-empty">
-            <i class="simple-icon-grid"></i>
-          </button>
-          <div *dropdownMenu class="dropdown-menu dropdown-menu-right mt-3" role="menu" aria-labelledby="button-basic" id="iconMenuDropdown">
-            <a href="javascript:;" class="icon-menu-item">
-              <i class="iconsminds-equalizer d-block"></i>
-              <span>Settings</span>
-            </a>
-
-            <a href="javascript:;" class="icon-menu-item">
-              <i class="iconsminds-male-female d-block"></i>
-              <span>Users</span>
-            </a>
-
-            <a href="javascript:;" class="icon-menu-item">
-              <i class="iconsminds-puzzle d-block"></i>
-              <span>Components</span>
-            </a>
-
-            <a href="javascript:;" class="icon-menu-item">
-              <i class="iconsminds-bar-chart-4 d-block"></i>
-              <span>Profits</span>
-            </a>
-
-            <a href="javascript:;" class="icon-menu-item">
-              <i class="iconsminds-file d-block"></i>
-              <span>Surveys</span>
-            </a>
-
-            <a href="javascript:;" class="icon-menu-item">
-              <i class="iconsminds-suitcase d-block"></i>
-              <span>Tasks</span>
-            </a>
-          </div>
-        </div>
-      </div> -->
-
       <div class="position-relative d-inline-block">
         <div dropdown>
           <button id="button-basic" dropdownToggle type="button" id="notificationButton" class="header-icon btn btn-empty">
-            <i class="simple-icon-bell"></i>
+            <i class="fas fa-bell"></i>
             <span class="count" *ngIf="notifs.length > 0">{{ notifs.length }}</span>
           </button>
           <div id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-right mt-3" id="notificationDropdown">
@@ -102,8 +49,8 @@
       </div>
 
       <button class="header-icon btn btn-empty d-none d-sm-inline-block" type="button" id="fullScreenButton" (click)="fullScreenClick()">
-        <i *ngIf="!isFullScreen" class="simple-icon-size-fullscreen"></i>
-        <i *ngIf="isFullScreen" class="simple-icon-size-actual"></i>
+        <i *ngIf="!isFullScreen" class="fas fa-expand-arrows-alt"></i>
+        <i *ngIf="isFullScreen" class="fas fa-compress-arrows-alt"></i>
       </button>
     </div>
 

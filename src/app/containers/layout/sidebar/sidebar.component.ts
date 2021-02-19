@@ -10,6 +10,7 @@ import { AuthService } from 'src/app/shared/auth.service';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
+  styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit, OnDestroy {
   menuItems: IMenuItem[] = menuItems;
@@ -55,25 +56,17 @@ export class SidebarComponent implements OnInit, OnDestroy {
       .subscribe((event) => {
         const path = this.router.url.split('?')[0];
         const paramtersLen = Object.keys(event.snapshot.params).length;
-        const pathArr = path
-          .split('/')
-          .slice(0, path.split('/').length - paramtersLen);
+        const pathArr = path.split('/').slice(0, path.split('/').length - paramtersLen);
         this.currentUrl = pathArr.join('/');
       });
 
-    router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe((event: NavigationEnd) => {
-        const { containerClassnames } = this.sidebar;
-        this.selectMenu();
-        this.toggle();
-        this.sidebarService.setContainerClassnames(
-          0,
-          containerClassnames,
-          this.sidebar.selectedMenuHasSubItems
-        );
-        window.scrollTo(0, 0);
-      });
+    router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
+      const { containerClassnames } = this.sidebar;
+      this.selectMenu();
+      this.toggle();
+      this.sidebarService.setContainerClassnames(0, containerClassnames, this.sidebar.selectedMenuHasSubItems);
+      window.scrollTo(0, 0);
+    });
   }
 
   async ngOnInit(): Promise<void> {
@@ -81,11 +74,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
       this.selectMenu();
       const { containerClassnames } = this.sidebar;
       const nextClasses = this.getMenuClassesForResize(containerClassnames);
-      this.sidebarService.setContainerClassnames(
-        0,
-        nextClasses.join(' '),
-        this.sidebar.selectedMenuHasSubItems
-      );
+      this.sidebarService.setContainerClassnames(0, nextClasses.join(' '), this.sidebar.selectedMenuHasSubItems);
       this.isCurrentMenuHasSubItem();
     }, 100);
   }
@@ -104,9 +93,7 @@ export class SidebarComponent implements OnInit, OnDestroy {
     if (!foundedMenuItem) {
       if (path.split('/').length > 1) {
         const pathArr = path.split('/');
-        return this.findParentInPath(
-          pathArr.slice(0, pathArr.length - 1).join('/')
-        );
+        return this.findParentInPath(pathArr.slice(0, pathArr.length - 1).join('/'));
       } else {
         return undefined;
       }
@@ -118,24 +105,13 @@ export class SidebarComponent implements OnInit, OnDestroy {
   isCurrentMenuHasSubItem(): boolean {
     const { containerClassnames } = this.sidebar;
 
-    const menuItem = this.menuItems.find(
-      (x) => x.to === this.selectedParentMenu
-    );
-    const isCurrentMenuHasSubItem =
-      menuItem && menuItem.subs && menuItem.subs.length > 0 ? true : false;
+    const menuItem = this.menuItems.find((x) => x.to === this.selectedParentMenu);
+    const isCurrentMenuHasSubItem = menuItem && menuItem.subs && menuItem.subs.length > 0 ? true : false;
     if (isCurrentMenuHasSubItem !== this.sidebar.selectedMenuHasSubItems) {
       if (!isCurrentMenuHasSubItem) {
-        this.sidebarService.setContainerClassnames(
-          0,
-          containerClassnames,
-          false
-        );
+        this.sidebarService.setContainerClassnames(0, containerClassnames, false);
       } else {
-        this.sidebarService.setContainerClassnames(
-          0,
-          containerClassnames,
-          true
-        );
+        this.sidebarService.setContainerClassnames(0, containerClassnames, true);
       }
     }
     return isCurrentMenuHasSubItem;
@@ -163,45 +139,22 @@ export class SidebarComponent implements OnInit, OnDestroy {
       this.selectedParentMenu = selectedParent;
       this.toggle();
     } else {
-      const currentClasses = containerClassnames
-        ? containerClassnames.split(' ').filter((x) => x !== '')
-        : '';
+      const currentClasses = containerClassnames ? containerClassnames.split(' ').filter((x) => x !== '') : '';
 
       if (!currentClasses.includes('menu-mobile')) {
-        if (
-          currentClasses.includes('menu-sub-hidden') &&
-          (menuClickCount === 2 || menuClickCount === 0)
-        ) {
-          this.sidebarService.setContainerClassnames(
-            3,
-            containerClassnames,
-            hasSubMenu
-          );
-        } else if (
-          currentClasses.includes('menu-hidden') &&
-          (menuClickCount === 1 || menuClickCount === 3)
-        ) {
-          this.sidebarService.setContainerClassnames(
-            2,
-            containerClassnames,
-            hasSubMenu
-          );
+        if (currentClasses.includes('menu-sub-hidden') && (menuClickCount === 2 || menuClickCount === 0)) {
+          this.sidebarService.setContainerClassnames(3, containerClassnames, hasSubMenu);
+        } else if (currentClasses.includes('menu-hidden') && (menuClickCount === 1 || menuClickCount === 3)) {
+          this.sidebarService.setContainerClassnames(2, containerClassnames, hasSubMenu);
         } else if (
           currentClasses.includes('menu-default') &&
           !currentClasses.includes('menu-sub-hidden') &&
           (menuClickCount === 1 || menuClickCount === 3)
         ) {
-          this.sidebarService.setContainerClassnames(
-            0,
-            containerClassnames,
-            hasSubMenu
-          );
+          this.sidebarService.setContainerClassnames(0, containerClassnames, hasSubMenu);
         }
       } else {
-        this.sidebarService.addContainerClassname(
-          'sub-show-temporary',
-          containerClassnames
-        );
+        this.sidebarService.addContainerClassname('sub-show-temporary', containerClassnames);
       }
       this.viewingParentMenu = selectedParent;
     }
@@ -209,25 +162,12 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   toggle(): void {
     const { containerClassnames, menuClickCount } = this.sidebar;
-    const currentClasses = containerClassnames
-      .split(' ')
-      .filter((x) => x !== '');
+    const currentClasses = containerClassnames.split(' ').filter((x) => x !== '');
     if (currentClasses.includes('menu-sub-hidden') && menuClickCount === 3) {
-      this.sidebarService.setContainerClassnames(
-        2,
-        containerClassnames,
-        this.sidebar.selectedMenuHasSubItems
-      );
-    } else if (
-      currentClasses.includes('menu-hidden') ||
-      currentClasses.includes('menu-mobile')
-    ) {
+      this.sidebarService.setContainerClassnames(2, containerClassnames, this.sidebar.selectedMenuHasSubItems);
+    } else if (currentClasses.includes('menu-hidden') || currentClasses.includes('menu-mobile')) {
       if (!(menuClickCount === 1 && !this.sidebar.selectedMenuHasSubItems)) {
-        this.sidebarService.setContainerClassnames(
-          0,
-          containerClassnames,
-          this.sidebar.selectedMenuHasSubItems
-        );
+        this.sidebarService.setContainerClassnames(0, containerClassnames, this.sidebar.selectedMenuHasSubItems);
       }
     }
   }
@@ -248,21 +188,13 @@ export class SidebarComponent implements OnInit, OnDestroy {
       nextClasses.push('menu-mobile');
     } else if (windowWidth < this.sidebarService.subHiddenBreakpoint) {
       nextClasses = nextClasses.filter((x: string) => x !== 'menu-mobile');
-      if (
-        nextClasses.includes('menu-default') &&
-        !nextClasses.includes('menu-sub-hidden')
-      ) {
+      if (nextClasses.includes('menu-default') && !nextClasses.includes('menu-sub-hidden')) {
         nextClasses.push('menu-sub-hidden');
       }
     } else {
       nextClasses = nextClasses.filter((x: string) => x !== 'menu-mobile');
-      if (
-        nextClasses.includes('menu-default') &&
-        nextClasses.includes('menu-sub-hidden')
-      ) {
-        nextClasses = nextClasses.filter(
-          (x: string) => x !== 'menu-sub-hidden'
-        );
+      if (nextClasses.includes('menu-default') && nextClasses.includes('menu-sub-hidden')) {
+        nextClasses = nextClasses.filter((x: string) => x !== 'menu-sub-hidden');
       }
     }
     return nextClasses;
@@ -296,11 +228,6 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   // tslint:disable-next-line:no-shadowed-variable
   filteredMenuItems(menuItems: IMenuItem[]): IMenuItem[] {
-    return menuItems
-      ? menuItems.filter(
-          (x) =>
-            !x.roles || (x.roles && x.roles.includes(this.currentUser.role))
-        )
-      : [];
+    return menuItems ? menuItems.filter((x) => !x.roles || (x.roles && x.roles.includes(this.currentUser.role))) : [];
   }
 }

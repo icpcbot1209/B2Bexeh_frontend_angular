@@ -28,7 +28,7 @@
             <li class="nav-item"><a (click)="scrollTo('#themes')" href="javascript:;">THEMES</a></li>
           </ul>
           <span class="mobile-menu-button" (click)="showMobileMenu = !showMobileMenu; $event.stopPropagation()">
-            <i class="simple-icon-menu"></i>
+            <i class="fas fa-bars"></i>
           </span>
         </div>
       </nav>
@@ -54,7 +54,7 @@
                   <br />
                   Hope you enjoy it!
                 </p>
-                <a class="btn btn-light btn-xl mr-2 mb-2" [routerLink]="'/main'"> VIEW NOW <i class="simple-icon-arrow-right"></i> </a>
+                <a class="btn btn-light btn-xl mr-2 mb-2" [routerLink]="'/main'"> VIEW NOW <i class="fas fa-arrow-right"></i> </a>
               </div>
             </div>
             <div class="col-12 col-xl-7 offset-xl-1 col-lg-7 col-md-6 d-none d-md-block">
@@ -65,14 +65,8 @@
           </div>
 
           <div class="row">
-            <div class="col-12 p-0">
-              <div class="home-carousel"></div>
-            </div>
-          </div>
-
-          <div class="row">
             <a class="btn btn-circle btn-outline-semi-light hero-circle-button" (click)="scrollTo('#features')">
-              <i class="simple-icon-arrow-down"></i>
+              <i class="fas fa-chevron-down"></i>
             </a>
           </div>
         </div>
@@ -174,7 +168,7 @@
           <div class="row footer-row">
             <div class="col-12 text-right">
               <a class="btn btn-circle btn-outline-semi-light footer-circle-button" (click)="scrollTo('#home')" href="javascript:;"
-                ><i class="simple-icon-arrow-up"></i
+                ><i class="fas fa-chevron-up"></i
               ></a>
             </div>
             <div class="col-12 text-center footer-content">

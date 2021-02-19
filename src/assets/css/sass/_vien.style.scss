@@ -1899,15 +1899,15 @@ a.btn-secondary:not([href]):not([tabindex]) {
   }
 
   .header-icon {
-    font-size: 16px;
+    font-size: 26px;
     color: $foreground-color;
-    padding-left: 0.6rem;
-    padding-right: 0.6rem;
+    padding-left: 1.6rem;
+    padding-right: 1.6rem;
     vertical-align: initial;
 
     @include respond-below(xs) {
-      padding-left: 0.3rem;
-      padding-right: 0.3rem;
+      padding-left: 0.8rem;
+      padding-right: 0.8rem;
     }
 
     &:hover {
@@ -8441,7 +8441,7 @@ app-profile-who-to-follow app-user-follow:last-of-type > div {
 
           i {
             margin-right: initial;
-            margin-left: 10px;
+            margin-left: 20px;
           }
 
           &.active:after {
@@ -9669,7 +9669,7 @@ footer.page-footer {
       background-repeat: no-repeat;
       background-position-y: 0;
       background-color: transparent;
-      height: 1440px;
+      height: 1280px;
       margin-bottom: 0;
       padding-top: 0;
       padding-bottom: 0;
@@ -9677,7 +9677,7 @@ footer.page-footer {
       background-size: cover;
 
       @include respond-below(xs) {
-        height: 1340px;
+        height: 1080px;
       }
     }
 
