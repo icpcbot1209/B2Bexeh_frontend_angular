@@ -1899,8 +1899,9 @@ a.btn-secondary:not([href]):not([tabindex]) {
   }
 
   .header-icon {
-    font-size: 26px;
+    font-size: 16px;
     color: $foreground-color;
+    opacity: 0.7;
     padding-left: 1.6rem;
     padding-right: 1.6rem;
     vertical-align: initial;

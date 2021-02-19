@@ -13,6 +13,7 @@ import { LayoutContainersModule } from './containers/layout/layout.containers.mo
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from 'src/app/shared/auth-interceptor';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { AdminModule } from './views/admin/admin.module';
 
 @NgModule({
   imports: [
@@ -25,6 +26,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
     MatSnackBarModule,
+    AdminModule,
   ],
   declarations: [AppComponent],
   providers: [
