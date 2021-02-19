@@ -1,8 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef, Renderer2 } from '@angular/core';
-import { ChatService, IChatContact, IChatConversation } from 'src/app/views/app/applications/chat/chat.service';
 import { PerfectScrollbarComponent } from 'ngx-perfect-scrollbar';
-import { Observable, Subject, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 import { ChattingService } from 'src/app/services/chatting.service';
 import { IUser } from 'src/app/interfaces/IUser';
 import { UserService } from 'src/app/services/user.service';

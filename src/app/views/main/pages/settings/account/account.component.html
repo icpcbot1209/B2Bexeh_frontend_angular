@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-auto">
     <div class="avatar-wrapper" data-tippy-placement="bottom" title="Change Avatar">
-      <img class="profile-pic" [src]="imagePreview || 'assets/img/profiles/user-avatar-placeholder.png'" alt="" />
+      <img class="profile-pic" [src]="imagePreview || 'assets/img/profiles/profile.png'" alt="" />
       <div class="upload-button" (click)="fileInput.click()"></div>
       <input class="file-upload" type="file" accept="image/*" #fileInput (change)="onImagePicked($event)" />
     </div>

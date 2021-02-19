@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 
-import { ApiUrl2 } from 'src/app/constants/api-url2';
 import { environment } from 'src/environments/environment';
 import { IUser } from '../interfaces/IUser';
 
@@ -17,10 +16,10 @@ export class UserService {
 
   //test purpose
   async getTenUsers(): Promise<IUser[]> {
-    let resp = await this.http.post(ApiUrl2.getTenUsers, {}).toPromise();
+    let resp = await this.http.post(`${environment.myApiUrl2}/user/getTenUsers`, {}).toPromise();
     let arr = resp['data']['rows'] || resp['data'];
     arr.forEach((user) => {
-      if (!user.profile_image_url || user.profile_image_url === '') user.profile_image_url = 'assets/img/profiles/user-avatar-placeholder.png';
+      if (!user.profile_image_url || user.profile_image_url === '') user.profile_image_url = 'assets/img/profiles/profile.png';
     });
     return arr;
   }
@@ -39,10 +38,10 @@ export class UserService {
     if (k > -1) return this.users[k];
 
     try {
-      const resp = await this.http.post(ApiUrl2.getUserById, { userId }).toPromise();
+      const resp = await this.http.post(`${environment.myApiUrl2}/user/getUserById`, { userId }).toPromise();
       if (resp['data'] && resp['data']['rows'] && resp['data']['rows'].length > 0) {
         const user: IUser = resp['data']['rows'][0];
-        if (!user.profile_image_url || user.profile_image_url === '') user.profile_image_url = 'assets/img/profiles/user-avatar-placeholder.png';
+        if (!user.profile_image_url || user.profile_image_url === '') user.profile_image_url = 'assets/img/profiles/profile.png';
         this.users.push(user);
         return user;
       } else {
