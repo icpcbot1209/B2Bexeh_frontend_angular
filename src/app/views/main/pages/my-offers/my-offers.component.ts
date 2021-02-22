@@ -8,12 +8,12 @@ import { Component, OnInit } from '@angular/core';
 export class MyOffersComponent implements OnInit {
   constructor() {}
 
-  ngOnInit() {}
-
   tabs = [
     { label: 'Active Received', url: '/main/myoffers/active-received' },
     { label: 'Active Sent', url: '/main/myoffers/active-sent' },
     { label: 'Closed Received', url: '/main/myoffers/closed-received' },
     { label: 'Closed Sent', url: '/main/myoffers/closed-sent' },
   ];
+
+  ngOnInit() {}
 }

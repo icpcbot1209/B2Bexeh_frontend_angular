@@ -7,24 +7,23 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./category-select.component.scss'],
 })
 export class CategorySelectComponent implements OnInit {
+  constructor(public productService: ProductService) {}
   @Output() categoriesSelected = new EventEmitter<{ categoryId; subcategoryId }>();
 
-  constructor(public productService: ProductService) {}
+  categories = [];
+
+  subcategories = [];
+  category;
+  subcategory;
 
   ngOnInit(): void {
     this.init();
   }
-
-  categories = [];
   init() {
     this.productService.getCategories().subscribe((resp) => {
       this.categories = resp['data']['rows'];
     });
   }
-
-  subcategories = [];
-  category;
-  subcategory;
   onChangeCategory(category) {
     this.productService.getSubcategories(category.id).subscribe((resp) => {
       this.subcategories = resp['data']['rows'];
@@ -33,8 +32,8 @@ export class CategorySelectComponent implements OnInit {
   }
 
   onChangeSubcategory(subcategory) {
-    let categoryId = this.category.id;
-    let subcategoryId = subcategory.id;
+    const categoryId = this.category.id;
+    const subcategoryId = subcategory.id;
     this.categoriesSelected.emit({ categoryId, subcategoryId });
   }
 }

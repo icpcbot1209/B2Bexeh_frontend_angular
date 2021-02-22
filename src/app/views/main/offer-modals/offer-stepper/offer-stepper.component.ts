@@ -21,7 +21,6 @@ import { CreateOfferComponent } from '../create-offer/create-offer.component';
   ],
 })
 export class OfferStepperComponent implements OnInit {
-  isLinear = false;
   constructor(
     public dialogRef: MatDialogRef<CreateOfferComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -29,6 +28,9 @@ export class OfferStepperComponent implements OnInit {
     public userService: UserService,
     public configs: ConfigsService
   ) {}
+  isLinear = false;
+
+  selectedStepId = 0;
 
   ngOnInit() {
     this.setSelectedStepId(this.data.offer);
@@ -44,25 +46,23 @@ export class OfferStepperComponent implements OnInit {
 
   statusState(offer: IOffer, pos: number): string {
     const num = this.offerService.statusOffer(offer).num;
-    if (num > pos) return 'done';
-    if (num === pos) return 'edit';
-    if (num < pos) return 'number';
+    if (num > pos) { return 'done'; }
+    if (num === pos) { return 'edit'; }
+    if (num < pos) { return 'number'; }
   }
-
-  selectedStepId = 0;
   setSelectedStepId(offer: IOffer, id?: number) {
-    if (id) this.selectedStepId = id;
+    if (id) { this.selectedStepId = id; }
     else {
-      if (offer.is_canceled) this.selectedStepId = 0;
-      else if (!offer.is_accepted) this.selectedStepId = 0;
-      else if (!offer.is_paid || !offer.is_shipped) this.selectedStepId = 1;
-      else this.selectedStepId = 2;
+      if (offer.is_canceled) { this.selectedStepId = 0; }
+      else if (!offer.is_accepted) { this.selectedStepId = 0; }
+      else if (!offer.is_paid || !offer.is_shipped) { this.selectedStepId = 1; }
+      else { this.selectedStepId = 2; }
     }
   }
 
   myFeedback(): string {
-    if (this.data.offer.buyer_id === this.userService.me.id) return this.data.offer.feedback2seller;
-    else return this.data.offer.feedback2buyer;
+    if (this.data.offer.buyer_id === this.userService.me.id) { return this.data.offer.feedback2seller; }
+    else { return this.data.offer.feedback2buyer; }
   }
 }
 

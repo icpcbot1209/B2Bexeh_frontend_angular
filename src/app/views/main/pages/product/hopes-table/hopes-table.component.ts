@@ -20,10 +20,12 @@ import { UserService } from 'src/app/services/user.service';
   ],
 })
 export class HopesTableComponent implements OnChanges {
-  private _hopes: IHope[];
   @Input() set hopes(value: IHope[]) {
     this.updateTableRows(value);
   }
+
+  constructor(public userService: UserService, public configs: ConfigsService) {}
+  private _hopes: IHope[];
   @Output() productClicked = new EventEmitter<any>();
   @Output() sendOfferClicked = new EventEmitter<any>();
   @Output() deleteHopeClicked = new EventEmitter<any>();
@@ -33,18 +35,16 @@ export class HopesTableComponent implements OnChanges {
 
   expandedElement: IHope | null;
 
-  constructor(public userService: UserService, public configs: ConfigsService) {}
+  displayedColumns: string[] = ['dealer_name', 'deal_method', 'unit', 'qty', 'price', 'total', 'note'];
+  dataSource: MatTableDataSource<IHope>;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.hopes && changes.hopes.currentValue !== changes.hopes.previousValue) {
       this.updateTableRows(changes.hopes.currentValue);
     }
   }
-
-  displayedColumns: string[] = ['dealer_name', 'deal_method', 'unit', 'qty', 'price', 'total', 'note'];
-  dataSource: MatTableDataSource<IHope>;
   updateTableRows(hopes: IHope[]) {
-    if (!hopes) return;
+    if (!hopes) { return; }
     this.dataSource = new MatTableDataSource(hopes);
     this.dataSource.sort = this.sort;
   }

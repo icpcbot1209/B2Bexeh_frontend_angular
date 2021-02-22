@@ -16,7 +16,7 @@ import { ConfigsService } from 'src/app/services/configs.service';
 export class CreateOfferComponent implements OnInit {
   qty: number;
   price: number;
-  note: string = '';
+  note = '';
 
   constructor(
     public dialogRef: MatDialogRef<CreateOfferComponent>,

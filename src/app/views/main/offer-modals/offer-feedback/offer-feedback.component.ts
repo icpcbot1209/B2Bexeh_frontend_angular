@@ -22,13 +22,13 @@ export class OfferFeedbackComponent implements OnChanges {
   }
 
   myFeedback(): string {
-    if (this.isBuyer()) return this.offer.feedback2seller;
-    else return this.offer.feedback2buyer;
+    if (this.isBuyer()) { return this.offer.feedback2seller; }
+    else { return this.offer.feedback2buyer; }
   }
 
   theirFeedback(): string {
-    if (this.isBuyer()) return this.offer.feedback2buyer;
-    else return this.offer.feedback2seller;
+    if (this.isBuyer()) { return this.offer.feedback2buyer; }
+    else { return this.offer.feedback2seller; }
   }
 
   giveFeedback(feedback: string) {

@@ -1,5 +1,4 @@
 import { environment } from 'src/environments/environment';
-import { UserRole } from '../shared/auth.roles';
 const adminRoot = environment.adminRoot;
 
 export interface IMenuItem {
@@ -9,10 +8,10 @@ export interface IMenuItem {
   to: string;
   newWindow?: boolean;
   subs?: IMenuItem[];
-  roles?: UserRole[];
+  roles?: string[];
 }
 
-let mydata: IMenuItem[] = [
+const mydata: IMenuItem[] = [
   {
     icon: 'fas fa-search-dollar',
     label: 'Browse Market',

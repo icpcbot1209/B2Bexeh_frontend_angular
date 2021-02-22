@@ -8,8 +8,6 @@ import { Component, OnInit } from '@angular/core';
 export class MarketComponent implements OnInit {
   constructor() {}
 
-  ngOnInit(): void {}
-
   tabs = [
     { label: 'Products', url: '/main/market/products' },
     { label: 'Bids/Asks', url: '/main/market/bidsasks' },
@@ -17,4 +15,6 @@ export class MarketComponent implements OnInit {
     { label: 'New Arrivals', url: '/main/market/new-arrivals' },
     { label: 'Watch List', url: '/main/market/watch-list' },
   ];
+
+  ngOnInit(): void {}
 }

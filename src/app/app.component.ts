@@ -30,6 +30,6 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   test() {
-    this.configsService.loadConfigs();
+    // this.configsService.loadConfigs();
   }
 }

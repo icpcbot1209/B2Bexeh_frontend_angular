@@ -11,16 +11,18 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./offer-payment.component.scss'],
 })
 export class OfferPaymentComponent implements OnChanges {
+
+  constructor(public userService: UserService, private offerService: OfferService) {}
   @Input() offer: IOffer;
   @Output() offerChanged = new EventEmitter<any>();
 
   seller: IUser;
   buyer: IUser;
 
-  constructor(public userService: UserService, private offerService: OfferService) {}
+  paidInfo = '';
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.offer) {
-      let offer: IOffer = changes.offer.currentValue;
+      const offer: IOffer = changes.offer.currentValue;
       this.userService.getUserById(offer.seller_id).then((user) => {
         this.seller = user;
       });
@@ -31,8 +33,6 @@ export class OfferPaymentComponent implements OnChanges {
   }
 
   ngOnInit() {}
-
-  paidInfo = '';
   async onClickConfirm() {
     if (confirm('paid?')) {
       this.offerService.markAsPaid(this.offer.id, this.paidInfo).subscribe((resp) => {

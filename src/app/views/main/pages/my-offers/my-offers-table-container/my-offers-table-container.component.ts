@@ -15,7 +15,6 @@ import { OfferStepperComponent } from '../../../offer-modals/offer-stepper/offer
   styleUrls: ['./my-offers-table-container.component.scss'],
 })
 export class MyOffersTableContainerComponent implements OnInit, OnDestroy {
-  private subscription: Subscription;
   constructor(
     private router: Router,
     private offerService: OfferService,
@@ -25,21 +24,22 @@ export class MyOffersTableContainerComponent implements OnInit, OnDestroy {
   ) {
     this.subscription = this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
-        let lastUrl = event.urlAfterRedirects.split('/').pop();
+        const lastUrl = event.urlAfterRedirects.split('/').pop();
         this.getMyOffers(lastUrl);
       }
     });
   }
+  private subscription: Subscription;
+
+  isBusy = false;
+  offers: IOffer[] = [];
+  tag: string;
 
   ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
-
-  isBusy = false;
-  offers: IOffer[] = [];
-  tag: string;
   async getMyOffers(tag: string) {
     this.tag = tag;
     try {
@@ -47,8 +47,8 @@ export class MyOffersTableContainerComponent implements OnInit, OnDestroy {
       rows.forEach(async (row) => {
         row.buyer_name = (await this.userService.getUserById(row.buyer_id)).user_name;
         row.seller_name = (await this.userService.getUserById(row.seller_id)).user_name;
-        if (row.buyer_id === this.userService.me.id) row.other_name = row.seller_name;
-        else row.other_name = row.buyer_name;
+        if (row.buyer_id === this.userService.me.id) { row.other_name = row.seller_name; }
+        else { row.other_name = row.buyer_name; }
       });
       this.offers = rows;
     } catch (err) {

@@ -12,9 +12,6 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./hopes-table.component.scss'],
 })
 export class HopesTableComponent implements OnInit {
-  @Input() is_ask: boolean;
-
-  private _hopes: IHope[];
   @Input() set hopes(value: IHope[]) {
     this.updateTableRows(value);
   }
@@ -22,18 +19,23 @@ export class HopesTableComponent implements OnInit {
     return this._hopes;
   }
 
+  constructor(private productService: ProductService) {}
+  @Input() is_ask: boolean;
+
+  private _hopes: IHope[];
+
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-
-  constructor(private productService: ProductService) {}
-
-  ngOnInit(): void {}
 
   displayedColumns: string[] = ['select', 'dealer_name', 'product_name', 'deal_method', 'qty', 'price', 'total', 'unit'];
 
   dataSource: MatTableDataSource<IHope>;
+
+  selection = new SelectionModel<IHope>(true, []);
+
+  ngOnInit(): void {}
   updateTableRows(hopes: IHope[]) {
-    if (!hopes) return;
+    if (!hopes) { return; }
     this.dataSource = new MatTableDataSource(hopes);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
@@ -47,8 +49,6 @@ export class HopesTableComponent implements OnInit {
       this.dataSource.paginator.firstPage();
     }
   }
-
-  selection = new SelectionModel<IHope>(true, []);
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {

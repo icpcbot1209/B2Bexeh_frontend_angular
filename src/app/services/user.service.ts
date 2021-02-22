@@ -5,6 +5,7 @@ import { finalize, map } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
 import { IUser } from '../interfaces/IUser';
+import { AuthService } from '../shared/auth.service';
 
 import { FileUploadService, makeFileName } from './file-upload.service';
 
@@ -12,49 +13,54 @@ import { FileUploadService, makeFileName } from './file-upload.service';
   providedIn: 'root',
 })
 export class UserService {
-  constructor(private http: HttpClient, private uploadService: FileUploadService) {}
-
-  //test purpose
-  async getTenUsers(): Promise<IUser[]> {
-    let resp = await this.http.post(`${environment.myApiUrl2}/user/getTenUsers`, {}).toPromise();
-    let arr = resp['data']['rows'] || resp['data'];
-    arr.forEach((user) => {
-      if (!user.profile_image_url || user.profile_image_url === '') user.profile_image_url = 'assets/img/profiles/profile.jpg';
+  constructor(private http: HttpClient, private authService: AuthService, private uploadService: FileUploadService) {
+    this.authService.auth$.subscribe((isAuthed) => {
+      if (!isAuthed) {
+        this.me = null;
+        this.me$.next(null);
+      } else {
+        this.getMe();
+      }
     });
-    return arr;
   }
 
   me: IUser = null;
   me$ = new Subject<IUser>();
 
-  async getMe(id: string) {
+  private users: IUser[] = [];
+
+  // test purpose
+  async getTenUsers(): Promise<IUser[]> {
+    return [];
+  }
+
+  async getMe(id: string = null) {
+    if (!id) id = localStorage.getItem('b2b_auth_uid');
+
     this.me = await this.getUserById(id);
     this.me$.next(this.me);
   }
 
-  private users: IUser[] = [];
-  async getUserById(userId: any) {
-    let k = this.users.findIndex((x) => x.id === userId);
-    if (k > -1) return this.users[k];
+  async getUserById(user_uid: string) {
+    const k = this.users.findIndex((x) => x.user_uid === user_uid);
+    if (k > -1) {
+      return this.users[k];
+    }
 
     try {
-      const resp = await this.http.post(`${environment.myApiUrl2}/user/getUserById`, { userId }).toPromise();
-      if (resp['data'] && resp['data']['rows'] && resp['data']['rows'].length > 0) {
-        const user: IUser = resp['data']['rows'][0];
-        if (!user.profile_image_url || user.profile_image_url === '') user.profile_image_url = 'assets/img/profiles/profile.jpg';
-        this.users.push(user);
-        return user;
-      } else {
-        console.log('No user found');
-        return null;
-      }
+      const user: IUser = await this.http
+        .post<IUser>(`${environment.myApiUrl2}/profile/getByUserUid`, { user_uid })
+        .toPromise();
+
+      this.users.push(user);
+      return user;
     } catch (err) {
       console.log(err);
       return null;
     }
   }
 
-  updateUser(data: IUser) {
+  updateMe(data: IUser) {
     return this.http.post(`${environment.myApiUrl2}/user/updateUser`, data).pipe(
       finalize(() => {
         this.me = data;

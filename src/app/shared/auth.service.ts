@@ -1,13 +1,11 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { getUserRole } from 'src/app/utils/util';
-
-import { from, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { ApiUrlConstant } from 'src/app/constants/api-url.constant';
+import { auth, User } from 'firebase/app';
+import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
-import { UserService } from '../services/user.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { switchMap, first, map } from 'rxjs/operators';
+import { SnackService } from '../services/snack.service';
 
 export interface ISignInCredentials {
   email: string;
@@ -17,7 +15,6 @@ export interface ISignInCredentials {
 export interface ICreateCredentials {
   email: string;
   password: string;
-  displayName: string;
 }
 
 export interface IPasswordReset {
@@ -27,90 +24,143 @@ export interface IPasswordReset {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  isAuthed = false;
-  userId: any;
-  constructor(private auth: AngularFireAuth, private http: HttpClient, private router: Router, private userService: UserService) {
-    this.autoLogin();
+  auth$ = new Subject<boolean>();
+
+  constructor(
+    // tslint:disable-next-line: no-shadowed-variable
+    private auth: AngularFireAuth,
+    private router: Router,
+    public ngZone: NgZone,
+    private snack: SnackService
+  ) {
+    this.auth.authState.subscribe((authData: User) => {
+      this.setAuthData(authData);
+    });
   }
 
-  private autoLogin() {
-    if (this.getToken()) {
-      this.isAuthed = true;
-      this.userId = localStorage.getItem('b2b_auth_userId');
-      this.userService.getMe(this.userId);
+  async autoLogin(): Promise<void> {
+    try {
+      let auth_token = localStorage.getItem('b2b_auth_token');
+      let auth_uid = localStorage.getItem('b2b_auth_uid');
+
+      if (!auth_token) return;
+      const data = await this.auth.signInWithCustomToken(auth_token);
+      this.setAuthData(data.user);
+    } catch (err) {
+      console.log(err);
+      this.snack.error(err.message);
     }
   }
 
-  setToken(token: string) {
-    localStorage.setItem('b2b_auth_token', token);
-  }
-  getToken() {
-    return localStorage.getItem('b2b_auth_token');
-  }
+  private async setAuthData(authData: User): Promise<void> {
+    if (authData) {
+      const auth_token = await authData.getIdToken();
+      const auth_uid = authData.uid;
 
-  trySignOut() {
-    localStorage.removeItem('b2b_auth_token');
-    localStorage.removeItem('b2b_auth_role');
-    localStorage.removeItem('b2b_auth_username');
-    localStorage.removeItem('b2b_auth_userId');
-  }
-
-  trySignup(data) {
-    return this.http.post(ApiUrlConstant.REGISTER, data).pipe(
-      map((res: any) => {
-        return res;
-      })
-    );
-  }
-
-  tryLogin(data) {
-    return this.http.post(ApiUrlConstant.LOGIN, data).pipe(
-      map((res: any) => {
-        if (res.code === 200) {
-          localStorage.setItem('b2b_auth_token', res['data']['token']);
-          let username = res.data.loginData.data[0].first_name + ' ' + res.data.loginData.data[0].last_name;
-          if (res.data.loginData.data[0].role == 'admin') {
-            localStorage.setItem('b2b_auth_role', 'admin');
-            localStorage.setItem('b2b_auth_username', username);
-          } else {
-            localStorage.setItem('b2b_auth_role', 'user');
-            localStorage.setItem('b2b_auth_username', username);
-          }
-          this.userId = res['data']['params']['_id'];
-          this.userService.getMe(this.userId);
-
-          localStorage.setItem('b2b_auth_userId', this.userId);
-
-          this.isAuthed = true;
-        }
-
-        return res;
-      })
-    );
-  }
-
-  // tslint:disable-next-line:typedef
-  signIn(credentials: ISignInCredentials) {
-    return this.auth.signInWithEmailAndPassword(credentials.email, credentials.password).then(({ user }) => {
-      return user;
-    });
-  }
-
-  signOut = () => from(this.auth.signOut());
-
-  // tslint:disable-next-line:typedef
-  register(credentials: ICreateCredentials) {
-    return this.auth.createUserWithEmailAndPassword(credentials.email, credentials.password).then(async ({ user }) => {
-      user.updateProfile({
-        displayName: credentials.displayName,
+      localStorage.setItem('b2b_auth_token', auth_token);
+      localStorage.setItem('b2b_auth_uid', auth_uid);
+      this.ngZone.run(() => {
+        this.router.navigate(['/main']);
       });
-      this.auth.updateCurrentUser(user);
-      return user;
-    });
+      this.auth$.next(true);
+    } else {
+      localStorage.setItem('b2b_auth_token', null);
+      localStorage.setItem('b2b_auth_uid', null);
+      this.ngZone.run(() => {
+        this.router.navigate(['/auth/login']);
+      });
+      this.auth$.next(false);
+    }
   }
 
   // tslint:disable-next-line:typedef
-  sendPasswordEmail(email) {
+  emailSignIn(credentials: ISignInCredentials) {
+    return this.auth.signInWithEmailAndPassword(credentials.email, credentials.password);
+  }
+
+  async signOut(): Promise<void> {
+    await this.auth.signOut();
+  }
+
+  // tslint:disable-next-line:typedef
+  emailSignUp(credentials: ICreateCredentials) {
+    return this.auth.createUserWithEmailAndPassword(credentials.email, credentials.password);
+  }
+
+  updateEmail(email: string): void {
+    this.auth.currentUser
+      .then((authData) => {
+        authData
+          .updateEmail(email)
+          .then(async () => {
+            this.setAuthData(authData);
+            this.snack.success('Email successfully changed');
+          })
+          .catch((error) => {
+            this.snack.error(error.message);
+          });
+        this.auth.updateCurrentUser(authData);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  updatePassword(password: string): void {
+    this.auth.currentUser
+      .then((authData) => {
+        authData
+          .updatePassword(password)
+          .then(() => {
+            this.setAuthData(authData);
+            this.snack.success('Successfully changed');
+          })
+          .catch((error) => {
+            console.log(error);
+            this.snack.error(error.message);
+          });
+
+        this.auth.updateCurrentUser(authData);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  googleAuth(): void {
+    this.auth
+      .signInWithPopup(new auth.GoogleAuthProvider())
+      .then(({ user }) => {
+        setTimeout(() => {
+          this.ngZone.run(() => {
+            this.router.navigate(['/main']);
+          });
+        }, 500);
+      })
+      .catch((error) => {
+        console.log(error);
+        this.snack.error(error.message);
+      });
+  }
+
+  facebookAuth(): void {
+    this.auth
+      .signInWithPopup(new auth.FacebookAuthProvider())
+      .then(({ user }) => {
+        setTimeout(() => {
+          this.router.navigate(['/main']);
+        }, 500);
+      })
+      .catch((error) => {
+        this.ngZone.run(() => {
+          console.log(error);
+          this.snack.error(error.message);
+        });
+      });
+  }
+
+  // tslint:disable-next-line:typedef
+  sendPasswordResetEmail(email) {
     return this.auth.sendPasswordResetEmail(email).then(() => {
       return true;
     });
@@ -121,11 +171,5 @@ export class AuthService {
     return this.auth.confirmPasswordReset(credentials.code, credentials.newPassword).then((data) => {
       return data;
     });
-  }
-
-  // tslint:disable-next-line:typedef
-  async getUser() {
-    const u = await this.auth.currentUser;
-    return { ...u, role: getUserRole() };
   }
 }

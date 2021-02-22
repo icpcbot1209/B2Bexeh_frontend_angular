@@ -12,13 +12,17 @@ import { SnackService } from 'src/app/services/snack.service';
   styleUrls: ['./account.component.scss'],
 })
 export class AccountComponent implements OnInit {
+  constructor(private _formBuilder: FormBuilder, private snack: SnackService, private userService: UserService) {
+    // this.pickInvalidFields();
+  }
   registerForm: FormGroup;
   states = states;
   countries = countries;
 
-  constructor(private _formBuilder: FormBuilder, private snack: SnackService, private userService: UserService) {
-    // this.pickInvalidFields();
-  }
+  busy = false;
+
+  newAvatarFile: File = null;
+  imagePreview: string;
 
   pickInvalidFields() {
     setInterval(() => {
@@ -49,27 +53,31 @@ export class AccountComponent implements OnInit {
       // ]),
       companyname: new FormControl({ value: null, disabled: false }, [Validators.required]),
       phone_number: new FormControl({ value: null, disabled: false }, [Validators.required]),
-      billingaddress1: new FormControl({ value: null, disabled: false }, [Validators.required]),
-      billingaddress2: new FormControl({ value: null, disabled: false }),
-      billingstate: new FormControl({ value: null, disabled: false }, [Validators.required]),
-      billingcity: new FormControl({ value: null, disabled: false }, [Validators.required]),
-      billingzipcode: new FormControl({ value: null, disabled: false }, [Validators.required]),
-      shippingaddress1: new FormControl({ value: null, disabled: false }, [Validators.required]),
-      shippingaddress2: new FormControl({ value: null, disabled: false }),
-      shippingstate: new FormControl({ value: null, disabled: false }, [Validators.required]),
-      shippingcity: new FormControl({ value: null, disabled: false }, [Validators.required]),
-      shippingzipcode: new FormControl({ value: null, disabled: false }, [Validators.required]),
+      billing_address_1: new FormControl({ value: null, disabled: false }, [Validators.required]),
+      billing_address_2: new FormControl({ value: null, disabled: false }),
+      billing_state: new FormControl({ value: null, disabled: false }, [Validators.required]),
+      billing_city: new FormControl({ value: null, disabled: false }, [Validators.required]),
+      billing_zipcode: new FormControl({ value: null, disabled: false }, [Validators.required]),
+      shipping_address_1: new FormControl({ value: null, disabled: false }, [Validators.required]),
+      shipping_address_2: new FormControl({ value: null, disabled: false }),
+      shipping_state: new FormControl({ value: null, disabled: false }, [Validators.required]),
+      shipping_city: new FormControl({ value: null, disabled: false }, [Validators.required]),
+      shipping_zipcode: new FormControl({ value: null, disabled: false }, [Validators.required]),
     });
 
     const me = this.userService.me;
-    if (me) this.setWithMine(me);
+    if (me) {
+      this.setWithMine(me);
+    }
     this.userService.me$.subscribe((me) => {
-      if (me) this.setWithMine(me);
+      if (me) {
+        this.setWithMine(me);
+      }
     });
   }
 
   setWithMine(me: IUser) {
-    this.imagePreview = me.profile_image_url;
+    this.imagePreview = me.photo_url;
 
     this.registerForm.setValue({
       email: me.email,
@@ -79,42 +87,42 @@ export class AccountComponent implements OnInit {
       // password: '',
       companyname: me.company_name,
       phone_number: me.phone_number,
-      billingaddress1: me.billingaddress1,
-      billingaddress2: me.billingaddress2,
-      billingstate: me.billingstate,
-      billingcity: me.billingcity,
-      billingzipcode: me.billingzipcode,
-      shippingaddress1: me.shippingaddress1,
-      shippingaddress2: me.shippingaddress2,
-      shippingstate: me.shippingstate,
-      shippingcity: me.shippingcity,
-      shippingzipcode: me.shippingzipcode,
+      billing_address_1: me.billing_address_1,
+      billing_address_2: me.billing_address_2,
+      billing_state: me.billing_state,
+      billing_city: me.billing_city,
+      billing_zipcode: me.billing_zipcode,
+      shipping_address_1: me.shipping_address_1,
+      shipping_address_2: me.shipping_address_2,
+      shipping_state: me.shipping_state,
+      shipping_city: me.shipping_city,
+      shipping_zipcode: me.shipping_zipcode,
     });
   }
 
   keyPress(event: any) {
     const pattern = /[0-9\+\-\ ]/;
 
-    let inputChar = String.fromCharCode(event.charCode);
+    const inputChar = String.fromCharCode(event.charCode);
     if (event.keyCode != 8 && !pattern.test(inputChar)) {
       event.preventDefault();
     }
   }
-
-  busy = false;
   async updateUser() {
-    if (this.registerForm.invalid) return;
-    var userData: IUser = this.registerForm.value;
+    if (this.registerForm.invalid) {
+      return;
+    }
+    const userData: IUser = this.registerForm.value;
     userData.phone_number = this.registerForm.value.phone_number.split('-').join('');
 
     this.busy = true;
     try {
       if (this.newAvatarFile) {
         // this.userService.uploadUserAvatar(this.newAvatarFile, userData.email);
-        const profile_image_url = await this.userService.uploadUserAvatar(this.newAvatarFile, userData.email);
-        userData.profile_image_url = profile_image_url;
+        const photo_url = await this.userService.uploadUserAvatar(this.newAvatarFile, userData.email);
+        userData.photo_url = photo_url;
       }
-      await this.userService.updateUser(userData).toPromise();
+      await this.userService.updateMe(userData).toPromise();
       this.snack.success('Successfully updated');
     } catch (err) {
       console.log(err);
@@ -122,9 +130,6 @@ export class AccountComponent implements OnInit {
     }
     this.busy = false;
   }
-
-  newAvatarFile: File = null;
-  imagePreview: string;
   onImagePicked(event: Event) {
     const file = (event.target as HTMLInputElement).files[0];
     this.newAvatarFile = file;

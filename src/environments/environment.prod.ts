@@ -2,49 +2,7 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-import { UserRole } from '../app/shared/auth.roles';
-
-export let environment: {
-  myApiUrl: string;
-  myApiUrl2: string;
-  defaultMenuType: string;
-  subHiddenBreakpoint: number;
-  defaultRole: UserRole;
-  production: boolean;
-  buyUrl: string;
-  defaultDirection: string;
-  themeColorStorageKey: string;
-  vienFirebase: {
-    storageBucket: string;
-    apiKey: string;
-    messagingSenderId: string;
-    appId: string;
-    projectId: string;
-    measurementId: string;
-    databaseURL: string;
-    authDomain: string;
-  };
-
-  firebase: {
-    apiKey: string;
-    authDomain: string;
-    databaseURL: string;
-    projectId: string;
-    storageBucket: string;
-    messagingSenderId: string;
-    appId: string;
-  };
-  menuHiddenBreakpoint: number;
-  isDarkSwitchActive: boolean;
-  themeRadiusStorageKey: string;
-  defaultColor: string;
-  apiUrl: string;
-  isAuthGuardActive: boolean;
-  adminRoot: string;
-  isMultiColorActive: boolean;
-  SCARF_ANALYTICS: boolean;
-};
-environment = {
+export const environment = {
   production: true,
   myApiUrl: 'https://superfractor-5e4df.web.app/api/v1',
   myApiUrl2: 'https://superfractor-5e4df.web.app/api/v2',
@@ -62,7 +20,6 @@ environment = {
   defaultDirection: 'ltr',
   themeRadiusStorageKey: 'vien-themeradius',
   isAuthGuardActive: false,
-  defaultRole: UserRole.Admin,
   vienFirebase: {
     apiKey: 'AIzaSyCqoNLB_jTw4nncO12qR-eDH9gAeWiZVaw',
     authDomain: 'vien-angular-login.firebaseapp.com',

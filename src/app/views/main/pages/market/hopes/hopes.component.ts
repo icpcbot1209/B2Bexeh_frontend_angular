@@ -12,12 +12,18 @@ import { SnackService } from 'src/app/services/snack.service';
 export class HopesComponent implements OnInit {
   constructor(private hopeService: HopeService, private snack: SnackService) {}
 
-  ngOnInit(): void {}
-
   categoryId;
   subcategoryId;
   type = '';
   listingTime = 24000;
+
+  isBusy = false;
+  hopes: IHope[] = [];
+
+  bids: IHope[] = [];
+  asks: IHope[] = [];
+
+  ngOnInit(): void {}
   handleCategoriesSelected({ categoryId, subcategoryId }) {
     this.categoryId = categoryId;
     this.subcategoryId = subcategoryId;
@@ -26,15 +32,12 @@ export class HopesComponent implements OnInit {
 
   handleChangeType(type) {
     this.type = type;
-    if (this.categoryId && this.subcategoryId) this.updateWithFilters();
+    if (this.categoryId && this.subcategoryId) { this.updateWithFilters(); }
   }
   handleChangeListing(listingTime) {
     this.listingTime = listingTime;
-    if (this.categoryId && this.subcategoryId) this.updateWithFilters();
+    if (this.categoryId && this.subcategoryId) { this.updateWithFilters(); }
   }
-
-  isBusy = false;
-  hopes: IHope[] = [];
   loadTableData({ categoryId, subcategoryId }) {
     this.isBusy = true;
 
@@ -51,19 +54,16 @@ export class HopesComponent implements OnInit {
       }
     );
   }
-
-  bids: IHope[] = [];
-  asks: IHope[] = [];
   updateWithFilters() {
     this.asks = [];
     this.bids = [];
 
     this.hopes.forEach((x) => {
-      if (this.type !== 'All' && x.deal_method !== this.type) return;
-      if (this.listingTime < (Date.now() - new Date(x.release_date).getTime()) / 3600000) return;
+      if (this.type !== 'All' && x.deal_method !== this.type) { return; }
+      if (this.listingTime < (Date.now() - new Date(x.release_date).getTime()) / 3600000) { return; }
 
-      if (x.is_ask) this.asks.push(x);
-      else this.bids.push(x);
+      if (x.is_ask) { this.asks.push(x); }
+      else { this.bids.push(x); }
     });
   }
 }

@@ -10,10 +10,14 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./offer-contract.component.scss'],
 })
 export class OfferContractComponent implements OnChanges {
+
+  constructor(public userService: UserService, public configs: ConfigsService, private offerService: OfferService) {}
   @Input() offer: IOffer;
   @Output() offerChanged = new EventEmitter<IOffer>();
 
-  constructor(public userService: UserService, public configs: ConfigsService, private offerService: OfferService) {}
+  isEditing = false;
+  newQty: number;
+  newPrice: number;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.offer) {
@@ -23,7 +27,7 @@ export class OfferContractComponent implements OnChanges {
   }
 
   makeTitle(offer: IOffer) {
-    if (offer.creator_id === offer.seller_id) return `${offer.seller_name.toUpperCase()} is offering to sell to ${offer.buyer_name.toUpperCase()}`;
+    if (offer.creator_id === offer.seller_id) { return `${offer.seller_name.toUpperCase()} is offering to sell to ${offer.buyer_name.toUpperCase()}`; }
     return `${offer.buyer_name.toUpperCase()} is offering to buy from ${offer.seller_name.toUpperCase()}`;
   }
 
@@ -40,10 +44,6 @@ export class OfferContractComponent implements OnChanges {
       this.offerChanged.emit(this.offer);
     });
   }
-
-  isEditing = false;
-  newQty: number;
-  newPrice: number;
   onClickEdit() {
     this.isEditing = true;
   }

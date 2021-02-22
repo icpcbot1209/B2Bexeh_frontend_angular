@@ -15,9 +15,6 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./my-offers-table.component.scss'],
 })
 export class MyOffersTableComponent implements OnInit {
-  @Input() tag: string;
-
-  private _offers: IOffer[];
   @Input() set offers(value: IOffer[]) {
     this.updateTableRows(value);
   }
@@ -25,20 +22,23 @@ export class MyOffersTableComponent implements OnInit {
     return this._offers;
   }
 
+  constructor(public configs: ConfigsService, public offerService: OfferService) {}
+  @Input() tag: string;
+
+  private _offers: IOffer[];
+
   @Output() offerClicked = new EventEmitter<any>();
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(public configs: ConfigsService, public offerService: OfferService) {}
-
-  ngOnInit(): void {}
-
   displayedColumns: string[] = ['created_at', 'other_name', 'product_name', 'hope_unit', 'qty', 'price', 'total', 'status'];
 
   dataSource: MatTableDataSource<IOffer>;
+
+  ngOnInit(): void {}
   updateTableRows(offers: IOffer[]) {
-    if (!offers) return;
+    if (!offers) { return; }
     this.dataSource = new MatTableDataSource(offers);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;

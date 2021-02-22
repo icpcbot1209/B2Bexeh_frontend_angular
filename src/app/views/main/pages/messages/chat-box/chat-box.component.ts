@@ -10,10 +10,12 @@ import { ChattingService } from 'src/app/services/chatting.service';
   styleUrls: ['./chat-box.component.scss'],
 })
 export class ChatBoxComponent implements OnChanges, AfterViewInit {
+
+  constructor(private chattingService: ChattingService) {}
   @Input() chat: IChat;
   @ViewChild('scroll') scrollRef: PerfectScrollbarComponent;
 
-  constructor(private chattingService: ChattingService) {}
+  txt = '';
   ngAfterViewInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -21,10 +23,8 @@ export class ChatBoxComponent implements OnChanges, AfterViewInit {
       this.scrollToBottom();
     }, 300);
   }
-
-  txt: string = '';
   sendMessage() {
-    if (this.txt.trim().length === 0) return;
+    if (this.txt.trim().length === 0) { return; }
     this.chattingService.sendMessage(this.chat.id, this.txt);
     this.txt = '';
   }
@@ -40,6 +40,6 @@ export class ChatBoxComponent implements OnChanges, AfterViewInit {
   }
 
   private scrollToBottom(): void {
-    if (this.scrollRef) this.scrollRef.directiveRef.scrollToBottom(0, 500);
+    if (this.scrollRef) { this.scrollRef.directiveRef.scrollToBottom(0, 500); }
   }
 }

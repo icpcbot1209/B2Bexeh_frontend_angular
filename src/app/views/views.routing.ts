@@ -5,11 +5,10 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { environment } from 'src/environments/environment';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from '../shared/auth.guard';
-import { UserRole } from '../shared/auth.roles';
 
 const adminRoot = environment.adminRoot.substr(1); // path cannot start with a slash
 
-let routes: Routes = [
+const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
@@ -22,20 +21,16 @@ let routes: Routes = [
   {
     path: 'main',
     loadChildren: () => import('./main/main.module').then((m) => m.MainModule),
-    data: { roles: [UserRole.Admin, UserRole.Editor] },
+    data: { roles: ['admin', 'user'] },
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
   },
   {
     path: 'admin',
     loadChildren: () => import('./admin/admin.module').then((m) => m.AdminModule),
-    data: { roles: [UserRole.Admin] },
+    data: { roles: ['admin'] },
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
-  },
-  {
-    path: 'user',
-    loadChildren: () => import('./user/user.module').then((m) => m.UserModule),
   },
   { path: 'error', component: ErrorComponent },
   { path: 'unauthorized', component: UnauthorizedComponent },

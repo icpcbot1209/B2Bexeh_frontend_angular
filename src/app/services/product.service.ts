@@ -13,8 +13,10 @@ export class ProductService {
 
   categories = [];
   sportId2Name(id: string) {
-    let category = this.categories.find((x) => x.id === id);
-    if (!category) return '';
+    const category = this.categories.find((x) => x.id === id);
+    if (!category) {
+      return '';
+    }
     return category.categoryName;
   }
 
@@ -50,8 +52,10 @@ export class ProductService {
   getProductById(productId) {
     return this.http.post(ApiUrlConstant.GETPRODUCTBYID, { id: productId }).pipe(
       map((resp) => {
-        let arr: any[] = resp['data']['rows'] || resp['data'];
-        if (arr && arr.length > 0) return arr[0];
+        const arr: any[] = resp['data']['rows'] || resp['data'];
+        if (arr && arr.length > 0) {
+          return arr[0];
+        }
         return null;
       })
     );

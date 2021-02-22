@@ -9,15 +9,18 @@ import { ConfigsService } from 'src/app/services/configs.service';
   styleUrls: ['./deal-method-select.component.scss'],
 })
 export class DealMethodSelectComponent implements OnInit, OnDestroy {
+  constructor(public configs: ConfigsService) {}
   @Output() valueChanged = new EventEmitter<any>();
 
   configs$: Subscription;
-  constructor(public configs: ConfigsService) {}
+
+  items: IDictItem[] = [];
+  theItem = null;
 
   ngOnInit(): void {
-    if (this.configs.loaded) this.initItems();
+    if (this.configs.loaded) { this.initItems(); }
     this.configs$ = this.configs.subjectLoaded.subscribe((loaded) => {
-      if (loaded) this.initItems();
+      if (loaded) { this.initItems(); }
     });
   }
 
@@ -30,9 +33,6 @@ export class DealMethodSelectComponent implements OnInit, OnDestroy {
     this.theItem = this.configs.dict_deal_method[0];
     this.onSelectItem(this.theItem);
   }
-
-  items: IDictItem[] = [];
-  theItem = null;
   onSelectItem(item: IDictItem) {
     this.valueChanged.emit(item.uid);
   }

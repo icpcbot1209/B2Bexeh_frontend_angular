@@ -30,7 +30,7 @@ export class ChattingService {
   }
 
   private async readMyChats(me: IUser) {
-    if (!me) return;
+    if (!me) { return; }
     this.isLoading = true;
 
     try {
@@ -53,7 +53,7 @@ export class ChattingService {
   }
 
   async mergeUserData(arr: IRespChat[]) {
-    let chats: IChat[] = [];
+    const chats: IChat[] = [];
     for (let i = 0; i < arr.length; i++) {
       const { id, users, msgs, lastMessageTime, date } = arr[i];
       const idOther = users[0] !== this.me.id ? users[0] : users[1];
@@ -77,9 +77,9 @@ export class ChattingService {
   }
 
   async startChatWith(idOther: string) {
-    if (idOther === this.me.id) return null;
+    if (idOther === this.me.id) { return null; }
     let chatId;
-    let k = this.chats.findIndex((x) => x.other.id === idOther);
+    const k = this.chats.findIndex((x) => x.other.id === idOther);
     if (k > -1) {
       chatId = this.chats[k].id;
     } else {
@@ -124,7 +124,7 @@ export class ChattingService {
 
   async markAllAsRead(chat: IChat) {
     chat.msgs.forEach((msg, i) => {
-      if (msg.senderId !== this.me.id) msg.isRead = true;
+      if (msg.senderId !== this.me.id) { msg.isRead = true; }
     });
 
     const ref = this.afs.collection('chats').doc(chat.id);
@@ -135,7 +135,7 @@ export class ChattingService {
 
   async onOfferCreate(idOther: string, idOffer: string, note: string) {
     const chatId = await this.startChatWith(idOther);
-    if (!chatId) return;
+    if (!chatId) { return; }
     // await this.sendMessage(chatId, { action: OfferActions.offer_created, value: idOffer });
 
     await this.sendMessage(chatId, note);
@@ -147,7 +147,7 @@ export class ChattingService {
 
   async onOfferAccept(idOther, offerId) {
     const chatId = await this.startChatWith(idOther);
-    if (!chatId) return;
+    if (!chatId) { return; }
     await this.sendMessage(chatId, { action: OfferActions.offer_accepted, value: offerId });
 
     this.ngZone.run(() => {
@@ -157,7 +157,7 @@ export class ChattingService {
 
   async onOfferPayment(idOther, offerId) {
     const chatId = await this.startChatWith(idOther);
-    if (!chatId) return;
+    if (!chatId) { return; }
     await this.sendMessage(chatId, { action: OfferActions.offer_paid, value: offerId });
 
     this.ngZone.run(() => {

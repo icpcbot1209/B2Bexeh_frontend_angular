@@ -22,7 +22,7 @@ export class OfferService {
   createOffer(data: IOffer) {
     return this.http.post<IOffer>(`${environment.myApiUrl2}/offer/createOne`, data).pipe(
       map((offer: IOffer) => {
-        let idOther = offer.seller_id === this.userService.me.id ? offer.buyer_id : offer.seller_id;
+        const idOther = offer.seller_id === this.userService.me.id ? offer.buyer_id : offer.seller_id;
         this.chattingService.onOfferCreate(idOther, offer.id, offer.note);
         return offer;
       })
@@ -62,7 +62,7 @@ export class OfferService {
   }
 
   statusOffer(offer: IOffer, me?: IUser) {
-    if (!me) me = this.userService.me;
+    if (!me) { me = this.userService.me; }
     let text = '',
       num = 0;
     if (offer.is_canceled) {
@@ -73,10 +73,10 @@ export class OfferService {
       text = `Pending ${who} Approval`;
       num = 0;
     } else if (!offer.is_paid || !offer.is_shipped) {
-      if (!offer.is_paid && offer.buyer_id === me.id) text = 'Pending Your Payment';
-      else if (!offer.is_shipped && offer.seller_id === me.id) text = 'Pending Your Shipping';
-      else if (!offer.is_paid && offer.buyer_id !== me.id) text = 'Pending Their Payment';
-      else if (!offer.is_shipped && offer.seller_id !== me.id) text = 'Pending Their Shipping';
+      if (!offer.is_paid && offer.buyer_id === me.id) { text = 'Pending Your Payment'; }
+      else if (!offer.is_shipped && offer.seller_id === me.id) { text = 'Pending Your Shipping'; }
+      else if (!offer.is_paid && offer.buyer_id !== me.id) { text = 'Pending Their Payment'; }
+      else if (!offer.is_shipped && offer.seller_id !== me.id) { text = 'Pending Their Shipping'; }
 
       num = 1;
     } else if (offer.is_paid && offer.is_shipped) {

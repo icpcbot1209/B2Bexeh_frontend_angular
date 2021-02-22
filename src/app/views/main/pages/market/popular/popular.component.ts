@@ -14,11 +14,11 @@ export class PopularComponent implements OnInit {
   constructor(public productService: ProductService, private snackbar: MatSnackBar, private authService: AuthService) {}
 
   products: IRespProduct[];
+
+  isBusy = false;
   ngOnInit(): void {
     this.getProducts(this.productService.getProductsPopular());
   }
-
-  isBusy = false;
 
   getProducts(observable: Observable<any>) {
     this.isBusy = true;

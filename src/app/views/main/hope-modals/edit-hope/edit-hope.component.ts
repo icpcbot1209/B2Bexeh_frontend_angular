@@ -9,10 +9,10 @@ import { IHope } from 'src/app/interfaces/IHope';
 })
 export class EditHopeComponent implements OnInit {
   deal_method = '';
-  unit: string = 'Box';
-  qty: number = 1;
+  unit = 'Box';
+  qty = 1;
   price: number;
-  note: string = '';
+  note = '';
 
   constructor(public dialogRef: MatDialogRef<EditHopeComponent>, @Inject(MAT_DIALOG_DATA) public data: DialogData) {
     if (data.isEditing) {
@@ -33,10 +33,10 @@ export class EditHopeComponent implements OnInit {
   }
 
   resetPrice() {
-    if (this.unit === 'Box' && !this.data.is_ask) this.price = this.data.product.boxhighestbid;
-    if (this.unit === 'Box' && this.data.is_ask) this.price = this.data.product.boxlowestask;
-    if (this.unit === 'Case' && !this.data.is_ask) this.price = this.data.product.casehighestbid;
-    if (this.unit === 'Case' && this.data.is_ask) this.price = this.data.product.caselowestask;
+    if (this.unit === 'Box' && !this.data.is_ask) { this.price = this.data.product.boxhighestbid; }
+    if (this.unit === 'Box' && this.data.is_ask) { this.price = this.data.product.boxlowestask; }
+    if (this.unit === 'Case' && !this.data.is_ask) { this.price = this.data.product.casehighestbid; }
+    if (this.unit === 'Case' && this.data.is_ask) { this.price = this.data.product.caselowestask; }
   }
 
   onNoClick(): void {

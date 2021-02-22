@@ -4,8 +4,8 @@ import { filter, map } from 'rxjs/operators';
 import { SidebarService, ISidebar } from './sidebar.service';
 import menuItems, { IMenuItem } from 'src/app/constants/menu';
 import { Subscription } from 'rxjs';
-import { UserRole } from 'src/app/shared/auth.roles';
-import { AuthService } from 'src/app/shared/auth.service';
+import { UserService } from 'src/app/services/user.service';
+import { IUser } from 'src/app/interfaces/IUser';
 
 @Component({
   selector: 'app-sidebar',
@@ -22,16 +22,17 @@ export class SidebarComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   closedCollapseList = [];
 
-  currentUser = null;
+  currentUser: IUser = null;
 
   constructor(
     private router: Router,
     private sidebarService: SidebarService,
     private activatedRoute: ActivatedRoute,
-    private authService: AuthService
+    private userService: UserService
   ) {
-    this.authService.getUser().then((user) => {
-      this.currentUser = user;
+    this.currentUser = this.userService.me;
+    this.userService.me$.subscribe((me) => {
+      this.currentUser = me;
     });
 
     this.subscription = this.sidebarService.getSidebar().subscribe(

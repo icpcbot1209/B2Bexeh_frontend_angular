@@ -72,12 +72,12 @@ export class ConfigsService {
 
   loadConfigs() {
     this.http.post<IRow[]>(`${environment.myApiUrl2}/configs/readAll`, {}).subscribe((rows) => {
-      if (rows.length === 0) this.initWithMockData();
+      if (rows.length === 0) { this.initWithMockData(); }
       rows.forEach((row: IRow) => {
-        if (row.json_key === 'dict_deal_method') this.dict_deal_method = JSON.parse(row.json_value);
-        if (row.json_key === 'dict_payment_method') this.dict_payment_method = JSON.parse(row.json_value);
-        if (row.json_key === 'dict_payment_timing') this.dict_payment_timing = JSON.parse(row.json_value);
-        if (row.json_key === 'dict_feedback') this.dict_feedback = JSON.parse(row.json_value);
+        if (row.json_key === 'dict_deal_method') { this.dict_deal_method = JSON.parse(row.json_value); }
+        if (row.json_key === 'dict_payment_method') { this.dict_payment_method = JSON.parse(row.json_value); }
+        if (row.json_key === 'dict_payment_timing') { this.dict_payment_timing = JSON.parse(row.json_value); }
+        if (row.json_key === 'dict_feedback') { this.dict_feedback = JSON.parse(row.json_value); }
       });
 
       this.loaded = true;
@@ -86,8 +86,8 @@ export class ConfigsService {
   }
 
   dictVal(uid: string, dict: IDictItem[]): string {
-    let item = dict.find((x) => x.uid === uid);
-    if (item) return item.value;
+    const item = dict.find((x) => x.uid === uid);
+    if (item) { return item.value; }
     return '';
   }
 }

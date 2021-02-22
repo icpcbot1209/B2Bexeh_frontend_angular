@@ -1,8 +1,8 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ProductService } from 'src/app/services/product.service';
-import { AuthService } from 'src/app/shared/auth.service';
+import { SnackService } from 'src/app/services/snack.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'main-product-filter',
@@ -10,14 +10,9 @@ import { AuthService } from 'src/app/shared/auth.service';
   styleUrls: ['./product-filter.component.scss'],
 })
 export class ProductFilterComponent implements OnInit {
+  constructor(public productService: ProductService, private userService: UserService, private snack: SnackService) {}
   @Input() isOpen: boolean;
   @Output() productsChanged = new EventEmitter<any[]>();
-
-  constructor(public productService: ProductService, private snackbar: MatSnackBar, private authService: AuthService) {}
-
-  ngOnInit(): void {
-    this.init();
-  }
 
   filters: Filter[] = [
     {
@@ -44,8 +39,23 @@ export class ProductFilterComponent implements OnInit {
     },
   ];
   theFilter: Filter;
+
+  categories = [];
+
+  subcategories = [];
+  category;
+  subcategory;
+
+  isBusy = false;
+  products = [];
+
+  ngOnInit(): void {
+    this.init();
+  }
   setFilter(filter: Filter) {
-    if (this.theFilter === filter) return;
+    if (this.theFilter === filter) {
+      return;
+    }
     this.theFilter = filter;
 
     this.category = null;
@@ -59,29 +69,20 @@ export class ProductFilterComponent implements OnInit {
       this.getProducts(this.productService.getProductsNewArrival());
     } else if (filter.uid === '3') {
       // watch list
-      this.getProducts(this.productService.getProductsWatchList(this.authService.userId));
+      this.getProducts(this.productService.getProductsWatchList(this.userService.me.user_uid));
     }
   }
-
-  categories = [];
   init() {
     this.productService.getCategories().subscribe((resp) => {
       this.categories = resp['data']['rows'];
     });
   }
-
-  subcategories = [];
-  category;
-  subcategory;
   onChangeCategory(category) {
     this.productService.getSubcategories(category.id).subscribe((resp) => {
       this.subcategories = resp['data']['rows'];
     });
     this.subcategory = null;
   }
-
-  isBusy = false;
-  products = [];
   onChangeSubcategory(subcategory) {
     this.getProducts(this.productService.getProductsByCategory(this.category.id, subcategory.id));
   }
@@ -96,12 +97,7 @@ export class ProductFilterComponent implements OnInit {
       },
       (err) => {
         console.log(err);
-        this.snackbar.open(err.message, 'close', {
-          horizontalPosition: 'end',
-          verticalPosition: 'top',
-          duration: 5000,
-          panelClass: ['red-snackbar'],
-        });
+        this.snack.error(err.message);
         this.isBusy = false;
       }
     );

@@ -2,7 +2,7 @@ import { environment } from 'src/environments/environment';
 
 export class ApiUrlConstant {
   private static appurl = environment.myApiUrl;
-  //add product and categary CATEGART
+  // add product and categary CATEGART
   public static get TEST(): string {
     return this.appurl + '/test';
   }
@@ -232,7 +232,7 @@ export class ApiUrlConstant {
     return this.appurl + '/chat/createRoom';
   }
 
-  //create bids and Asks
+  // create bids and Asks
   public static get CREATEBIDSASKS(): string {
     return this.appurl + '/bidsasks/createbidsorask';
   }
@@ -295,7 +295,7 @@ export class ApiUrlConstant {
   public static get GETALLHIGHLOWBIDASK(): string {
     return this.appurl + '/bidsasks/getHighestBidOrMinAsk';
   }
-  //admin user/product/categary update api
+  // admin user/product/categary update api
   public static get UPDATEPRODUCT(): string {
     return this.appurl + '/product/editProduct';
   }
@@ -402,7 +402,7 @@ export class ApiUrlConstant {
   public static get ACTIVATEUSER(): string {
     return this.appurl + '/user/activateUser';
   }
-  //user Profile
+  // user Profile
   public static get UPDATEUSERPROFILE(): string {
     return this.appurl + '/user/updateUserProfile';
   }
@@ -421,7 +421,7 @@ export class ApiUrlConstant {
   public static get SAVEEMAILBLAST(): string {
     return this.appurl + '/user/saveEmailBlast';
   }
-  //UserArticle
+  // UserArticle
   public static get SAVEMYARTICLE(): string {
     return this.appurl + '/article/saveMyArticle';
   }
@@ -443,12 +443,12 @@ export class ApiUrlConstant {
   public static get DELETEARTICLE(): string {
     return this.appurl + '/article/deleteArticle';
   }
-  //Cart
+  // Cart
   public static get LIST_ADD_TO_CART(): string {
     return this.appurl + '/cart/listAddToCart';
   }
 
-  //UserSurvey
+  // UserSurvey
 
   public static get SAVEMYSURVEYS(): string {
     return this.appurl + '/survey/addSurvey';
@@ -484,7 +484,7 @@ export class ApiUrlConstant {
     return this.appurl + '/questionlist/changeStatusSurveyListItem';
   }
 
-  //admin info
+  // admin info
   public static get DASHBOARDAPI(): string {
     return this.appurl + '/admin/dashBoardAPI';
   }
@@ -492,7 +492,7 @@ export class ApiUrlConstant {
     return this.appurl + '/user/getRegisterUsers';
   }
 
-  //email
+  // email
   public static get LISTEMAILTEMPLATE(): string {
     return this.appurl + '/emailTemplate/listEmailTemplate';
   }
@@ -506,7 +506,7 @@ export class ApiUrlConstant {
     return this.appurl + '/email/deleteEmailTemplate';
   }
 
-  //noitification
+  // noitification
   public static get ADDNEWNOTIFICATION(): string {
     return this.appurl + '/notification/addNotification';
   }
@@ -526,7 +526,7 @@ export class ApiUrlConstant {
     return this.appurl + '/notification/updatenotificationStatus';
   }
 
-  //role & Permission
+  // role & Permission
   public static get ADDNEWROLEANDPERMISSION(): string {
     return this.appurl + '/rolesAndPermission/addrolesAndPermission';
   }

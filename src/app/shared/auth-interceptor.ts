@@ -9,7 +9,7 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor() {}
 
   getToken() {
-    if (this.token) return this.token;
+    if (this.token) { return this.token; }
     this.token = localStorage.getItem('b2b_auth_token');
     return this.token;
   }

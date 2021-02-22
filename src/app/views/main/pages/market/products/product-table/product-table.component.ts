@@ -9,7 +9,6 @@ import { IProduct } from 'src/app/interfaces/IProduct';
   styleUrls: ['./product-table.component.scss'],
 })
 export class ProductTableComponent implements OnInit {
-  private _products: IProduct[];
   @Input() set products(value: IProduct[]) {
     this.updateTableRows(value);
   }
@@ -17,23 +16,24 @@ export class ProductTableComponent implements OnInit {
     return this._products;
   }
 
+  constructor() {}
+  private _products: IProduct[];
+
   @Output() productClicked = new EventEmitter<any>();
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor() {}
-
-  ngOnInit(): void {}
-
   displayedColumns: string[] = ['productName', 'listingDates', 'releaseDate', 'boxhighestbid', 'boxlowestask'];
   dataSource: MatTableDataSource<IProduct>;
+
+  ngOnInit(): void {}
   updateTableRows(products: IProduct[]) {
-    if (!products) return;
-    let rows: IProduct[] = [];
+    if (!products) { return; }
+    const rows: IProduct[] = [];
     products.forEach((product) => {
-      let differenceInTime = new Date().getTime() - new Date(product.releaseDate).getTime();
-      let listingDates = (differenceInTime / (1000 * 3600 * 24)).toFixed();
-      let row: IProduct = { ...product, listingDates: listingDates };
+      const differenceInTime = new Date().getTime() - new Date(product.releaseDate).getTime();
+      const listingDates = (differenceInTime / (1000 * 3600 * 24)).toFixed();
+      const row: IProduct = { ...product, listingDates };
       rows.push(row);
     });
 

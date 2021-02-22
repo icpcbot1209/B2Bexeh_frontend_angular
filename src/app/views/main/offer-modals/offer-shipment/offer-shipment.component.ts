@@ -10,16 +10,18 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./offer-shipment.component.scss'],
 })
 export class OfferShipmentComponent implements OnChanges {
+
+  constructor(public userService: UserService, private offerService: OfferService) {}
   @Input() offer: IOffer;
   @Output() offerChanged = new EventEmitter<any>();
 
   seller: IUser;
   buyer: IUser;
 
-  constructor(public userService: UserService, private offerService: OfferService) {}
+  shippedInfo = '';
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.offer) {
-      let offer: IOffer = changes.offer.currentValue;
+      const offer: IOffer = changes.offer.currentValue;
       this.userService.getUserById(offer.seller_id).then((user) => {
         this.seller = user;
       });
@@ -28,8 +30,6 @@ export class OfferShipmentComponent implements OnChanges {
       });
     }
   }
-
-  shippedInfo = '';
   async onClickConfirm() {
     if (confirm('shipped?')) {
       this.offerService.markAsShipped(this.offer.id, this.shippedInfo).subscribe((resp) => {

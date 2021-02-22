@@ -11,18 +11,18 @@ import { AuthService } from 'src/app/shared/auth.service';
   styleUrls: ['./products.component.scss'],
 })
 export class ProductsComponent implements OnInit {
-  @ViewChild('refTableDiv', { static: true }) refTableDiv: ElementRef;
   constructor(public productService: ProductService, private snackbar: MatSnackBar, private authService: AuthService, private router: Router) {}
+  @ViewChild('refTableDiv', { static: true }) refTableDiv: ElementRef;
+  isOpenFilter = true;
+
+  products;
+  isBusy = false;
 
   ngOnInit(): void {}
-  isOpenFilter = true;
 
   handleCategoriesSelected({ categoryId, subcategoryId }) {
     this.getProducts(this.productService.getProductsByCategory(categoryId, subcategoryId));
   }
-
-  products;
-  isBusy = false;
   getProducts(observable: Observable<any>) {
     this.isBusy = true;
     observable.subscribe(

@@ -26,8 +26,6 @@ import { IProduct } from 'src/app/interfaces/IProduct';
   ],
 })
 export class MyHopesTableComponent implements OnInit {
-  @Input() isAsk: boolean;
-  @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     public userService: UserService,
@@ -37,12 +35,19 @@ export class MyHopesTableComponent implements OnInit {
     private snack: SnackService,
     public dialog: MatDialog
   ) {}
+  @Input() isAsk: boolean;
+  @ViewChild(MatSort) sort: MatSort;
+
+  hopes: IHope[] = [];
+
+  displayedColumns: string[] = ['product_name', 'deal_method', 'unit', 'qty', 'price', 'total', 'note'];
+  dataSource: MatTableDataSource<IHope>;
+
+  expandedElement: IHope | null;
 
   ngOnInit(): void {
     this.loadHopes();
   }
-
-  hopes: IHope[] = [];
   async loadHopes() {
     try {
       this.hopes = await this.hopeService.getMyHopes(this.isAsk).toPromise();
@@ -52,16 +57,11 @@ export class MyHopesTableComponent implements OnInit {
       this.snack.error(err.message);
     }
   }
-
-  displayedColumns: string[] = ['product_name', 'deal_method', 'unit', 'qty', 'price', 'total', 'note'];
-  dataSource: MatTableDataSource<IHope>;
   updateTableRows(hopes: IHope[]) {
-    if (!hopes) return;
+    if (!hopes) { return; }
     this.dataSource = new MatTableDataSource(hopes);
     this.dataSource.sort = this.sort;
   }
-
-  expandedElement: IHope | null;
   onToggleNote(element: IHope, event) {
     event.stopPropagation();
     this.expandedElement = this.expandedElement === element ? null : element;
@@ -69,7 +69,7 @@ export class MyHopesTableComponent implements OnInit {
 
   async onClickDeleteHope(hope: IHope, event) {
     event.stopPropagation();
-    if (!confirm('Confirm delete this bid/ask?')) return;
+    if (!confirm('Confirm delete this bid/ask?')) { return; }
     try {
       await this.hopeService.deleteHope(hope.id).toPromise();
       this.hopes = this.hopes.filter((x) => x.id !== hope.id);
@@ -85,7 +85,7 @@ export class MyHopesTableComponent implements OnInit {
   async onClickEditHope(hope: IHope, event) {
     event.stopPropagation();
 
-    let product = await this.productService.getProductById(hope.product_id).toPromise();
+    const product = await this.productService.getProductById(hope.product_id).toPromise();
 
     this.openHopeModal(this.isAsk, true, product, hope);
   }
@@ -97,9 +97,9 @@ export class MyHopesTableComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result: IHope) => {
-      if (!result) return;
-      if (!isEditing) this.tryCreateHope(result);
-      else this.tryUpdateHope(result, hope.id);
+      if (!result) { return; }
+      if (!isEditing) { this.tryCreateHope(result); }
+      else { this.tryUpdateHope(result, hope.id); }
     });
   }
 
@@ -120,8 +120,8 @@ export class MyHopesTableComponent implements OnInit {
     try {
       const hope: IHope = await this.hopeService.updateHope(hopeData, hopeId).toPromise();
 
-      let k = this.hopes.findIndex((x) => x.id === hope.id);
-      if (k > -1) this.hopes[k] = hope;
+      const k = this.hopes.findIndex((x) => x.id === hope.id);
+      if (k > -1) { this.hopes[k] = hope; }
       this.updateTableRows(this.hopes);
 
       this.snack.success('Successfully updated.');

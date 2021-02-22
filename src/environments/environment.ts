@@ -2,8 +2,6 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-import { UserRole } from '../app/shared/auth.roles';
-
 export const environment = {
   production: false,
   myApiUrl: 'http://localhost:9013/api/v1',
@@ -32,7 +30,6 @@ export const environment = {
   defaultDirection: 'ltr',
   themeRadiusStorageKey: 'vien-themeradius',
   isAuthGuardActive: true,
-  defaultRole: UserRole.Admin,
   vienFirebase: {
     apiKey: 'AIzaSyCqoNLB_jTw4nncO12qR-eDH9gAeWiZVaw',
     authDomain: 'vien-angular-login.firebaseapp.com',

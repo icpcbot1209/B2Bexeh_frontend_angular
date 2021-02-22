@@ -29,7 +29,7 @@ export class NotifService {
   }
 
   async listenMyNotifs(me: IUser) {
-    if (!me) return;
+    if (!me) { return; }
     this.isLoading = true;
 
     try {
