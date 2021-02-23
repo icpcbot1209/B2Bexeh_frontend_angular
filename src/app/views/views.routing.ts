@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ErrorComponent } from './error/error.component';
-import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { environment } from 'src/environments/environment';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from '../shared/auth.guard';
@@ -21,9 +19,8 @@ const routes: Routes = [
   {
     path: 'main',
     loadChildren: () => import('./main/main.module').then((m) => m.MainModule),
-    data: { roles: ['admin', 'user'] },
+    data: { roles: ['admin', 'user', 'pending'] },
     canActivate: [AuthGuard],
-    canActivateChild: [AuthGuard],
   },
   {
     path: 'admin',
@@ -32,9 +29,6 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
   },
-  { path: 'error', component: ErrorComponent },
-  { path: 'unauthorized', component: UnauthorizedComponent },
-  { path: '**', redirectTo: '/error' },
 ];
 
 @NgModule({

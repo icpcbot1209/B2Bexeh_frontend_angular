@@ -22,10 +22,6 @@ export class MessagesComponent implements OnInit, OnDestroy {
   chatsSubscription: Subscription;
 
   constructor(private chattingService: ChattingService, private userService: UserService, private route: ActivatedRoute) {
-    this.userService.getTenUsers().then((arr) => {
-      this.tenUsers = arr;
-    });
-
     this.chats = this.chattingService.chats;
     this.chatsSubscription = this.chattingService.chats$.subscribe((chats) => {
       this.chats = chats;

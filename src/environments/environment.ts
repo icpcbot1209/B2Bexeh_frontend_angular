@@ -8,7 +8,7 @@ export const environment = {
   myApiUrl2: 'http://localhost:9013/api/v2',
   buyUrl: 'https://1.envato.market/6NV1b',
   SCARF_ANALYTICS: false,
-  adminRoot: '/app',
+  adminRoot: '/',
   apiUrl: 'https://api.coloredstrategies.com',
   defaultMenuType: 'menu-default',
   subHiddenBreakpoint: 1440,

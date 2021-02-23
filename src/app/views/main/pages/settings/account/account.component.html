@@ -1,10 +1,25 @@
+<div class="row" *ngIf="userService.me.role == 'pending'">
+  <div style="padding: 20px">
+    <alert type="danger">Pending Role: Please wait until the admin allows your user role.</alert>
+  </div>
+</div>
 <div class="row">
   <div class="col-auto">
     <div class="avatar-wrapper" data-tippy-placement="bottom" title="Change Avatar">
-      <img class="profile-pic" [src]="imagePreview || 'assets/img/profiles/profile.jpg'" alt="" />
+      <img class="profile-pic" [src]="imagePreview" onerror="this.src='assets/img/profiles/profile.jpg'" />
       <div class="upload-button" (click)="fileInput.click()"></div>
       <input class="file-upload" type="file" accept="image/*" #fileInput (change)="onImagePicked($event)" />
     </div>
+
+    <app-state-button
+      btnClass="btn btn-light w-100"
+      [currentState]="busy ? 'show-spinner' : ''"
+      [showMessage]="false"
+      [isDisabled]="!newAvatarFile"
+      (click)="updateAvatar()"
+    >
+      Upload Avatar
+    </app-state-button>
   </div>
   <div class="col">
     <div class="full-flex">
@@ -19,11 +34,21 @@
                 <mat-error *ngIf="registerForm.get('email').hasError('pattern')">Please enter valid email </mat-error>
               </mat-form-field>
             </div>
+            <div class="col-md-6"></div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <mat-form-field class="w-100">
+                <mat-label class="required">User Name</mat-label>
+                <input matInput formControlName="user_name" placeholder="Enter User Name" maxlength="40" />
+                <mat-error *ngIf="registerForm.get('user_name').hasError('required')">User name is required</mat-error>
+              </mat-form-field>
+            </div>
             <div class="col-md-6">
               <mat-form-field class="w-100">
                 <mat-label class="required">Company Name</mat-label>
-                <input matInput formControlName="companyname" placeholder="Enter Company Name" maxlength="40" />
-                <mat-error *ngIf="registerForm.get('companyname').hasError('required')">Company name is required</mat-error>
+                <input matInput formControlName="company_name" placeholder="Enter Company Name" maxlength="40" />
+                <mat-error *ngIf="registerForm.get('company_name').hasError('required')">Company name is required</mat-error>
               </mat-form-field>
             </div>
           </div>
@@ -46,17 +71,6 @@
           </div>
           <div class="row">
             <div class="col-md-6">
-              <!-- <mat-form-field class="w-100">
-                <mat-label class="required">Password</mat-label>
-                <input matInput formControlName="password" type="password" placeholder="Enter Password" minlength="6" maxlength="20" />
-                <mat-error *ngIf="registerForm.get('password').hasError('required')">Password is required</mat-error>
-                <mat-error *ngIf="registerForm.get('password').hasError('minlength')">At least 6 characters required</mat-error>
-                <mat-error *ngIf="registerForm.get('password').hasError('pattern')">
-                  Should contain 1 uppercase character, 1 lowercase character, 1 special symbol and 1 number.
-                </mat-error>
-              </mat-form-field> -->
-            </div>
-            <div class="col-md-6">
               <mat-form-field class="w-100">
                 <mat-label class="required" for="tel">Phone Number</mat-label>
                 <input
@@ -76,6 +90,7 @@
                 >
               </mat-form-field>
             </div>
+            <div class="col-md-6"></div>
           </div>
           <div class="row">
             <div class="col-md-6">
@@ -176,7 +191,7 @@
             </div>
           </div>
 
-          <div class="row mt-3">
+          <!-- <div class="row mt-3">
             <div class="col-md-12 text-center">
               <app-state-button
                 btnClass="btn btn-primary font-weight-light text-uppercase"
@@ -187,7 +202,7 @@
                 Submit
               </app-state-button>
             </div>
-          </div>
+          </div> -->
         </form>
       </div>
     </div>

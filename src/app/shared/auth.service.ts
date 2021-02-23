@@ -3,9 +3,9 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { auth, User } from 'firebase/app';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { switchMap, first, map } from 'rxjs/operators';
 import { SnackService } from '../services/snack.service';
+import { UserService } from '../services/user.service';
+import { IUser } from '../interfaces/IUser';
 
 export interface ISignInCredentials {
   email: string;
@@ -24,67 +24,84 @@ export interface IPasswordReset {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  auth$ = new Subject<boolean>();
-
   constructor(
-    // tslint:disable-next-line: no-shadowed-variable
     private auth: AngularFireAuth,
     private router: Router,
     public ngZone: NgZone,
-    private snack: SnackService
-  ) {
-    this.auth.authState.subscribe((authData: User) => {
-      this.setAuthData(authData);
+    private snack: SnackService,
+    private userService: UserService
+  ) {}
+
+  async autoLogin(): Promise<boolean> {
+    try {
+      const auth_token = JSON.parse(localStorage.getItem('b2b_auth_token'));
+      const auth_uid = JSON.parse(localStorage.getItem('b2b_auth_uid'));
+
+      if (!auth_uid) return false;
+      // const userCredential: auth.UserCredential = await this.auth.signInAnonymously();
+
+      await this.userService.getMe(auth_uid);
+      return true;
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
+  }
+
+  private async setAuthData(userCredential: auth.UserCredential): Promise<void> {
+    if (userCredential) {
+      const auth_token = await userCredential.user.getIdToken();
+      const auth_uid = userCredential.user.uid;
+
+      localStorage.setItem('b2b_auth_token', JSON.stringify(auth_token));
+      localStorage.setItem('b2b_auth_uid', JSON.stringify(auth_uid));
+    } else {
+      localStorage.setItem('b2b_auth_token', JSON.stringify(null));
+      localStorage.setItem('b2b_auth_uid', JSON.stringify(null));
+    }
+  }
+
+  // tslint:disable-next-line:typedef
+  async emailSignIn(credentials: ISignInCredentials) {
+    const userCredential = await this.auth.signInWithEmailAndPassword(credentials.email, credentials.password);
+    await this.setAuthData(userCredential);
+
+    await this.userService.getMe(userCredential.user.uid);
+
+    this.ngZone.run(() => {
+      this.router.navigate(['/main/settings/account']);
     });
   }
 
-  async autoLogin(): Promise<void> {
+  async signOut(): Promise<void> {
     try {
-      let auth_token = localStorage.getItem('b2b_auth_token');
-      let auth_uid = localStorage.getItem('b2b_auth_uid');
+      // await this.auth.signOut();
+      await this.setAuthData(null);
 
-      if (!auth_token) return;
-      const data = await this.auth.signInWithCustomToken(auth_token);
-      this.setAuthData(data.user);
+      this.ngZone.run(() => {
+        this.router.navigate(['/auth/login']);
+      });
     } catch (err) {
-      console.log(err);
       this.snack.error(err.message);
     }
   }
 
-  private async setAuthData(authData: User): Promise<void> {
-    if (authData) {
-      const auth_token = await authData.getIdToken();
-      const auth_uid = authData.uid;
-
-      localStorage.setItem('b2b_auth_token', auth_token);
-      localStorage.setItem('b2b_auth_uid', auth_uid);
-      this.ngZone.run(() => {
-        this.router.navigate(['/main']);
-      });
-      this.auth$.next(true);
-    } else {
-      localStorage.setItem('b2b_auth_token', null);
-      localStorage.setItem('b2b_auth_uid', null);
-      this.ngZone.run(() => {
-        this.router.navigate(['/auth/login']);
-      });
-      this.auth$.next(false);
-    }
-  }
-
   // tslint:disable-next-line:typedef
-  emailSignIn(credentials: ISignInCredentials) {
-    return this.auth.signInWithEmailAndPassword(credentials.email, credentials.password);
-  }
+  async emailSignUp(userData: IUser) {
+    const email = userData.email;
+    const password = userData.password;
 
-  async signOut(): Promise<void> {
-    await this.auth.signOut();
-  }
+    const userCredential = await this.auth.createUserWithEmailAndPassword(email, password);
 
-  // tslint:disable-next-line:typedef
-  emailSignUp(credentials: ICreateCredentials) {
-    return this.auth.createUserWithEmailAndPassword(credentials.email, credentials.password);
+    delete userData.password;
+    userData.user_uid = userCredential.user.uid;
+    await this.userService.createUser(userData);
+
+    await this.setAuthData(userCredential);
+
+    this.ngZone.run(() => {
+      this.router.navigate(['/main/settings/account']);
+    });
   }
 
   updateEmail(email: string): void {
@@ -93,7 +110,6 @@ export class AuthService {
         authData
           .updateEmail(email)
           .then(async () => {
-            this.setAuthData(authData);
             this.snack.success('Email successfully changed');
           })
           .catch((error) => {
@@ -111,8 +127,7 @@ export class AuthService {
       .then((authData) => {
         authData
           .updatePassword(password)
-          .then(() => {
-            this.setAuthData(authData);
+          .then(async () => {
             this.snack.success('Successfully changed');
           })
           .catch((error) => {

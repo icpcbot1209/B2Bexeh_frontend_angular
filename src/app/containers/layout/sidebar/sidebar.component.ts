@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, Input } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 import { SidebarService, ISidebar } from './sidebar.service';
-import menuItems, { IMenuItem } from 'src/app/constants/menu';
+import { IMenuItem, menuItemsAdmin, menuItemsUser } from 'src/app/constants/menu';
 import { Subscription } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
 import { IUser } from 'src/app/interfaces/IUser';
@@ -13,7 +13,9 @@ import { IUser } from 'src/app/interfaces/IUser';
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit, OnDestroy {
-  menuItems: IMenuItem[] = menuItems;
+  @Input() isAdminSite: boolean = false;
+
+  menuItems: IMenuItem[] = [];
   selectedParentMenu = '';
   viewingParentMenu = '';
   currentUrl: string;
@@ -71,6 +73,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
+    this.menuItems = this.isAdminSite ? menuItemsAdmin : menuItemsUser;
+
     setTimeout(() => {
       this.selectMenu();
       const { containerClassnames } = this.sidebar;

@@ -10,8 +10,7 @@ import { HopeModalsModule } from 'src/app/views/main/hope-modals/hope-modals.mod
 import { TablesModule } from 'src/app/views/main/tables/tables.module';
 
 import { AccountComponent } from './account/account.component';
-import { MyHopesComponent } from './my-hopes/my-hopes.component';
-import { BillingComponent } from './billing/billing.component';
+import { AlertModule } from 'ngx-bootstrap/alert';
 
 const routes: Routes = [
   {
@@ -20,14 +19,12 @@ const routes: Routes = [
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'account' },
       { path: 'account', component: AccountComponent },
-      { path: 'my-bids-asks', component: MyHopesComponent },
-      { path: 'billing', component: BillingComponent },
     ],
   },
 ];
 
 @NgModule({
-  declarations: [SettingsComponent, AccountComponent, MyHopesComponent, BillingComponent],
+  declarations: [SettingsComponent, AccountComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -37,6 +34,7 @@ const routes: Routes = [
     ComponentsStateButtonModule,
     HopeModalsModule,
     TablesModule,
+    AlertModule,
   ],
 })
 export class SettingsModule {}

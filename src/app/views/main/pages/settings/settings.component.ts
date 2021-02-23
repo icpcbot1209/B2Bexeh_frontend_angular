@@ -5,11 +5,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./settings.component.scss'],
 })
 export class SettingsComponent implements OnInit {
-  tabs = [
-    { label: 'Account', url: '/main/settings/account' },
-    { label: 'Bids / Asks', url: '/main/settings/my-bids-asks' },
-    { label: 'Billing', url: '/main/settings/billing' },
-  ];
+  tabs = [{ label: 'Account', url: '/main/settings/account' }];
 
   constructor() {}
 

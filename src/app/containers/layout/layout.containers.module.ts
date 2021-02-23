@@ -2,13 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { TopnavComponent } from './topnav/topnav.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 import { ColorSwitcherComponent } from './color-switcher/color-switcher.component';
 import { FooterComponent } from './footer/footer.component';
-import { HeadingComponent } from './heading/heading.component';
 import { ApplicationMenuComponent } from './application-menu/application-menu.component';
 import { FormsModule } from '@angular/forms';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
@@ -17,16 +15,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { NotifListComponent } from './topnav/notif-list/notif-list.component';
 
 @NgModule({
-  declarations: [
-    TopnavComponent,
-    SidebarComponent,
-    BreadcrumbComponent,
-    ColorSwitcherComponent,
-    FooterComponent,
-    HeadingComponent,
-    ApplicationMenuComponent,
-    NotifListComponent,
-  ],
+  declarations: [TopnavComponent, SidebarComponent, ColorSwitcherComponent, FooterComponent, ApplicationMenuComponent, NotifListComponent],
   imports: [
     CommonModule,
     PerfectScrollbarModule,
@@ -37,14 +26,6 @@ import { NotifListComponent } from './topnav/notif-list/notif-list.component';
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
   ],
-  exports: [
-    TopnavComponent,
-    SidebarComponent,
-    BreadcrumbComponent,
-    ColorSwitcherComponent,
-    FooterComponent,
-    HeadingComponent,
-    ApplicationMenuComponent,
-  ],
+  exports: [TopnavComponent, SidebarComponent, ColorSwitcherComponent, FooterComponent, ApplicationMenuComponent],
 })
 export class LayoutContainersModule {}

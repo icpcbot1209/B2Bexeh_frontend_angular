@@ -32,6 +32,17 @@
       <span class="logo d-none d-xs-block"></span>
       <span class="logo-mobile d-block d-xs-none"></span>
     </a>
+
+    <div *ngIf="userService.me.role == 'admin'">
+      <div *ngIf="isAdminSite" style="color: white">
+        This is Admin Site:
+        <a [routerLink]="['/main']"> Go To User Site</a>
+      </div>
+      <div *ngIf="!isAdminSite" style="color: white">
+        This is User Site:
+        <a [routerLink]="['/admin']"> Go To Admin Site</a>
+      </div>
+    </div>
   </div>
 
   <div class="navbar-right">
@@ -57,15 +68,13 @@
     <div class="user d-inline-block" dropdown>
       <button class="btn btn-empty p-0" type="button" dropdownToggle>
         <span>
-          <img alt="Profile Picture" [src]="userService.me?.photo_url || 'assets/img/profiles/profile.jpg'" />
+          <img [src]="userService.me?.photo_url" onerror="this.src='assets/img/profiles/profile.jpg'" />
         </span>
       </button>
 
       <div class="dropdown-menu dropdown-menu-right mt-3" *dropdownMenu role="menu">
         <a class="dropdown-item c-pointer" [routerLink]="['/main/settings/account']">Account</a>
-        <a class="dropdown-item c-pointer">Features</a>
-        <a class="dropdown-item c-pointer">History</a>
-        <a class="dropdown-item c-pointer">Support</a>
+        <a class="dropdown-item c-pointer" [routerLink]="['/main/help']">Support</a>
         <li class="divider dropdown-divider"></li>
         <a class="dropdown-item c-pointer" (click)="onSignOut()">Sign out</a>
       </div>

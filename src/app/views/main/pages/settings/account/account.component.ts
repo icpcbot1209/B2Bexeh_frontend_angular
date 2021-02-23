@@ -12,9 +12,7 @@ import { SnackService } from 'src/app/services/snack.service';
   styleUrls: ['./account.component.scss'],
 })
 export class AccountComponent implements OnInit {
-  constructor(private _formBuilder: FormBuilder, private snack: SnackService, private userService: UserService) {
-    // this.pickInvalidFields();
-  }
+  constructor(private _formBuilder: FormBuilder, private snack: SnackService, public userService: UserService) {}
   registerForm: FormGroup;
   states = states;
   countries = countries;
@@ -24,34 +22,13 @@ export class AccountComponent implements OnInit {
   newAvatarFile: File = null;
   imagePreview: string;
 
-  pickInvalidFields() {
-    setInterval(() => {
-      if (this.registerForm) {
-        const invalid = [];
-        const controls = this.registerForm.controls;
-        for (const name in controls) {
-          if (controls[name].invalid) {
-            invalid.push(name);
-          }
-        }
-        console.log(invalid);
-      }
-      console.log(this.registerForm?.valid);
-    }, 1000);
-  }
-
   ngOnInit(): void {
     this.registerForm = this._formBuilder.group({
       email: new FormControl({ value: null, disabled: false }, [Validators.required, Validators.pattern(genralConfig.pattern.EMAIL)]),
       user_name: new FormControl({ value: null, disabled: false }, [Validators.required]),
+      company_name: new FormControl({ value: null, disabled: false }, [Validators.required]),
       first_name: new FormControl({ value: null, disabled: false }, [Validators.required]),
       last_name: new FormControl({ value: null, disabled: false }, [Validators.required]),
-      // password: new FormControl({ value: null, disabled: false }, [
-      //   Validators.required,
-      //   Validators.minLength(6),
-      //   Validators.pattern(genralConfig.pattern.PASSWORD),
-      // ]),
-      companyname: new FormControl({ value: null, disabled: false }, [Validators.required]),
       phone_number: new FormControl({ value: null, disabled: false }, [Validators.required]),
       billing_address_1: new FormControl({ value: null, disabled: false }, [Validators.required]),
       billing_address_2: new FormControl({ value: null, disabled: false }),
@@ -65,14 +42,9 @@ export class AccountComponent implements OnInit {
       shipping_zipcode: new FormControl({ value: null, disabled: false }, [Validators.required]),
     });
 
-    const me = this.userService.me;
-    if (me) {
-      this.setWithMine(me);
-    }
+    if (this.userService.me) this.setWithMine(this.userService.me);
     this.userService.me$.subscribe((me) => {
-      if (me) {
-        this.setWithMine(me);
-      }
+      if (me) this.setWithMine(me);
     });
   }
 
@@ -82,10 +54,9 @@ export class AccountComponent implements OnInit {
     this.registerForm.setValue({
       email: me.email,
       user_name: me.user_name,
+      company_name: me.company_name,
       first_name: me.first_name,
       last_name: me.last_name,
-      // password: '',
-      companyname: me.company_name,
       phone_number: me.phone_number,
       billing_address_1: me.billing_address_1,
       billing_address_2: me.billing_address_2,
@@ -98,6 +69,7 @@ export class AccountComponent implements OnInit {
       shipping_city: me.shipping_city,
       shipping_zipcode: me.shipping_zipcode,
     });
+    this.registerForm.disable();
   }
 
   keyPress(event: any) {
@@ -108,6 +80,26 @@ export class AccountComponent implements OnInit {
       event.preventDefault();
     }
   }
+
+  async updateAvatar() {
+    const userData: IUser = this.registerForm.value;
+
+    this.busy = true;
+    try {
+      if (this.newAvatarFile) {
+        // this.userService.uploadUserAvatar(this.newAvatarFile, userData.email);
+        const photo_url = await this.userService.uploadUserAvatar(this.newAvatarFile, userData.email);
+        await this.userService.updateMe({ photo_url }).toPromise();
+
+        this.snack.success('Successfully updated');
+      }
+    } catch (err) {
+      console.log(err);
+      this.snack.error(err.message);
+    }
+    this.busy = false;
+  }
+
   async updateUser() {
     if (this.registerForm.invalid) {
       return;

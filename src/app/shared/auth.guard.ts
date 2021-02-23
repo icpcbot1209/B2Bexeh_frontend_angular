@@ -1,30 +1,41 @@
 import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot, CanActivateChild } from '@angular/router';
 import { Injectable } from '@angular/core';
+import { UserService } from '../services/user.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate, CanActivateChild {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private userService: UserService) {}
 
-  token: string;
   getToken() {
-    if (this.token) {
-      return this.token;
-    }
-    this.token = localStorage.getItem('b2b_auth_token');
-    return this.token;
+    const token = JSON.parse(localStorage.getItem('b2b_auth_token'));
+    return token;
   }
 
-  async canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
+  async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     if (this.getToken()) {
-      return true;
+      if (!this.userService.me) await this.userService.getMe();
+      if (route.data.roles.includes(this.userService.me.role)) {
+        return true;
+      } else {
+        this.router.navigate(['/auth/unauthorized']);
+        return false;
+      }
     } else {
       this.router.navigate(['/auth/login']);
       return false;
     }
   }
-  async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
+
+  async canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     if (this.getToken()) {
-      return true;
+      if (!this.userService.me) await this.userService.getMe();
+
+      if (route.data.roles.includes(this.userService.me.role)) {
+        return true;
+      } else {
+        this.router.navigate(['/auth/unauthorized']);
+        return false;
+      }
     } else {
       this.router.navigate(['/auth/login']);
       return false;

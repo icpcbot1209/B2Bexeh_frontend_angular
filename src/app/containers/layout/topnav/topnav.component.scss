@@ -1,0 +1,8 @@
+a {
+  margin-left: 20px;
+  color: lightgray;
+  text-decoration: underline;
+  &:hover {
+    color: yellow;
+  }
+}

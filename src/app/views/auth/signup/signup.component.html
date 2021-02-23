@@ -1,5 +1,5 @@
 <div class="full-flex">
-  <div class="signup-box container">
+  <div class="signup-box">
     <div class="signup-title">
       <mat-icon style="cursor: pointer" [routerLink]="'/auth/login'">keyboard_backspace</mat-icon>
       <span style="margin-left: 20px"> SIGN UP</span>
@@ -12,6 +12,27 @@
             <input matInput placeholder="Enter Email" formControlName="email" />
             <mat-error *ngIf="registerForm.get('email').hasError('required')">Email is required</mat-error>
             <mat-error *ngIf="registerForm.get('email').hasError('pattern')">Please enter valid email </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <mat-form-field class="w-100">
+            <mat-label class="required">Password</mat-label>
+            <input matInput formControlName="password" type="password" placeholder="Enter Password" minlength="6" maxlength="20" />
+            <mat-error *ngIf="registerForm.get('password').hasError('required')">Password is required</mat-error>
+            <mat-error *ngIf="registerForm.get('password').hasError('minlength')">At least 6 characters required</mat-error>
+            <mat-error *ngIf="registerForm.get('password').hasError('pattern')">
+              Should contain 1 uppercase character, 1 lowercase character, 1 special symbol and 1 number.
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <mat-form-field class="w-100">
+            <mat-label class="required">User Name</mat-label>
+            <input matInput formControlName="company_name" placeholder="Enter User Name" maxlength="40" />
+            <mat-error *ngIf="registerForm.get('user_name').hasError('required')">User name is required</mat-error>
           </mat-form-field>
         </div>
         <div class="col-md-6">
@@ -42,33 +63,9 @@
       <div class="row">
         <div class="col-md-6">
           <mat-form-field class="w-100">
-            <mat-label class="required">Password</mat-label>
-            <input matInput formControlName="password" type="password" placeholder="Enter Password" minlength="6" maxlength="20" />
-            <mat-error *ngIf="registerForm.get('password').hasError('required')">Password is required</mat-error>
-            <mat-error *ngIf="registerForm.get('password').hasError('minlength')">At least 6 characters required</mat-error>
-            <mat-error *ngIf="registerForm.get('password').hasError('pattern')">
-              Should contain 1 uppercase character, 1 lowercase character, 1 special symbol and 1 number.
-            </mat-error>
-          </mat-form-field>
-        </div>
-        <div class="col-md-6">
-          <mat-form-field class="w-100">
             <mat-label class="required" for="tel">Phone Number</mat-label>
-            <input
-              matInput
-              id="tel"
-              type="text"
-              placeholder="###-###-####"
-              phoneMask
-              formControlName="phone_number"
-              (keypress)="keyPress($event)"
-              maxlength="14"
-              minlength="10"
-            />
+            <input matInput id="tel" type="text" placeholder="###-###-####" phoneMask formControlName="phone_number" (keypress)="keyPress($event)" />
             <mat-error *ngIf="registerForm.get('phone_number').hasError('required')">Phone Number is required</mat-error>
-            <mat-error *ngIf="registerForm.get('phone_number').hasError('pattern')"
-              >Phone Number should have minimum 10 digits - maximum 12 digits</mat-error
-            >
           </mat-form-field>
         </div>
       </div>

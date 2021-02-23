@@ -5,13 +5,11 @@ import { AuthService } from './auth.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  token;
   constructor() {}
 
   getToken() {
-    if (this.token) { return this.token; }
-    this.token = localStorage.getItem('b2b_auth_token');
-    return this.token;
+    const token = JSON.parse(localStorage.getItem('b2b_auth_token'));
+    return token;
   }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (this.getToken() != null) {

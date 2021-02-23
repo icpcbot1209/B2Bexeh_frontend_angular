@@ -11,37 +11,48 @@ export interface IMenuItem {
   roles?: string[];
 }
 
-const mydata: IMenuItem[] = [
+export const menuItemsUser: IMenuItem[] = [
   {
     icon: 'fas fa-search-dollar',
     label: 'Browse Market',
     to: `/main/market`,
-    // roles: [UserRole.Admin, UserRole.Editor],
+    roles: ['admin', 'user'],
+  },
+  {
+    icon: 'fas fa-tasks',
+    label: 'My Bids/Asks',
+    to: `/main/my-bids-asks`,
+    roles: ['admin', 'user'],
   },
   {
     icon: 'fas fa-tasks',
     label: 'My Offers',
     to: `/main/myoffers`,
-    // roles: [UserRole.Admin, UserRole.Editor],
+    roles: ['admin', 'user'],
   },
   {
     icon: 'fas fa-comments',
     label: 'Messages',
     to: `/main/messages`,
-    // roles: [UserRole.Admin, UserRole.Editor],
+    roles: ['admin', 'user'],
   },
   {
     icon: 'fas fa-user-cog',
     label: 'Settings',
     to: `/main/settings`,
-    // roles: [UserRole.Admin, UserRole.Editor],
   },
   {
     icon: 'fas fa-question-circle',
     label: 'Help',
     to: `/main/help`,
-    // roles: [UserRole.Admin, UserRole.Editor],
   },
 ];
 
-export default mydata;
+export const menuItemsAdmin: IMenuItem[] = [
+  {
+    icon: 'fas fa-user-cog',
+    label: 'Users',
+    to: `/admin/users`,
+    roles: ['admin'],
+  },
+];

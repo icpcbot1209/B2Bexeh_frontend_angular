@@ -1,5 +1,5 @@
 import { NotifService } from './../../../services/notif.service';
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { SidebarService, ISidebar } from '../sidebar/sidebar.service';
 import { Router } from '@angular/router';
@@ -15,8 +15,11 @@ import { UserService } from 'src/app/services/user.service';
 @Component({
   selector: 'app-topnav',
   templateUrl: './topnav.component.html',
+  styleUrls: ['./topnav.component.scss'],
 })
 export class TopnavComponent implements OnInit, OnDestroy {
+  @Input() isAdminSite: boolean = false;
+
   buyUrl = environment.buyUrl;
   adminRoot = environment.adminRoot;
   sidebar: ISidebar;

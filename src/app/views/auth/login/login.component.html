@@ -22,13 +22,18 @@
 
       <div style="display: flex">
         <div style="flex: 1"></div>
-        <app-state-button btnClass="btn btn-primary font-weight-light text-uppercase" [currentState]="busy?'show-spinner':''" [showMessage]="false" [isDisabled]="loginForm.invalid">
+        <app-state-button
+          btnClass="btn btn-primary font-weight-light text-uppercase"
+          [currentState]="busy ? 'show-spinner' : ''"
+          [showMessage]="false"
+          [isDisabled]="loginForm.invalid"
+        >
           SIGN IN
         </app-state-button>
       </div>
 
       <div class="forgot-password text-center mt-4">
-        <a [routerLink]="['forgot-password']" class="text-gray-scale1 f-13 font-weight-bolder">Forgot Password?</a>
+        <a [routerLink]="['/auth/forgot-password']" class="text-gray-scale1 f-13 font-weight-bolder">Forgot Password?</a>
       </div>
       <div class="forgot-password text-center text-gray-scale1 text-gray-scale1 f-13 font-weight-bolder">
         New User?
