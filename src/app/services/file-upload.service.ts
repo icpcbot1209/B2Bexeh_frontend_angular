@@ -50,8 +50,6 @@ export const makeFileName = (file: File, email: string) => {
   let name = email.toLowerCase().split(' ').join('-').split('@').join('-');
   const ext = MIME_TYPE_MAP[file.type];
   name = name + '-' + Date.now() + '.' + ext;
-  console.log('file.type=', file.type);
-  console.log('name=', name);
   return name;
 };
 

@@ -2,9 +2,11 @@ export interface IUser {
   id: string;
   created_at: Date;
   updated_at: Date;
-  user_uid: string;
-  role: string;
   status: string;
+
+  user_uid: string;
+
+  role: string;
   photo_url: string;
   email: string;
   user_name: string;

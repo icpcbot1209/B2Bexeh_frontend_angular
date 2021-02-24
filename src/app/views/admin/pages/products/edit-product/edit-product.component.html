@@ -1,0 +1,73 @@
+<div mat-dialog-content>
+  <div style="position: relative">
+    <mat-icon class="close-button" (click)="dialogRef.close()">close</mat-icon>
+
+    <h1 mat-dialog-title>{{ data.isEditing ? 'Edit' : 'Create' }} Product</h1>
+  </div>
+
+  <div class="row">
+    <div class="col-auto">
+      <div class="avatar-wrapper" data-tippy-placement="bottom" title="Change Avatar">
+        <img class="profile-pic" width="140" height="auto" [src]="imagePreview" onerror="this.src='assets/img/b2bexch/product_placeholder.png'" />
+        <div class="upload-button" (click)="fileInput.click()"></div>
+        <input class="file-upload" type="file" accept="image/*" #fileInput (change)="onImagePicked($event)" />
+      </div>
+    </div>
+    <div class="col">
+      <div class="full-flex">
+        <div class="signup-box container">
+          <form [formGroup]="theForm" id="signup-form" (submit)="updateItem()">
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field class="w-100">
+                  <mat-label class="required">Product Name</mat-label>
+                  <input matInput formControlName="name" placeholder="Product Name" maxlength="40" />
+                  <mat-error *ngIf="theForm.get('name').hasError('required')">Product name is required</mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-6">
+                <mat-form-field class="w-100">
+                  <mat-label class="required">Release Date</mat-label>
+                  <input matInput formControlName="release_date" placeholder="Release Date" maxlength="20" />
+                  <mat-error *ngIf="theForm.get('release_date').hasError('required')">Release Date is required </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field class="w-100">
+                  <mat-label class="required">Category</mat-label>
+                  <input matInput formControlName="category_id" placeholder="Category" maxlength="40" />
+                  <mat-error *ngIf="theForm.get('category_id').hasError('required')">Category is required</mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-6">
+                <mat-form-field class="w-100">
+                  <mat-label class="required">Subcategory</mat-label>
+                  <input matInput formControlName="subcategory_id" placeholder="Subcategory" />
+                  <mat-error *ngIf="theForm.get('subcategory_id').hasError('required')">Subcategory is required</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row mt-3">
+              <div class="col-md-12 text-center">
+                <app-state-button
+                  btnClass="btn btn-primary font-weight-light text-uppercase"
+                  [currentState]="busy ? 'show-spinner' : ''"
+                  [showMessage]="false"
+                  [isDisabled]="!theForm.valid"
+                >
+                  Save
+                </app-state-button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions style="flex-direction: column"></div>

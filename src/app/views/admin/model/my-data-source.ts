@@ -28,13 +28,12 @@ export class MyDataSource implements DataSource<any> {
       });
   }
 
-  async deleteItem(tableName, item) {
+  async addItem(tableName, itemData) {
     this.loadingSubject.next(true);
     try {
-      const resp = await this.apiService.deleteItem(tableName, item).toPromise();
-      console.log(resp);
-      this.items = this.items.filter((x) => x.id !== item.id);
-      this.countFiltered--;
+      const newItem = await this.apiService.createItem(tableName, itemData).toPromise();
+      this.items.push(newItem);
+
       this.itemsSubject.next(this.items);
     } catch (err) {
       console.log(err);
@@ -50,6 +49,20 @@ export class MyDataSource implements DataSource<any> {
       let k = this.items.findIndex((x) => x.id == itemId);
       if (k > -1) Object.assign(this.items[k], itemData);
 
+      this.itemsSubject.next(this.items);
+    } catch (err) {
+      console.log(err);
+      this.snack.error(err.message);
+    }
+    this.loadingSubject.next(false);
+  }
+
+  async deleteItem(tableName, item) {
+    this.loadingSubject.next(true);
+    try {
+      const resp = await this.apiService.deleteItem(tableName, item).toPromise();
+      this.items = this.items.filter((x) => x.id !== item.id);
+      this.countFiltered--;
       this.itemsSubject.next(this.items);
     } catch (err) {
       console.log(err);

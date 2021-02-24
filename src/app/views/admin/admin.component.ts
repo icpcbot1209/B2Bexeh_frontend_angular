@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ISidebar, SidebarService } from 'src/app/containers/layout/sidebar/sidebar.service';
-import { ChattingService } from 'src/app/services/chatting.service';
 
 @Component({
   templateUrl: './admin.component.html',

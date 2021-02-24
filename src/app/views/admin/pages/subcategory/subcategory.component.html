@@ -1,4 +1,4 @@
-<div>
+<div style="min-width: 600px; width: fit-content; margin: auto">
   <h2>{{ tableName | uppercase }}</h2>
   <div class="row">
     <div class="col">
@@ -18,36 +18,10 @@
   </div>
 
   <mat-table class="mat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="name" matSortDirection="asc" matSortDisableClear>
-    <ng-container matColumnDef="photo_url">
-      <mat-header-cell *matHeaderCellDef>Image</mat-header-cell>
-
-      <mat-cell *matCellDef="let item">
-        <img [src]="item.photo_url" onerror="this.src='assets/img/profiles/profile.jpg'" height="64" width="auto" class="profile-img" />
-      </mat-cell>
-    </ng-container>
-
     <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Product Name</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Category Name</mat-header-cell>
 
       <mat-cell *matCellDef="let item">{{ item.name }}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="release_date">
-      <mat-header-cell *matHeaderCellDef>Release Date</mat-header-cell>
-
-      <mat-cell *matCellDef="let item">{{ item.release_date }}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="category_id">
-      <mat-header-cell *matHeaderCellDef>Category</mat-header-cell>
-
-      <mat-cell *matCellDef="let item">{{ item.category_id }}</mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="subcategory_id">
-      <mat-header-cell *matHeaderCellDef>Subcategory</mat-header-cell>
-
-      <mat-cell *matCellDef="let item">{{ item.subcategory_id }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="actions">

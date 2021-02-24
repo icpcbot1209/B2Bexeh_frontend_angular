@@ -28,10 +28,12 @@ export class ProductTableComponent implements OnInit {
 
   ngOnInit(): void {}
   updateTableRows(products: IProduct[]) {
-    if (!products) { return; }
+    if (!products) {
+      return;
+    }
     const rows: IProduct[] = [];
     products.forEach((product) => {
-      const differenceInTime = new Date().getTime() - new Date(product.releaseDate).getTime();
+      const differenceInTime = new Date().getTime() - new Date(product.release_date).getTime();
       const listingDates = (differenceInTime / (1000 * 3600 * 24)).toFixed();
       const row: IProduct = { ...product, listingDates };
       rows.push(row);

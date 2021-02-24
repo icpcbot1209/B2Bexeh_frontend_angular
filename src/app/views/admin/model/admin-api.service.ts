@@ -21,6 +21,10 @@ export class AdminApiService {
   updateItem(tableName, itemId, itemData) {
     return this.http.post<any>(`${this.baseUrl}/${tableName}/updateItem`, { itemId, itemData });
   }
+
+  createItem(tableName, itemData) {
+    return this.http.post<any>(`${this.baseUrl}/${tableName}/createItem`, { itemData });
+  }
 }
 
 export interface ITableConfig {

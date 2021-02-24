@@ -16,6 +16,12 @@ import { ProductsComponent } from './pages/products/products.component';
 import { EditUserComponent } from './pages/users/edit-user/edit-user.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ComponentsStateButtonModule } from 'src/app/components/state-button/components.state-button.module';
+import { CategoryComponent } from './pages/category/category.component';
+import { EditCategoryComponent } from './pages/category/edit-category/edit-category.component';
+import { SubcategoryComponent } from './pages/subcategory/subcategory.component';
+import { EditSubcategoryComponent } from './pages/subcategory/edit-subcategory/edit-subcategory.component';
+import { EditProductComponent } from './pages/products/edit-product/edit-product.component';
+import { HopeComponent } from './pages/hope/hope.component';
 
 const routes: Routes = [
   {
@@ -25,6 +31,18 @@ const routes: Routes = [
       {
         path: 'user',
         component: UsersComponent,
+        data: { roles: ['admin'] },
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'category',
+        component: CategoryComponent,
+        data: { roles: ['admin'] },
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'subcategory',
+        component: SubcategoryComponent,
         data: { roles: ['admin'] },
         canActivate: [AuthGuard],
       },
@@ -39,7 +57,18 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AdminComponent, ProductsComponent, UsersComponent, EditUserComponent],
+  declarations: [
+    AdminComponent,
+    ProductsComponent,
+    UsersComponent,
+    EditUserComponent,
+    CategoryComponent,
+    EditCategoryComponent,
+    SubcategoryComponent,
+    EditSubcategoryComponent,
+    EditProductComponent,
+    HopeComponent,
+  ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

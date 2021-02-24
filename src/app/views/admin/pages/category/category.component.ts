@@ -6,24 +6,24 @@ import { MatSort } from '@angular/material/sort';
 import { fromEvent, merge } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
-import { EditProductComponent } from './edit-product/edit-product.component';
 
 import { SwalService } from 'src/app/services/swal.service';
 import { SnackService } from 'src/app/services/snack.service';
+import { EditCategoryComponent } from './edit-category/edit-category.component';
 
 @Component({
-  templateUrl: './products.component.html',
-  styleUrls: ['./products.component.scss'],
+  templateUrl: './category.component.html',
+  styleUrls: ['./category.component.scss'],
 })
-export class ProductsComponent implements OnInit, AfterViewInit {
+export class CategoryComponent implements OnInit, AfterViewInit {
   dataSource: MyDataSource;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('input') input: ElementRef;
 
-  displayedColumns = ['photo_url', 'name', 'release_date', 'category_id', 'subcategory_id', 'actions'];
+  displayedColumns = ['name', 'priority', 'actions'];
 
-  tableName = 'products';
+  tableName = 'categories';
   config: ITableConfig = {
     filter: '',
     sortDirection: 'asc',
@@ -68,7 +68,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   }
 
   onClickAdd() {
-    const dialogRef = this.dialog.open(EditProductComponent, {
+    const dialogRef = this.dialog.open(EditCategoryComponent, {
       data: { isEditing: false },
       panelClass: 'custom-dialog-container',
     });
@@ -81,7 +81,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   }
 
   onClickEdit(item) {
-    const dialogRef = this.dialog.open(EditProductComponent, {
+    const dialogRef = this.dialog.open(EditCategoryComponent, {
       data: { isEditing: true, item: item },
       panelClass: 'custom-dialog-container',
     });
