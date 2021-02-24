@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   myApiUrl: 'http://localhost:9013/api/v1',
   myApiUrl2: 'http://localhost:9013/api/v2',
+  apiAdminUrl: 'http://localhost:9013/api/admin',
   buyUrl: 'https://1.envato.market/6NV1b',
   SCARF_ANALYTICS: false,
   adminRoot: '/',

@@ -1,0 +1,70 @@
+<div>
+  <h2>{{ tableName | uppercase }}</h2>
+
+  <mat-form-field>
+    <input matInput placeholder="Search items" #input />
+  </mat-form-field>
+
+  <div class="spinner-container" *ngIf="dataSource.loading$ | async">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+
+  <mat-table class="mat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="user_name" matSortDirection="asc" matSortDisableClear>
+    <ng-container matColumnDef="photo_url">
+      <mat-header-cell *matHeaderCellDef>Photo</mat-header-cell>
+
+      <mat-cell *matCellDef="let item">
+        <img [src]="item.photo_url" onerror="this.src='assets/img/profiles/profile.jpg'" height="64" width="auto" class="profile-img" />
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="user_name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>User name</mat-header-cell>
+
+      <mat-cell *matCellDef="let item">{{ item.user_name }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+
+      <mat-cell *matCellDef="let item">{{ item.email }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="first_name">
+      <mat-header-cell *matHeaderCellDef>First name</mat-header-cell>
+
+      <mat-cell *matCellDef="let item">{{ item.first_name }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="last_name">
+      <mat-header-cell *matHeaderCellDef>Last name</mat-header-cell>
+
+      <mat-cell *matCellDef="let item">{{ item.last_name }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="role">
+      <mat-header-cell *matHeaderCellDef>User Role</mat-header-cell>
+
+      <mat-cell *matCellDef="let item">{{ item.role }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+
+      <mat-cell *matCellDef="let item">
+        <button mat-icon-button color="primary" (click)="onClickEdit(item)">
+          <i class="fas fa-edit fa-lg"></i>
+        </button>
+        <button mat-icon-button color="warn" (click)="onClickDelete(item)">
+          <i class="fas fa-trash-alt fa-lg"></i>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+
+  <mat-paginator [length]="dataSource.countFiltered" [pageSize]="10" [pageSizeOptions]="[10, 15, 20]"></mat-paginator>
+</div>

@@ -1,4 +1,4 @@
-<nav class="navbar fixed-top" style="z-index: 100 !important">
+<nav class="navbar fixed-top" style="z-index: 100 !important" [ngClass]="{ adminNav: isAdminSite }">
   <div class="d-flex align-items-center navbar-left">
     <a
       (click)="menuButtonClick($event, sidebar.menuClickCount, sidebar.containerClassnames); (false)"
@@ -33,7 +33,7 @@
       <span class="logo-mobile d-block d-xs-none"></span>
     </a>
 
-    <div *ngIf="userService.me.role == 'admin'">
+    <div *ngIf="userService.me.role == 'admin'" class="admin-link">
       <div *ngIf="isAdminSite" style="color: white">
         This is Admin Site:
         <a [routerLink]="['/main']"> Go To User Site</a>

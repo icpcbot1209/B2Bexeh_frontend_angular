@@ -6,6 +6,7 @@ export const environment = {
   production: true,
   myApiUrl: 'https://superfractor-5e4df.web.app/api/v1',
   myApiUrl2: 'https://superfractor-5e4df.web.app/api/v2',
+  apiAdminUrl: 'https://superfractor-5e4df.web.app/api/admin',
   buyUrl: 'https://1.envato.market/6NV1b',
   SCARF_ANALYTICS: false,
   adminRoot: '/app',

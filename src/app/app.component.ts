@@ -22,7 +22,6 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.langService.init();
-    this.authService.autoLogin();
   }
 
   ngAfterViewInit(): void {

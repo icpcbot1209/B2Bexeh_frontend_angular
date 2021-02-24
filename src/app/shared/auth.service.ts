@@ -30,28 +30,17 @@ export class AuthService {
     public ngZone: NgZone,
     private snack: SnackService,
     private userService: UserService
-  ) {}
-
-  async autoLogin(): Promise<boolean> {
-    try {
-      const auth_token = JSON.parse(localStorage.getItem('b2b_auth_token'));
-      const auth_uid = JSON.parse(localStorage.getItem('b2b_auth_uid'));
-
-      if (!auth_uid) return false;
-      // const userCredential: auth.UserCredential = await this.auth.signInAnonymously();
-
-      await this.userService.getMe(auth_uid);
-      return true;
-    } catch (err) {
-      console.log(err);
-      return false;
-    }
+  ) {
+    // this.auth.setPersistence('LOCAL');
+    this.auth.onIdTokenChanged((user: User) => {
+      this.setAuthData(user);
+    });
   }
 
-  private async setAuthData(userCredential: auth.UserCredential): Promise<void> {
-    if (userCredential) {
-      const auth_token = await userCredential.user.getIdToken();
-      const auth_uid = userCredential.user.uid;
+  private async setAuthData(authData: User): Promise<void> {
+    if (authData) {
+      const auth_token = await authData.getIdToken();
+      const auth_uid = authData.uid;
 
       localStorage.setItem('b2b_auth_token', JSON.stringify(auth_token));
       localStorage.setItem('b2b_auth_uid', JSON.stringify(auth_uid));
@@ -64,7 +53,7 @@ export class AuthService {
   // tslint:disable-next-line:typedef
   async emailSignIn(credentials: ISignInCredentials) {
     const userCredential = await this.auth.signInWithEmailAndPassword(credentials.email, credentials.password);
-    await this.setAuthData(userCredential);
+    await this.setAuthData(userCredential.user);
 
     await this.userService.getMe(userCredential.user.uid);
 
@@ -75,7 +64,7 @@ export class AuthService {
 
   async signOut(): Promise<void> {
     try {
-      // await this.auth.signOut();
+      await this.auth.signOut();
       await this.setAuthData(null);
 
       this.ngZone.run(() => {
@@ -95,9 +84,8 @@ export class AuthService {
 
     delete userData.password;
     userData.user_uid = userCredential.user.uid;
+    await this.setAuthData(userCredential.user);
     await this.userService.createUser(userData);
-
-    await this.setAuthData(userCredential);
 
     this.ngZone.run(() => {
       this.router.navigate(['/main/settings/account']);

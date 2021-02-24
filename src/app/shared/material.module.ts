@@ -20,6 +20,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatRadioModule } from '@angular/material/radio';
 
 const arr = [
   MatFormFieldModule,
@@ -41,6 +42,7 @@ const arr = [
   MatSlideToggleModule,
   MatDialogModule,
   MatStepperModule,
+  MatRadioModule,
 ];
 
 @NgModule({

@@ -1,8 +1,14 @@
-a {
-  margin-left: 20px;
-  color: lightgray;
-  text-decoration: underline;
-  &:hover {
-    color: yellow;
+.adminNav {
+  background-color: darkblue !important;
+}
+
+.admin-link {
+  a {
+    margin-left: 20px;
+    color: lightgray;
+    text-decoration: underline;
+    &:hover {
+      color: yellow;
+    }
   }
 }
