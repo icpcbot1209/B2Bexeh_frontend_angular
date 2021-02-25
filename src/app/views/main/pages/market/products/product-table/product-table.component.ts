@@ -19,7 +19,6 @@ export class ProductTableComponent implements OnInit {
   constructor() {}
   private _products: IProduct[];
 
-  @Output() productClicked = new EventEmitter<any>();
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -51,9 +50,5 @@ export class ProductTableComponent implements OnInit {
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
-  }
-
-  onClickRow(row: IProduct) {
-    this.productClicked.emit(row.id);
   }
 }

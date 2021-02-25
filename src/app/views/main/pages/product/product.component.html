@@ -29,9 +29,14 @@
       </div>
     </div>
     <div style="display: flex; flex-wrap: wrap; justify-content: space-around; align-items: flex-start">
-      <div class="button" (click)="addToWatchlist()">
-        <mat-icon>remove_red_eye</mat-icon>
+      <div class="button" (click)="addToWatchlist()" *ngIf="!existInWatchlist" [ngClass]="{ busy: busyWatchlist }">
+        <i class="fas fa-eye"></i>
         Add to watchlist
+      </div>
+
+      <div class="button" (click)="removeFromWatchlist()" *ngIf="existInWatchlist">
+        <i class="fas fa-eye-slash"></i>
+        Remove from watchlist
       </div>
     </div>
   </div>

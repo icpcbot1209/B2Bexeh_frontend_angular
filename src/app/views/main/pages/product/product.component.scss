@@ -1,6 +1,11 @@
 :host {
   div.button {
     font-weight: 900;
+    &.busy {
+      user-select: none;
+      pointer-events: none;
+      color: gray;
+    }
   }
 
   .toggle-container {

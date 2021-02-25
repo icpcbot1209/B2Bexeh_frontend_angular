@@ -88,7 +88,7 @@ export class MyHopesTableComponent implements OnInit {
   async onClickEditHope(hope: IHope, event) {
     event.stopPropagation();
 
-    const product = await this.productService.getProductById(hope.product_id).toPromise();
+    const product = await this.productService.getById(hope.product_id).toPromise();
 
     this.openHopeModal(this.isAsk, true, product, hope);
   }

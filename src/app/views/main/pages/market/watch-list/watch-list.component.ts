@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { IProduct } from 'src/app/interfaces/IProduct';
 import { ProductService } from 'src/app/services/product.service';
+import { SnackService } from 'src/app/services/snack.service';
 import { UserService } from 'src/app/services/user.service';
 import { AuthService } from 'src/app/shared/auth.service';
 
@@ -12,32 +13,24 @@ import { AuthService } from 'src/app/shared/auth.service';
   styleUrls: ['./watch-list.component.scss'],
 })
 export class WatchListComponent implements OnInit {
-  constructor(public productService: ProductService, private snackbar: MatSnackBar, private userService: UserService) {}
-
+  isBusy = false;
   products: IProduct[];
 
-  isBusy = false;
+  constructor(public productService: ProductService, private snack: SnackService, private userService: UserService) {}
+
   ngOnInit(): void {
-    this.getProducts(this.productService.getProductsWatchList(this.userService.me.user_uid));
+    this.getProducts(this.productService.getWatchlist(this.userService.me.id));
   }
 
-  getProducts(observable: Observable<any>) {
+  async getProducts(observable: Observable<any>) {
     this.isBusy = true;
-    observable.subscribe(
-      (resp) => {
-        this.products = resp['data']['rows'] || resp['data'];
-        this.isBusy = false;
-      },
-      (err) => {
-        console.error(err);
-        this.snackbar.open(err.message, 'close', {
-          horizontalPosition: 'end',
-          verticalPosition: 'top',
-          duration: 5000,
-          panelClass: ['red-snackbar'],
-        });
-        this.isBusy = false;
-      }
-    );
+    try {
+      this.products = await observable.toPromise();
+      console.log(this.products);
+    } catch (err) {
+      console.error(err);
+      this.snack.error(err.message);
+    }
+    this.isBusy = false;
   }
 }

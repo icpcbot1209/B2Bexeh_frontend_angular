@@ -1,5 +1,4 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ProductService } from 'src/app/services/product.service';
 import { SnackService } from 'src/app/services/snack.service';
@@ -10,7 +9,7 @@ import { SnackService } from 'src/app/services/snack.service';
   styleUrls: ['./products.component.scss'],
 })
 export class ProductsComponent implements OnInit {
-  constructor(public productService: ProductService, private router: Router, private snack: SnackService) {}
+  constructor(public productService: ProductService, private snack: SnackService) {}
   @ViewChild('refTableDiv', { static: true }) refTableDiv: ElementRef;
   isOpenFilter = true;
 
@@ -33,10 +32,5 @@ export class ProductsComponent implements OnInit {
       this.snack.error(err.message);
     }
     this.isBusy = false;
-  }
-
-  handleProductClicked(productId) {
-    console.log(productId);
-    this.router.navigate(['/main/product', productId]);
   }
 }

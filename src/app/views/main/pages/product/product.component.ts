@@ -39,6 +39,9 @@ export class ProductComponent implements OnInit {
   bids: IHope[] = [];
   myAsks: IHope[] = [];
   myBids: IHope[] = [];
+
+  existInWatchlist: boolean;
+
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(async (paramMap: ParamMap) => {
       if (!paramMap.has('productId')) {
@@ -53,7 +56,8 @@ export class ProductComponent implements OnInit {
   async loadProduct(productId) {
     this.isBusy = true;
     try {
-      this.product = await this.productService.getProductById(productId).toPromise();
+      this.product = await this.productService.getById(productId).toPromise();
+      this.existInWatchlist = await this.productService.existInWatchlist(this.userService.me.id, productId).toPromise();
     } catch (err) {
       console.error(err);
       this.snack.error(err.message);
@@ -76,7 +80,7 @@ export class ProductComponent implements OnInit {
     );
   }
   separateHopes(hopes: IHope[]) {
-    const userId = this.userService.me.user_uid;
+    const userId = this.userService.me.id;
     const asks: IHope[] = [];
     const bids: IHope[] = [];
     const myAsks: IHope[] = [];
@@ -115,7 +119,32 @@ export class ProductComponent implements OnInit {
 
   openPriceHistory() {}
 
-  addToWatchlist() {}
+  busyWatchlist = false;
+  async addToWatchlist() {
+    if (this.busyWatchlist) return;
+    this.busyWatchlist = true;
+    try {
+      await this.productService.addToWatchlist(this.userService.me.id, this.productId).toPromise();
+      this.existInWatchlist = true;
+    } catch (err) {
+      console.error(err);
+      this.snack.error(err.message);
+    }
+    this.busyWatchlist = false;
+  }
+
+  async removeFromWatchlist() {
+    if (this.busyWatchlist) return;
+    this.busyWatchlist = true;
+    try {
+      await this.productService.removeFromWatchlist(this.userService.me.id, this.productId).toPromise();
+      this.existInWatchlist = false;
+    } catch (err) {
+      console.error(err);
+      this.snack.error(err.message);
+    }
+    this.busyWatchlist = false;
+  }
 
   openCreateHopeModal(is_ask: boolean, isEditing: boolean = false, hope: IHope = null) {
     const dialogRef = this.dialog.open(EditHopeComponent, {
