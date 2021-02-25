@@ -3,28 +3,28 @@
 </ng-container>
 <ng-container [style.display]="!isBusy ? 'block' : 'none'">
   <div style="display: grid; grid-template-columns: 250px 30px 250px auto; grid-template-rows: auto" *ngIf="product">
-    <img [src]="product?.imageUrl" width="250" height="auto" />
+    <img [src]="product?.photo_url" onerror="this.src='assets/img/profiles/profile.jpg'" height="200" width="auto" />
     <div></div>
     <div>
-      <h2>{{ product.productName }}</h2>
-      <p>Released on {{ product.releaseDate | date: 'longDate' }}</p>
+      <h2>{{ product.name }}</h2>
+      <p>Released on {{ product.release_date | date: 'yyyy-MM-dd' }}</p>
 
-      <div style="display: grid; grid-template-columns: 100px 100px; grid-template-rows: 50px 50px">
+      <div style="display: grid; grid-template-columns: 100px 100px; row-gap: 10px">
         <div class="sell-price">
-          <label>Highest / Box</label>
-          <p>{{ product.boxhighestbid | currency }}</p>
+          <label>Highest Bid / Box</label>
+          <p>{{ product.boxhighestbid || 0 | currency }}</p>
         </div>
         <div class="buy-price">
-          <label>Lowest / Box</label>
-          <p>{{ product.boxlowestask | currency }}</p>
+          <label>Lowest Ask / Box</label>
+          <p>{{ product.boxlowestask || 0 | currency }}</p>
         </div>
         <div class="sell-price">
-          <label>Highest / Case</label>
-          <p>{{ product.casehighestbid | currency }}</p>
+          <label>Highest Bid / Case</label>
+          <p>{{ product.casehighestbid || 0 | currency }}</p>
         </div>
         <div class="buy-price">
-          <label>Lowest / Case</label>
-          <p>{{ product.caselowestask | currency }}</p>
+          <label>Lowest Ask / Case</label>
+          <p>{{ product.caselowestask || 0 | currency }}</p>
         </div>
       </div>
     </div>

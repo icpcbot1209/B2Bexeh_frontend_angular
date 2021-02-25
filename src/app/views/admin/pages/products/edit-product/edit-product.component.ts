@@ -78,7 +78,7 @@ export class EditProductComponent implements OnInit {
 
       this.dialogRef.close(itemData);
     } catch (err) {
-      console.log(err);
+      console.error(err);
       this.snack.error(err.message);
     }
     this.busy = false;

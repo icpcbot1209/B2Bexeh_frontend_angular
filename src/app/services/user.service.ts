@@ -37,7 +37,7 @@ export class UserService {
       this.users.push(user);
       return user;
     } catch (err) {
-      console.log(err);
+      console.error(err);
       return null;
     }
   }
@@ -54,7 +54,7 @@ export class UserService {
       this.users.push(user);
       return user;
     } catch (err) {
-      console.log(err);
+      console.error(err);
       return null;
     }
   }

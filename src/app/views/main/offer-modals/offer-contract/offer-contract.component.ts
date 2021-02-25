@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { IOffer } from 'src/app/interfaces/IOffer';
-import { ConfigsService } from 'src/app/services/configs.service';
+import { ConstListService } from 'src/app/services/const-list.service';
 import { OfferService } from 'src/app/services/offer.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -10,8 +10,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./offer-contract.component.scss'],
 })
 export class OfferContractComponent implements OnChanges {
-
-  constructor(public userService: UserService, public configs: ConfigsService, private offerService: OfferService) {}
+  constructor(public userService: UserService, public consts: ConstListService, private offerService: OfferService) {}
   @Input() offer: IOffer;
   @Output() offerChanged = new EventEmitter<IOffer>();
 
@@ -27,7 +26,9 @@ export class OfferContractComponent implements OnChanges {
   }
 
   makeTitle(offer: IOffer) {
-    if (offer.creator_id === offer.seller_id) { return `${offer.seller_name.toUpperCase()} is offering to sell to ${offer.buyer_name.toUpperCase()}`; }
+    if (offer.creator_id === offer.seller_id) {
+      return `${offer.seller_name.toUpperCase()} is offering to sell to ${offer.buyer_name.toUpperCase()}`;
+    }
     return `${offer.buyer_name.toUpperCase()} is offering to buy from ${offer.seller_name.toUpperCase()}`;
   }
 

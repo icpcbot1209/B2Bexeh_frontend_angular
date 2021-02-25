@@ -32,11 +32,15 @@ export class HopesComponent implements OnInit {
 
   handleChangeType(type) {
     this.type = type;
-    if (this.categoryId && this.subcategoryId) { this.updateWithFilters(); }
+    if (this.categoryId && this.subcategoryId) {
+      this.updateWithFilters();
+    }
   }
   handleChangeListing(listingTime) {
     this.listingTime = listingTime;
-    if (this.categoryId && this.subcategoryId) { this.updateWithFilters(); }
+    if (this.categoryId && this.subcategoryId) {
+      this.updateWithFilters();
+    }
   }
   loadTableData({ categoryId, subcategoryId }) {
     this.isBusy = true;
@@ -48,7 +52,7 @@ export class HopesComponent implements OnInit {
         this.isBusy = false;
       },
       (err) => {
-        console.log(err);
+        console.error(err);
         this.snack.error(err.message);
         this.isBusy = false;
       }
@@ -59,11 +63,18 @@ export class HopesComponent implements OnInit {
     this.bids = [];
 
     this.hopes.forEach((x) => {
-      if (this.type !== 'All' && x.deal_method !== this.type) { return; }
-      if (this.listingTime < (Date.now() - new Date(x.release_date).getTime()) / 3600000) { return; }
+      if (this.type !== 'All' && x.deal_method !== this.type) {
+        return;
+      }
+      if (this.listingTime < (Date.now() - new Date(x.release_date).getTime()) / 3600000) {
+        return;
+      }
 
-      if (x.is_ask) { this.asks.push(x); }
-      else { this.bids.push(x); }
+      if (x.is_ask) {
+        this.asks.push(x);
+      } else {
+        this.bids.push(x);
+      }
     });
   }
 }

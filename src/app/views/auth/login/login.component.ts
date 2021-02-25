@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
     try {
       await this.authService.emailSignIn(this.loginForm.value);
     } catch (err) {
-      console.log(err);
+      console.error(err);
       this.snack.error(err.message);
     }
     this.busy = false;

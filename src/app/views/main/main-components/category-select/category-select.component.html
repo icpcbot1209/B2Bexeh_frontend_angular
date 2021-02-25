@@ -9,7 +9,7 @@
       [clearable]="false"
       [placeholder]="'--- select sport ---'"
       [items]="categories"
-      bindLabel="categoryName"
+      bindLabel="name"
       (change)="onChangeCategory($event)"
       [(ngModel)]="category"
     >
@@ -26,7 +26,7 @@
       [clearable]="false"
       [placeholder]="'--- select year ---'"
       [items]="subcategories"
-      bindLabel="subcategory_name"
+      bindLabel="name"
       (change)="onChangeSubcategory($event)"
       [(ngModel)]="subcategory"
     >

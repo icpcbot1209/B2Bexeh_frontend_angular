@@ -36,7 +36,7 @@ export class MyDataSource implements DataSource<any> {
 
       this.itemsSubject.next(this.items);
     } catch (err) {
-      console.log(err);
+      console.error(err);
       this.snack.error(err.message);
     }
     this.loadingSubject.next(false);
@@ -51,7 +51,7 @@ export class MyDataSource implements DataSource<any> {
 
       this.itemsSubject.next(this.items);
     } catch (err) {
-      console.log(err);
+      console.error(err);
       this.snack.error(err.message);
     }
     this.loadingSubject.next(false);
@@ -65,7 +65,7 @@ export class MyDataSource implements DataSource<any> {
       this.countFiltered--;
       this.itemsSubject.next(this.items);
     } catch (err) {
-      console.log(err);
+      console.error(err);
       this.snack.error(err.message);
     }
     this.loadingSubject.next(false);

@@ -4,7 +4,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { IHope } from 'src/app/interfaces/IHope';
-import { ConfigsService } from 'src/app/services/configs.service';
+import { ConstListService } from 'src/app/services/const-list.service';
 import { HopeService } from 'src/app/services/hope.service';
 import { SnackService } from 'src/app/services/snack.service';
 import { UserService } from 'src/app/services/user.service';
@@ -26,10 +26,9 @@ import { IProduct } from 'src/app/interfaces/IProduct';
   ],
 })
 export class MyHopesTableComponent implements OnInit {
-
   constructor(
     public userService: UserService,
-    public configs: ConfigsService,
+    public consts: ConstListService,
     private productService: ProductService,
     private hopeService: HopeService,
     private snack: SnackService,
@@ -53,12 +52,14 @@ export class MyHopesTableComponent implements OnInit {
       this.hopes = await this.hopeService.getMyHopes(this.isAsk).toPromise();
       this.updateTableRows(this.hopes);
     } catch (err) {
-      console.log(err);
+      console.error(err);
       this.snack.error(err.message);
     }
   }
   updateTableRows(hopes: IHope[]) {
-    if (!hopes) { return; }
+    if (!hopes) {
+      return;
+    }
     this.dataSource = new MatTableDataSource(hopes);
     this.dataSource.sort = this.sort;
   }
@@ -69,7 +70,9 @@ export class MyHopesTableComponent implements OnInit {
 
   async onClickDeleteHope(hope: IHope, event) {
     event.stopPropagation();
-    if (!confirm('Confirm delete this bid/ask?')) { return; }
+    if (!confirm('Confirm delete this bid/ask?')) {
+      return;
+    }
     try {
       await this.hopeService.deleteHope(hope.id).toPromise();
       this.hopes = this.hopes.filter((x) => x.id !== hope.id);
@@ -77,7 +80,7 @@ export class MyHopesTableComponent implements OnInit {
 
       this.snack.success('Successfully deleted.');
     } catch (err) {
-      console.log(err);
+      console.error(err);
       this.snack.error(err.message);
     }
   }
@@ -97,9 +100,14 @@ export class MyHopesTableComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result: IHope) => {
-      if (!result) { return; }
-      if (!isEditing) { this.tryCreateHope(result); }
-      else { this.tryUpdateHope(result, hope.id); }
+      if (!result) {
+        return;
+      }
+      if (!isEditing) {
+        this.tryCreateHope(result);
+      } else {
+        this.tryUpdateHope(result, hope.id);
+      }
     });
   }
 
@@ -111,7 +119,7 @@ export class MyHopesTableComponent implements OnInit {
       this.updateTableRows(this.hopes);
       this.snack.success('Successfully created.');
     } catch (err) {
-      console.log(err);
+      console.error(err);
       this.snack.error(err.message);
     }
   }
@@ -121,12 +129,14 @@ export class MyHopesTableComponent implements OnInit {
       const hope: IHope = await this.hopeService.updateHope(hopeData, hopeId).toPromise();
 
       const k = this.hopes.findIndex((x) => x.id === hope.id);
-      if (k > -1) { this.hopes[k] = hope; }
+      if (k > -1) {
+        this.hopes[k] = hope;
+      }
       this.updateTableRows(this.hopes);
 
       this.snack.success('Successfully updated.');
     } catch (err) {
-      console.log(err);
+      console.error(err);
       this.snack.error(err.message);
     }
   }

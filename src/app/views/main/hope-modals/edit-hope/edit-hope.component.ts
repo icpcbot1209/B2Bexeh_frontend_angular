@@ -1,57 +1,90 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { IRespProduct } from 'src/app/interfaces/IRespProduct';
+import { IProduct } from 'src/app/interfaces/IProduct';
 import { IHope } from 'src/app/interfaces/IHope';
+import { UserService } from 'src/app/services/user.service';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { genralConfig } from 'src/app/constants/genral-config.constant';
+import { ConstListService } from 'src/app/services/const-list.service';
 
 @Component({
   templateUrl: './edit-hope.component.html',
   styleUrls: ['./edit-hope.component.scss'],
 })
 export class EditHopeComponent implements OnInit {
-  deal_method = '';
-  unit = 'Box';
-  qty = 1;
-  price: number;
-  note = '';
+  theForm: FormGroup;
+  units = [];
+  deal_methods = [];
+  constructor(
+    public dialogRef: MatDialogRef<EditHopeComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private formBuilder: FormBuilder,
+    private userService: UserService,
+    public consts: ConstListService
+  ) {
+    this.units = this.consts.dict_unit.slice(1);
+    this.deal_methods = this.consts.dict_deal_method.slice(1);
+  }
 
-  constructor(public dialogRef: MatDialogRef<EditHopeComponent>, @Inject(MAT_DIALOG_DATA) public data: DialogData) {
-    if (data.isEditing) {
-      this.deal_method = data.hope.deal_method;
-      this.unit = data.hope.unit;
-      this.qty = data.hope.qty;
-      this.price = data.hope.price;
-      this.note = data.hope.note;
+  ngOnInit(): void {
+    this.theForm = this.formBuilder.group({
+      unit: new FormControl(null, [Validators.required]),
+      deal_method: new FormControl(null, [Validators.required]),
+      qty: new FormControl(null, [Validators.required]),
+      price: new FormControl(null, [Validators.required]),
+      note: new FormControl(null, [Validators.required]),
+    });
+
+    if (this.data.isEditing) {
+      this.theForm.setValue({
+        unit: this.data.hope.unit,
+        deal_method: this.data.hope.deal_method,
+        qty: this.data.hope.qty,
+        price: this.data.hope.price,
+        note: this.data.hope.note,
+      });
     } else {
-      this.resetPrice();
+      // this.resetPrice();
     }
   }
 
-  ngOnInit(): void {}
-
   unitWillChange(unit) {
-    this.resetPrice();
+    // this.resetPrice();
   }
 
   resetPrice() {
-    if (this.unit === 'Box' && !this.data.is_ask) { this.price = this.data.product.boxhighestbid; }
-    if (this.unit === 'Box' && this.data.is_ask) { this.price = this.data.product.boxlowestask; }
-    if (this.unit === 'Case' && !this.data.is_ask) { this.price = this.data.product.casehighestbid; }
-    if (this.unit === 'Case' && this.data.is_ask) { this.price = this.data.product.caselowestask; }
+    let unit = this.theForm.value.unit;
+    let price = 0;
+    if (unit === 'box' && !this.data.is_ask) {
+      price = this.data.product.boxhighestbid;
+    }
+    if (unit === 'box' && this.data.is_ask) {
+      price = this.data.product.boxlowestask;
+    }
+    if (unit === 'case' && !this.data.is_ask) {
+      price = this.data.product.casehighestbid;
+    }
+    if (unit === 'case' && this.data.is_ask) {
+      price = this.data.product.caselowestask;
+    }
+
+    this.theForm.value.price = price;
   }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
-  onSubmit() {
+  onSubmit(event) {
+    event.preventDefault();
+    if (this.theForm.invalid) return;
+
+    const value = this.theForm.value;
     const hopeData: IHope = {
+      creator_id: this.userService.me.id,
       is_ask: this.data.is_ask,
-      note: this.note,
       product_id: this.data.product.id,
-      qty: this.qty,
-      price: this.price,
-      unit: this.unit,
-      deal_method: this.deal_method,
+      ...value,
     };
     this.dialogRef.close(hopeData);
   }
@@ -59,7 +92,7 @@ export class EditHopeComponent implements OnInit {
 
 interface DialogData {
   is_ask: boolean;
-  product: IRespProduct;
+  product: IProduct;
   isEditing: boolean;
   hope: IHope;
 }

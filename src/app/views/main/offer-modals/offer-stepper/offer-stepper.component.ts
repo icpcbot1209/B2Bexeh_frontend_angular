@@ -4,7 +4,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { IOffer } from 'src/app/interfaces/IOffer';
 import { OfferService } from 'src/app/services/offer.service';
 import { UserService } from 'src/app/services/user.service';
-import { ConfigsService } from 'src/app/services/configs.service';
 
 import { STEPPER_GLOBAL_OPTIONS, StepState } from '@angular/cdk/stepper';
 import { CreateOfferComponent } from '../create-offer/create-offer.component';
@@ -25,8 +24,7 @@ export class OfferStepperComponent implements OnInit {
     public dialogRef: MatDialogRef<CreateOfferComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private offerService: OfferService,
-    public userService: UserService,
-    public configs: ConfigsService
+    public userService: UserService
   ) {}
   isLinear = false;
 
@@ -46,23 +44,38 @@ export class OfferStepperComponent implements OnInit {
 
   statusState(offer: IOffer, pos: number): string {
     const num = this.offerService.statusOffer(offer).num;
-    if (num > pos) { return 'done'; }
-    if (num === pos) { return 'edit'; }
-    if (num < pos) { return 'number'; }
+    if (num > pos) {
+      return 'done';
+    }
+    if (num === pos) {
+      return 'edit';
+    }
+    if (num < pos) {
+      return 'number';
+    }
   }
   setSelectedStepId(offer: IOffer, id?: number) {
-    if (id) { this.selectedStepId = id; }
-    else {
-      if (offer.is_canceled) { this.selectedStepId = 0; }
-      else if (!offer.is_accepted) { this.selectedStepId = 0; }
-      else if (!offer.is_paid || !offer.is_shipped) { this.selectedStepId = 1; }
-      else { this.selectedStepId = 2; }
+    if (id) {
+      this.selectedStepId = id;
+    } else {
+      if (offer.is_canceled) {
+        this.selectedStepId = 0;
+      } else if (!offer.is_accepted) {
+        this.selectedStepId = 0;
+      } else if (!offer.is_paid || !offer.is_shipped) {
+        this.selectedStepId = 1;
+      } else {
+        this.selectedStepId = 2;
+      }
     }
   }
 
   myFeedback(): string {
-    if (this.data.offer.buyer_id === this.userService.me.id) { return this.data.offer.feedback2seller; }
-    else { return this.data.offer.feedback2buyer; }
+    if (this.data.offer.buyer_id === this.userService.me.id) {
+      return this.data.offer.feedback2seller;
+    } else {
+      return this.data.offer.feedback2buyer;
+    }
   }
 }
 

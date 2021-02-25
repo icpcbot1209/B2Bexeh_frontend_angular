@@ -73,12 +73,12 @@ export const menuItemsAdmin: IMenuItem[] = [
     to: `/admin/product`,
     roles: ['admin'],
   },
-  {
-    icon: 'fas fa-file-invoice-dollar',
-    label: 'Bids/Asks',
-    to: `/admin/bids-asks`,
-    roles: ['admin'],
-  },
+  // {
+  //   icon: 'fas fa-file-invoice-dollar',
+  //   label: 'Bids/Asks',
+  //   to: `/admin/bids-asks`,
+  //   roles: ['admin'],
+  // },
   {
     icon: 'fas fa-money-check-alt',
     label: 'Transaction',

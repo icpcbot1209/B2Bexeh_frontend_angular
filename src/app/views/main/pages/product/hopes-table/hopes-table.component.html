@@ -15,12 +15,12 @@
 
   <ng-container matColumnDef="deal_method">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
-    <td mat-cell *matCellDef="let element">{{ configs.dictVal(element.deal_method, configs.dict_deal_method) }}</td>
+    <td mat-cell *matCellDef="let element">{{ consts.dictVal(element.deal_method, consts.dict_deal_method) }}</td>
   </ng-container>
 
   <ng-container matColumnDef="unit">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Unit</th>
-    <td mat-cell *matCellDef="let element">{{ element.unit }}</td>
+    <td mat-cell *matCellDef="let element">{{ consts.dictVal(element.unit, consts.dict_unit) }}</td>
   </ng-container>
 
   <ng-container matColumnDef="qty">

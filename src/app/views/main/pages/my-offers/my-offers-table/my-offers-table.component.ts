@@ -5,7 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { IOffer } from 'src/app/interfaces/IOffer';
 import { IUser } from 'src/app/interfaces/IUser';
-import { ConfigsService } from 'src/app/services/configs.service';
+import { ConstListService } from 'src/app/services/const-list.service';
 import { OfferService } from 'src/app/services/offer.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -22,7 +22,7 @@ export class MyOffersTableComponent implements OnInit {
     return this._offers;
   }
 
-  constructor(public configs: ConfigsService, public offerService: OfferService) {}
+  constructor(public consts: ConstListService, public offerService: OfferService) {}
   @Input() tag: string;
 
   private _offers: IOffer[];
@@ -38,7 +38,9 @@ export class MyOffersTableComponent implements OnInit {
 
   ngOnInit(): void {}
   updateTableRows(offers: IOffer[]) {
-    if (!offers) { return; }
+    if (!offers) {
+      return;
+    }
     this.dataSource = new MatTableDataSource(offers);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;

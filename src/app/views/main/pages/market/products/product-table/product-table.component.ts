@@ -23,7 +23,7 @@ export class ProductTableComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  displayedColumns: string[] = ['productName', 'listingDates', 'releaseDate', 'boxhighestbid', 'boxlowestask'];
+  displayedColumns: string[] = ['name', 'listingDates', 'release_date', 'boxhighestbid', 'boxlowestask'];
   dataSource: MatTableDataSource<IProduct>;
 
   ngOnInit(): void {}

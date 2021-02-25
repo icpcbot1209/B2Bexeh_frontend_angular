@@ -94,16 +94,15 @@ export class AccountComponent implements OnInit {
         this.snack.success('Successfully updated');
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
       this.snack.error(err.message);
     }
     this.busy = false;
   }
 
   async updateUser() {
-    if (this.registerForm.invalid) {
-      return;
-    }
+    if (this.registerForm.invalid) return;
+
     const userData: IUser = this.registerForm.value;
     userData.phone_number = this.registerForm.value.phone_number.split('-').join('');
 
@@ -117,7 +116,7 @@ export class AccountComponent implements OnInit {
       await this.userService.updateMe(userData).toPromise();
       this.snack.success('Successfully updated');
     } catch (err) {
-      console.log(err);
+      console.error(err);
       this.snack.error(err.message);
     }
     this.busy = false;

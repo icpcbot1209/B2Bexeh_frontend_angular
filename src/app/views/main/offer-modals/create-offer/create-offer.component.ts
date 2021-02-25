@@ -1,12 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { IHope } from 'src/app/interfaces/IHope';
-import { IRespProduct } from 'src/app/interfaces/IRespProduct';
+import { IProduct } from 'src/app/interfaces/IProduct';
 import { IOffer } from 'src/app/interfaces/IOffer';
 import { OfferService } from 'src/app/services/offer.service';
 import { UserService } from 'src/app/services/user.service';
 import { ChattingService } from 'src/app/services/chatting.service';
-import { ConfigsService } from 'src/app/services/configs.service';
+import { ConstListService } from 'src/app/services/const-list.service';
 
 @Component({
   selector: 'app-create-offer',
@@ -24,7 +24,7 @@ export class CreateOfferComponent implements OnInit {
     private offerService: OfferService,
     private userService: UserService,
     private chattingService: ChattingService,
-    public configs: ConfigsService
+    public consts: ConstListService
   ) {}
 
   ngOnInit() {
@@ -64,13 +64,13 @@ export class CreateOfferComponent implements OnInit {
       const offer: IOffer = await this.offerService.createOffer(data).toPromise();
       this.dialogRef.close(offer);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   }
 }
 
 interface DialogData {
-  product: IRespProduct;
+  product: IProduct;
   hope: IHope;
   isAccept: boolean;
 }

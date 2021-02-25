@@ -98,7 +98,7 @@ export class SignupComponent implements OnInit {
     try {
       await this.authService.emailSignUp(userData);
     } catch (err) {
-      console.log(err);
+      console.error(err);
       this.snack.error(err.message);
     }
     this.busy = false;

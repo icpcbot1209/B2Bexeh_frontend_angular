@@ -29,7 +29,9 @@ export class NotifService {
   }
 
   async listenMyNotifs(me: IUser) {
-    if (!me) { return; }
+    if (!me) {
+      return;
+    }
     this.isLoading = true;
 
     try {
@@ -38,7 +40,7 @@ export class NotifService {
         this.isLoading = false;
       });
     } catch (err) {
-      console.log(err);
+      console.error(err);
       this.isLoading = false;
     }
   }

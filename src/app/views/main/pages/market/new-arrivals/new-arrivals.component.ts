@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
-import { IRespProduct } from 'src/app/interfaces/IRespProduct';
+import { IProduct } from 'src/app/interfaces/IProduct';
 import { ProductService } from 'src/app/services/product.service';
 import { AuthService } from 'src/app/shared/auth.service';
 
@@ -13,7 +13,7 @@ import { AuthService } from 'src/app/shared/auth.service';
 export class NewArrivalsComponent implements OnInit {
   constructor(public productService: ProductService, private snackbar: MatSnackBar, private authService: AuthService) {}
 
-  products: IRespProduct[];
+  products: IProduct[];
 
   isBusy = false;
   ngOnInit(): void {
@@ -28,7 +28,7 @@ export class NewArrivalsComponent implements OnInit {
         this.isBusy = false;
       },
       (err) => {
-        console.log(err);
+        console.error(err);
         this.snackbar.open(err.message, 'close', {
           horizontalPosition: 'end',
           verticalPosition: 'top',

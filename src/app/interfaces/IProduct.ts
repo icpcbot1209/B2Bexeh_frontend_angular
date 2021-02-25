@@ -10,5 +10,9 @@ export interface IProduct {
   release_date?: Date;
   photo_url?: string;
 
+  boxlowestask?: number;
+  boxhighestbid?: number;
+  caselowestask?: number;
+  casehighestbid?: number;
   listingDates?: any;
 }

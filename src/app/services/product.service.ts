@@ -20,21 +20,12 @@ export class ProductService {
     return category.categoryName;
   }
 
-  getCategories() {
-    return this.http.post(ApiUrlConstant.CATEGARTLIST, null).pipe(
-      map((resp) => {
-        this.categories = resp['data']['rows'] || resp['data'];
-        return resp;
-      })
-    );
-  }
-
-  getSubcategories(category_id: string) {
-    return this.http.post(ApiUrlConstant.SUBCATEGARTLISTBYCATE, { category_id });
-  }
-
   getProductsByCategory(category_id: string, subcategory_id: string) {
     return this.http.post(`${environment.myApiUrl2}/product/getByCategory`, { category_id, subcategory_id });
+  }
+
+  getProductById(productId) {
+    return this.http.post<IProduct>(`${environment.myApiUrl2}/product/getById`, { id: productId });
   }
 
   getProductsPopular() {
@@ -47,17 +38,5 @@ export class ProductService {
 
   getProductsWatchList(userId) {
     return this.http.post(ApiUrlConstant.GETALLWATCHLIST, { userId });
-  }
-
-  getProductById(productId) {
-    return this.http.post(ApiUrlConstant.GETPRODUCTBYID, { id: productId }).pipe(
-      map((resp) => {
-        const arr: any[] = resp['data']['rows'] || resp['data'];
-        if (arr && arr.length > 0) {
-          return arr[0];
-        }
-        return null;
-      })
-    );
   }
 }

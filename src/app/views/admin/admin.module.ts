@@ -22,6 +22,8 @@ import { SubcategoryComponent } from './pages/subcategory/subcategory.component'
 import { EditSubcategoryComponent } from './pages/subcategory/edit-subcategory/edit-subcategory.component';
 import { EditProductComponent } from './pages/products/edit-product/edit-product.component';
 import { HopeComponent } from './pages/hope/hope.component';
+import { TransactionComponent } from './pages/transaction/transaction.component';
+import { SettingComponent } from './pages/setting/setting.component';
 
 const routes: Routes = [
   {
@@ -52,6 +54,24 @@ const routes: Routes = [
         data: { roles: ['admin'] },
         canActivate: [AuthGuard],
       },
+      // {
+      //   path: 'hope',
+      //   component: HopeComponent,
+      //   data: { roles: ['admin'] },
+      //   canActivate: [AuthGuard],
+      // },
+      {
+        path: 'transaction',
+        component: TransactionComponent,
+        data: { roles: ['admin'] },
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'setting',
+        component: SettingComponent,
+        data: { roles: ['admin'] },
+        canActivate: [AuthGuard],
+      },
     ],
   },
 ];
@@ -68,6 +88,8 @@ const routes: Routes = [
     EditSubcategoryComponent,
     EditProductComponent,
     HopeComponent,
+    TransactionComponent,
+    SettingComponent,
   ],
   imports: [
     CommonModule,

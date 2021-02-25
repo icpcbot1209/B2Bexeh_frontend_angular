@@ -1,4 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ConstListService } from 'src/app/services/const-list.service';
+
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -7,7 +9,7 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./category-select.component.scss'],
 })
 export class CategorySelectComponent implements OnInit {
-  constructor(public productService: ProductService) {}
+  constructor(private constService: ConstListService, public productService: ProductService) {}
   @Output() categoriesSelected = new EventEmitter<{ categoryId; subcategoryId }>();
 
   categories = [];
@@ -19,16 +21,14 @@ export class CategorySelectComponent implements OnInit {
   ngOnInit(): void {
     this.init();
   }
-  init() {
-    this.productService.getCategories().subscribe((resp) => {
-      this.categories = resp['data']['rows'];
-    });
+
+  async init() {
+    this.categories = await this.constService.getCategories();
   }
-  onChangeCategory(category) {
-    this.productService.getSubcategories(category.id).subscribe((resp) => {
-      this.subcategories = resp['data']['rows'];
-    });
+  async onChangeCategory(category) {
     this.subcategory = null;
+    this.subcategories = [];
+    this.subcategories = await this.constService.getSubcategories(category.id);
   }
 
   onChangeSubcategory(subcategory) {

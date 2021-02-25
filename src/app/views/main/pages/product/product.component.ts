@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
-import { IRespProduct } from 'src/app/interfaces/IRespProduct';
+import { IProduct } from 'src/app/interfaces/IProduct';
 import { ProductService } from 'src/app/services/product.service';
 
 import { IHope } from 'src/app/interfaces/IHope';
@@ -31,7 +31,7 @@ export class ProductComponent implements OnInit {
   productId;
 
   isBusy = false;
-  product: IRespProduct;
+  product: IProduct;
 
   hopes: IHope[];
 
@@ -49,18 +49,18 @@ export class ProductComponent implements OnInit {
       this.readHopesByProductId(this.productId);
     });
   }
-  loadProduct(productId) {
+
+  async loadProduct(productId) {
     this.isBusy = true;
-    this.productService.getProductById(productId).subscribe(
-      (resp) => {
-        this.product = resp;
-      },
-      (err) => {
-        this.isBusy = false;
-        console.log(err);
-      }
-    );
+    try {
+      this.product = await this.productService.getProductById(productId).toPromise();
+    } catch (err) {
+      console.error(err);
+      this.snack.error(err.message);
+    }
+    this.isBusy = false;
   }
+
   readHopesByProductId(productId) {
     this.isBusy = true;
     this.hopeService.readByProductId(this.productId).subscribe(
@@ -71,7 +71,7 @@ export class ProductComponent implements OnInit {
       },
       (err) => {
         this.isBusy = false;
-        console.log(err);
+        console.error(err);
       }
     );
   }
@@ -144,7 +144,7 @@ export class ProductComponent implements OnInit {
       this.separateHopes(this.hopes);
       this.snack.success('Successfully created.');
     } catch (err) {
-      console.log(err);
+      console.error(err);
       this.snack.error(err.message);
     }
   }
@@ -162,7 +162,7 @@ export class ProductComponent implements OnInit {
 
       this.snack.success('Successfully updated.');
     } catch (err) {
-      console.log(err);
+      console.error(err);
       this.snack.error(err.message);
     }
   }
@@ -175,7 +175,7 @@ export class ProductComponent implements OnInit {
 
       this.snack.success('Successfully deleted.');
     } catch (err) {
-      console.log(err);
+      console.error(err);
       this.snack.error(err.message);
     }
   }

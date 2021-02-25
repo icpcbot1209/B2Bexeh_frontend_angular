@@ -1,5 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ConstListService } from 'src/app/services/const-list.service';
 import { ProductService } from 'src/app/services/product.service';
 import { SnackService } from 'src/app/services/snack.service';
 import { UserService } from 'src/app/services/user.service';
@@ -10,7 +11,12 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./product-filter.component.scss'],
 })
 export class ProductFilterComponent implements OnInit {
-  constructor(public productService: ProductService, private userService: UserService, private snack: SnackService) {}
+  constructor(
+    public constService: ConstListService,
+    public productService: ProductService,
+    private userService: UserService,
+    private snack: SnackService
+  ) {}
   @Input() isOpen: boolean;
   @Output() productsChanged = new EventEmitter<any[]>();
 
@@ -72,17 +78,16 @@ export class ProductFilterComponent implements OnInit {
       this.getProducts(this.productService.getProductsWatchList(this.userService.me.user_uid));
     }
   }
-  init() {
-    this.productService.getCategories().subscribe((resp) => {
-      this.categories = resp['data']['rows'];
-    });
+
+  async init() {
+    this.categories = await this.constService.getCategories();
   }
-  onChangeCategory(category) {
-    this.productService.getSubcategories(category.id).subscribe((resp) => {
-      this.subcategories = resp['data']['rows'];
-    });
+  async onChangeCategory(category) {
+    this.subcategories = await this.constService.getSubcategories(category.id);
+
     this.subcategory = null;
   }
+
   onChangeSubcategory(subcategory) {
     this.getProducts(this.productService.getProductsByCategory(this.category.id, subcategory.id));
   }
@@ -96,7 +101,7 @@ export class ProductFilterComponent implements OnInit {
         this.isBusy = false;
       },
       (err) => {
-        console.log(err);
+        console.error(err);
         this.snack.error(err.message);
         this.isBusy = false;
       }

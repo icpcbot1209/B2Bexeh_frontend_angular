@@ -30,7 +30,9 @@ export class ChattingService {
   }
 
   private async readMyChats(me: IUser) {
-    if (!me) { return; }
+    if (!me) {
+      return;
+    }
     this.isLoading = true;
 
     try {
@@ -40,7 +42,7 @@ export class ChattingService {
         this.isLoading = false;
       });
     } catch (err) {
-      console.log(err);
+      console.error(err);
       this.isLoading = false;
     }
   }
@@ -77,7 +79,9 @@ export class ChattingService {
   }
 
   async startChatWith(idOther: string) {
-    if (idOther === this.me.id) { return null; }
+    if (idOther === this.me.id) {
+      return null;
+    }
     let chatId;
     const k = this.chats.findIndex((x) => x.other.id === idOther);
     if (k > -1) {
@@ -124,7 +128,9 @@ export class ChattingService {
 
   async markAllAsRead(chat: IChat) {
     chat.msgs.forEach((msg, i) => {
-      if (msg.senderId !== this.me.id) { msg.isRead = true; }
+      if (msg.senderId !== this.me.id) {
+        msg.isRead = true;
+      }
     });
 
     const ref = this.afs.collection('chats').doc(chat.id);
@@ -135,7 +141,9 @@ export class ChattingService {
 
   async onOfferCreate(idOther: string, idOffer: string, note: string) {
     const chatId = await this.startChatWith(idOther);
-    if (!chatId) { return; }
+    if (!chatId) {
+      return;
+    }
     // await this.sendMessage(chatId, { action: OfferActions.offer_created, value: idOffer });
 
     await this.sendMessage(chatId, note);
@@ -147,7 +155,9 @@ export class ChattingService {
 
   async onOfferAccept(idOther, offerId) {
     const chatId = await this.startChatWith(idOther);
-    if (!chatId) { return; }
+    if (!chatId) {
+      return;
+    }
     await this.sendMessage(chatId, { action: OfferActions.offer_accepted, value: offerId });
 
     this.ngZone.run(() => {
@@ -157,7 +167,9 @@ export class ChattingService {
 
   async onOfferPayment(idOther, offerId) {
     const chatId = await this.startChatWith(idOther);
-    if (!chatId) { return; }
+    if (!chatId) {
+      return;
+    }
     await this.sendMessage(chatId, { action: OfferActions.offer_paid, value: offerId });
 
     this.ngZone.run(() => {

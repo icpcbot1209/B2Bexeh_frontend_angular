@@ -4,7 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 import { IHope } from 'src/app/interfaces/IHope';
-import { ConfigsService } from 'src/app/services/configs.service';
+import { ConstListService } from 'src/app/services/const-list.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -24,7 +24,7 @@ export class HopesTableComponent implements OnChanges {
     this.updateTableRows(value);
   }
 
-  constructor(public userService: UserService, public configs: ConfigsService) {}
+  constructor(public userService: UserService, public consts: ConstListService) {}
   private _hopes: IHope[];
   @Output() productClicked = new EventEmitter<any>();
   @Output() sendOfferClicked = new EventEmitter<any>();
@@ -44,7 +44,9 @@ export class HopesTableComponent implements OnChanges {
     }
   }
   updateTableRows(hopes: IHope[]) {
-    if (!hopes) { return; }
+    if (!hopes) {
+      return;
+    }
     this.dataSource = new MatTableDataSource(hopes);
     this.dataSource.sort = this.sort;
   }

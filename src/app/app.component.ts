@@ -1,10 +1,6 @@
-import { Component, OnInit, Renderer2, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { LangService } from './shared/lang.service';
-import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
-
-import { ConfigsService } from './services/configs.service';
-import { AuthService } from './shared/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -12,24 +8,11 @@ import { AuthService } from './shared/auth.service';
 })
 @Injectable()
 export class AppComponent implements OnInit, AfterViewInit {
-  isMultiColorActive = environment.isMultiColorActive;
-  constructor(
-    private langService: LangService,
-    private renderer: Renderer2,
-    private configsService: ConfigsService,
-    private authService: AuthService
-  ) {}
+  constructor(private langService: LangService) {}
 
   ngOnInit(): void {
     this.langService.init();
   }
 
-  ngAfterViewInit(): void {
-    // setTimeout(() => {
-    //   this.renderer.addClass(document.body, 'show');
-    // }, 1000);
-    // setTimeout(() => {
-    //   this.renderer.addClass(document.body, 'default-transition');
-    // }, 1500);
-  }
+  ngAfterViewInit(): void {}
 }
