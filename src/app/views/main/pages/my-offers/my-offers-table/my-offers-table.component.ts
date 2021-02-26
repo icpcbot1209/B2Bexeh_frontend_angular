@@ -3,8 +3,10 @@ import { Component, OnInit, Output } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { IOffer } from 'src/app/interfaces/IOffer';
 import { IUser } from 'src/app/interfaces/IUser';
+import { ChattingService } from 'src/app/services/chatting.service';
 import { ConstListService } from 'src/app/services/const-list.service';
 import { OfferService } from 'src/app/services/offer.service';
 import { UserService } from 'src/app/services/user.service';
@@ -15,15 +17,15 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./my-offers-table.component.scss'],
 })
 export class MyOffersTableComponent implements OnInit {
+  @Input() tag: string;
+
   @Input() set offers(value: IOffer[]) {
     this.updateTableRows(value);
   }
+
   get offers(): IOffer[] {
     return this._offers;
   }
-
-  constructor(public consts: ConstListService, public offerService: OfferService) {}
-  @Input() tag: string;
 
   private _offers: IOffer[];
 
@@ -32,9 +34,11 @@ export class MyOffersTableComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  displayedColumns: string[] = ['created_at', 'other_name', 'product_name', 'hope_unit', 'qty', 'price', 'total', 'status'];
+  displayedColumns: string[] = ['created_at', 'other_name', 'product_name', 'unit', 'qty', 'price', 'total', 'action'];
 
   dataSource: MatTableDataSource<IOffer>;
+
+  constructor(public consts: ConstListService, public offerService: OfferService, private chattingService: ChattingService, private router: Router) {}
 
   ngOnInit(): void {}
   updateTableRows(offers: IOffer[]) {
@@ -57,5 +61,12 @@ export class MyOffersTableComponent implements OnInit {
 
   onClickOfferStatus(offer: IOffer): void {
     this.offerClicked.emit(offer);
+  }
+
+  async onClickOtherName(offer: IOffer) {
+    const chatId = await this.chattingService.startChatWith(offer.other.user_uid);
+    if (chatId) {
+      this.router.navigate(['/main/messages', chatId]);
+    }
   }
 }

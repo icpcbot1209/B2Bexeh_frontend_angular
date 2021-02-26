@@ -6,12 +6,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ComponentsStateButtonModule } from 'src/app/components/state-button/components.state-button.module';
 import { MaterialModule } from 'src/app/shared/material.module';
 import { HopeModalsModule } from '../../hope-modals/hope-modals.module';
-import { TablesModule } from '../../tables/tables.module';
+import { MyHopesTableComponent } from './my-hopes-table/my-hopes-table.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { MainComponentsModule } from '../../main-components/main-components.module';
 
 const routes: Routes = [{ path: '', component: MyHopesComponent }];
 
 @NgModule({
-  declarations: [MyHopesComponent],
+  declarations: [MyHopesComponent, MyHopesTableComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -20,7 +23,9 @@ const routes: Routes = [{ path: '', component: MyHopesComponent }];
     MaterialModule,
     ComponentsStateButtonModule,
     HopeModalsModule,
-    TablesModule,
+    NgSelectModule,
+    MainComponentsModule,
+    PerfectScrollbarModule,
   ],
 })
 export class MyHopesModule {}

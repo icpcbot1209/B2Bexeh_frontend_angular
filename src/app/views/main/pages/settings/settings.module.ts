@@ -7,7 +7,6 @@ import { MaterialModule } from 'src/app/shared/material.module';
 import { ComponentsStateButtonModule } from 'src/app/components/state-button/components.state-button.module';
 
 import { HopeModalsModule } from 'src/app/views/main/hope-modals/hope-modals.module';
-import { TablesModule } from 'src/app/views/main/tables/tables.module';
 
 import { AccountComponent } from './account/account.component';
 import { AlertModule } from 'ngx-bootstrap/alert';
@@ -33,7 +32,6 @@ const routes: Routes = [
     MaterialModule,
     ComponentsStateButtonModule,
     HopeModalsModule,
-    TablesModule,
     AlertModule,
   ],
 })

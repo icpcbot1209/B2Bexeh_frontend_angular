@@ -5,15 +5,15 @@ import Swal from 'sweetalert2';
   providedIn: 'root',
 })
 export class SwalService {
-  async confirm() {
+  async confirm(text = null, yes = null) {
     const result = await Swal.fire({
       title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      text: text || "You won't be able to revert this!",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it',
+      confirmButtonText: yes || 'Yes, delete it',
     });
     return result.isConfirmed;
   }

@@ -63,7 +63,7 @@ export class HopesComponent implements OnInit {
     this.bids = [];
 
     this.hopes.forEach((x) => {
-      if (this.type !== 'All' && x.deal_method !== this.type) {
+      if (this.type !== 'all' && x.deal_method !== this.type) {
         return;
       }
       if (this.listingTime < (Date.now() - new Date(x.release_date).getTime()) / 3600000) {

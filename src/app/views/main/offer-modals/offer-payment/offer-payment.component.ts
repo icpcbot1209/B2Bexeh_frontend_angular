@@ -3,6 +3,7 @@ import { IOffer } from 'src/app/interfaces/IOffer';
 import { IUser } from 'src/app/interfaces/IUser';
 import { ChattingService } from 'src/app/services/chatting.service';
 import { OfferService } from 'src/app/services/offer.service';
+import { SwalService } from 'src/app/services/swal.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -11,8 +12,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./offer-payment.component.scss'],
 })
 export class OfferPaymentComponent implements OnChanges {
-
-  constructor(public userService: UserService, private offerService: OfferService) {}
+  constructor(public userService: UserService, private offerService: OfferService, private swal: SwalService) {}
   @Input() offer: IOffer;
   @Output() offerChanged = new EventEmitter<any>();
 
@@ -34,7 +34,7 @@ export class OfferPaymentComponent implements OnChanges {
 
   ngOnInit() {}
   async onClickConfirm() {
-    if (confirm('paid?')) {
+    if (await this.swal.confirm('Have you paid?', 'Yes, I have paid.')) {
       this.offerService.markAsPaid(this.offer.id, this.paidInfo).subscribe((resp) => {
         this.offer.is_paid = true;
         this.offer.paid_info = this.paidInfo;

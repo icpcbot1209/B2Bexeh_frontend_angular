@@ -30,7 +30,7 @@ export class HopeService {
     return this.http.post<IHope[]>(`${env.myApiUrl2}/hope/getByCategory`, { category_id, subcategory_id });
   }
 
-  getMyHopes(is_ask: boolean) {
-    return this.http.post<IHope[]>(`${env.myApiUrl2}/hope/getMyHopes`, { is_ask });
+  getMyHopes(user_id: string, is_ask: boolean) {
+    return this.http.post<IHope[]>(`${env.myApiUrl2}/hope/getMyHopes`, { user_id, is_ask });
   }
 }

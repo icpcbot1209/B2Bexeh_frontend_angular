@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { IHope } from 'src/app/interfaces/IHope';
+import { ConstListService } from 'src/app/services/const-list.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -19,7 +20,7 @@ export class HopesTableComponent implements OnInit {
     return this._hopes;
   }
 
-  constructor(private productService: ProductService) {}
+  constructor(public consts: ConstListService) {}
   @Input() is_ask: boolean;
 
   private _hopes: IHope[];
@@ -27,7 +28,7 @@ export class HopesTableComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  displayedColumns: string[] = ['select', 'dealer_name', 'product_name', 'deal_method', 'qty', 'price', 'total', 'unit'];
+  displayedColumns: string[] = ['select', 'dealer_name', 'product_name', 'deal_method', 'unit', 'qty', 'price', 'total'];
 
   dataSource: MatTableDataSource<IHope>;
 
@@ -35,7 +36,9 @@ export class HopesTableComponent implements OnInit {
 
   ngOnInit(): void {}
   updateTableRows(hopes: IHope[]) {
-    if (!hopes) { return; }
+    if (!hopes) {
+      return;
+    }
     this.dataSource = new MatTableDataSource(hopes);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
@@ -60,9 +63,5 @@ export class HopesTableComponent implements OnInit {
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
     this.isAllSelected() ? this.selection.clear() : this.dataSource.data.forEach((row) => this.selection.select(row));
-  }
-
-  onClickRow(row: IHope) {
-    console.log(row);
   }
 }

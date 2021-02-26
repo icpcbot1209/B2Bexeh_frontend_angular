@@ -5,7 +5,6 @@ import { IProduct } from 'src/app/interfaces/IProduct';
 import { IOffer } from 'src/app/interfaces/IOffer';
 import { OfferService } from 'src/app/services/offer.service';
 import { UserService } from 'src/app/services/user.service';
-import { ChattingService } from 'src/app/services/chatting.service';
 import { ConstListService } from 'src/app/services/const-list.service';
 
 @Component({
@@ -23,7 +22,6 @@ export class CreateOfferComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private offerService: OfferService,
     private userService: UserService,
-    private chattingService: ChattingService,
     public consts: ConstListService
   ) {}
 
@@ -37,6 +35,7 @@ export class CreateOfferComponent implements OnInit {
   }
 
   async onClickCreate() {
+    let creator_id = this.userService.me.id;
     let seller_id, buyer_id;
 
     if (this.data.hope.is_ask) {
@@ -50,6 +49,7 @@ export class CreateOfferComponent implements OnInit {
     const data: IOffer = {
       hope_id: this.data.hope.id,
       product_id: this.data.product.id,
+      creator_id,
       seller_id,
       buyer_id,
 

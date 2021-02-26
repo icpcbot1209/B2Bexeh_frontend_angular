@@ -26,7 +26,6 @@ export class ProductsComponent implements OnInit {
     this.isBusy = true;
     try {
       this.products = await observable.toPromise();
-      console.log(this.products);
     } catch (err) {
       console.error(err);
       this.snack.error(err.message);

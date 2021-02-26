@@ -34,7 +34,7 @@
         Add to watchlist
       </div>
 
-      <div class="button" (click)="removeFromWatchlist()" *ngIf="existInWatchlist">
+      <div class="button" (click)="removeFromWatchlist()" *ngIf="existInWatchlist" [ngClass]="{ busy: busyWatchlist }">
         <i class="fas fa-eye-slash"></i>
         Remove from watchlist
       </div>

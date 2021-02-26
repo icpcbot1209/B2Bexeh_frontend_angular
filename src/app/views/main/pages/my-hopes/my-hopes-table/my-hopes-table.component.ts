@@ -12,6 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditHopeComponent } from 'src/app/views/main/hope-modals/edit-hope/edit-hope.component';
 import { ProductService } from 'src/app/services/product.service';
 import { IProduct } from 'src/app/interfaces/IProduct';
+import { SwalService } from 'src/app/services/swal.service';
 
 @Component({
   selector: 'main-my-hopes-table',
@@ -32,14 +33,15 @@ export class MyHopesTableComponent implements OnInit {
     private productService: ProductService,
     private hopeService: HopeService,
     private snack: SnackService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private swal: SwalService
   ) {}
   @Input() isAsk: boolean;
   @ViewChild(MatSort) sort: MatSort;
 
   hopes: IHope[] = [];
 
-  displayedColumns: string[] = ['product_name', 'deal_method', 'unit', 'qty', 'price', 'total', 'note'];
+  displayedColumns: string[] = ['product_name', 'deal_method', 'unit', 'qty', 'price', 'total'];
   dataSource: MatTableDataSource<IHope>;
 
   expandedElement: IHope | null;
@@ -49,7 +51,7 @@ export class MyHopesTableComponent implements OnInit {
   }
   async loadHopes() {
     try {
-      this.hopes = await this.hopeService.getMyHopes(this.isAsk).toPromise();
+      this.hopes = await this.hopeService.getMyHopes(this.userService.me.id, this.isAsk).toPromise();
       this.updateTableRows(this.hopes);
     } catch (err) {
       console.error(err);
@@ -70,9 +72,9 @@ export class MyHopesTableComponent implements OnInit {
 
   async onClickDeleteHope(hope: IHope, event) {
     event.stopPropagation();
-    if (!confirm('Confirm delete this bid/ask?')) {
-      return;
-    }
+
+    if (!(await this.swal.confirm())) return;
+
     try {
       await this.hopeService.deleteHope(hope.id).toPromise();
       this.hopes = this.hopes.filter((x) => x.id !== hope.id);
@@ -124,13 +126,13 @@ export class MyHopesTableComponent implements OnInit {
     }
   }
 
-  async tryUpdateHope(hopeData: IHope, hopeId) {
+  async tryUpdateHope(hopeData: IHope, hopeId: string) {
     try {
-      const hope: IHope = await this.hopeService.updateHope(hopeData, hopeId).toPromise();
+      await this.hopeService.updateHope(hopeData, hopeId).toPromise();
 
-      const k = this.hopes.findIndex((x) => x.id === hope.id);
+      const k = this.hopes.findIndex((x) => x.id === hopeId);
       if (k > -1) {
-        this.hopes[k] = hope;
+        this.hopes[k] = Object.assign(this.hopes[k], hopeData);
       }
       this.updateTableRows(this.hopes);
 

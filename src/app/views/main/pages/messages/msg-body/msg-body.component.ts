@@ -15,8 +15,8 @@ export class MsgBodyComponent {
 
   constructor() {}
 
-  getUser(id: string) {
-    return this.chat.me.id === id ? this.chat.me : this.chat.other;
+  getUser(uid: string) {
+    return this.chat.me.user_uid === uid ? this.chat.me : this.chat.other;
   }
 
   showOffer(offerId) {}

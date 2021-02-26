@@ -6,6 +6,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { IHope } from 'src/app/interfaces/IHope';
 import { ConstListService } from 'src/app/services/const-list.service';
 import { UserService } from 'src/app/services/user.service';
+import { SwalService } from 'src/app/services/swal.service';
 
 @Component({
   selector: 'main-hopes-table',
@@ -24,7 +25,7 @@ export class HopesTableComponent implements OnChanges {
     this.updateTableRows(value);
   }
 
-  constructor(public userService: UserService, public consts: ConstListService) {}
+  constructor(public userService: UserService, public consts: ConstListService, private swal: SwalService) {}
   private _hopes: IHope[];
   @Output() productClicked = new EventEmitter<any>();
   @Output() sendOfferClicked = new EventEmitter<any>();
@@ -62,10 +63,10 @@ export class HopesTableComponent implements OnChanges {
     this.expandedElement = this.expandedElement === element ? null : element;
   }
 
-  onClickDeleteHope(hope: IHope, event) {
+  async onClickDeleteHope(hope: IHope, event) {
     event.stopPropagation();
 
-    if (confirm('Confirm delete this bid/ask?')) {
+    if (await this.swal.confirm('Confirm delete this bid/ask?')) {
       this.deleteHopeClicked.emit(hope);
     }
   }

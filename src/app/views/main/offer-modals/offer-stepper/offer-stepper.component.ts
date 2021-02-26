@@ -40,6 +40,7 @@ export class OfferStepperComponent implements OnInit {
 
   handleOfferChanged(offer: IOffer) {
     this.data.offer = offer;
+    this.setSelectedStepId(offer);
   }
 
   statusState(offer: IOffer, pos: number): string {

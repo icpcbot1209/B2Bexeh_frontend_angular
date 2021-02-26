@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChange
 import { IOffer } from 'src/app/interfaces/IOffer';
 import { IUser } from 'src/app/interfaces/IUser';
 import { OfferService } from 'src/app/services/offer.service';
+import { SwalService } from 'src/app/services/swal.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -10,8 +11,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./offer-shipment.component.scss'],
 })
 export class OfferShipmentComponent implements OnChanges {
-
-  constructor(public userService: UserService, private offerService: OfferService) {}
+  constructor(public userService: UserService, private offerService: OfferService, private swal: SwalService) {}
   @Input() offer: IOffer;
   @Output() offerChanged = new EventEmitter<any>();
 
@@ -31,7 +31,7 @@ export class OfferShipmentComponent implements OnChanges {
     }
   }
   async onClickConfirm() {
-    if (confirm('shipped?')) {
+    if (await this.swal.confirm('Have you shipped?', 'Yes, I have shipped.')) {
       this.offerService.markAsShipped(this.offer.id, this.shippedInfo).subscribe((resp) => {
         this.offer.is_shipped = true;
         this.offer.shipped_info = this.shippedInfo;

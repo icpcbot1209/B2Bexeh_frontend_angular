@@ -11,8 +11,9 @@ export class AuthInterceptor implements HttpInterceptor {
     const token = JSON.parse(localStorage.getItem('b2b_auth_token'));
     return token;
   }
+
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (this.getToken() != null) {
+    if (this.getToken()) {
       req = req.clone({
         setHeaders: {
           // 'Accept'       : 'application/json',

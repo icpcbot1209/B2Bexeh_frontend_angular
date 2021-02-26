@@ -180,13 +180,13 @@ export class ProductComponent implements OnInit {
 
   async tryUpdateHope(hopeData: IHope, hopeId) {
     try {
-      const hope: IHope = await this.hopeService.updateHope(hopeData, hopeId).toPromise();
-      hope.dealer_name = this.userService.me.user_name;
+      await this.hopeService.updateHope(hopeData, hopeId).toPromise();
 
-      const k = this.hopes.findIndex((x) => x.id === hope.id);
+      const k = this.hopes.findIndex((x) => x.id === hopeId);
       if (k > -1) {
-        this.hopes[k] = hope;
+        this.hopes[k] = Object.assign(this.hopes[k], hopeData);
       }
+
       this.separateHopes(this.hopes);
 
       this.snack.success('Successfully updated.');

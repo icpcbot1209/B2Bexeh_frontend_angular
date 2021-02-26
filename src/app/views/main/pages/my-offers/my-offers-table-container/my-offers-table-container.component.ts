@@ -43,12 +43,17 @@ export class MyOffersTableContainerComponent implements OnInit, OnDestroy {
   async getMyOffers(tag: string) {
     this.tag = tag;
     try {
-      const rows: IOffer[] = await this.offerService.getMyOffers(tag).toPromise();
+      const rows: IOffer[] = await this.offerService.getMyOffers(this.userService.me.id, tag).toPromise();
       rows.forEach(async (row) => {
-        row.buyer_name = (await this.userService.getUserById(row.buyer_id)).user_name;
-        row.seller_name = (await this.userService.getUserById(row.seller_id)).user_name;
-        if (row.buyer_id === this.userService.me.id) { row.other_name = row.seller_name; }
-        else { row.other_name = row.buyer_name; }
+        const buyer = await this.userService.getUserById(row.buyer_id);
+        const seller = await this.userService.getUserById(row.seller_id);
+        row.buyer_name = buyer.user_name;
+        row.seller_name = seller.user_name;
+        if (row.buyer_id === this.userService.me.id) {
+          row.other = seller;
+        } else {
+          row.other = buyer;
+        }
       });
       this.offers = rows;
     } catch (err) {

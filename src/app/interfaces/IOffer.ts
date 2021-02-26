@@ -1,9 +1,11 @@
 import { dateSelectionJoinTransformer } from '@fullcalendar/angular';
+import { IUser } from './IUser';
 
 export interface IOffer {
   id?: string;
   created_at?: Date;
   updated_at?: Date;
+  status?: string;
 
   hope_id?: string;
   product_id?: string;
@@ -32,18 +34,17 @@ export interface IOffer {
   feedback2buyer?: string;
 
   is_canceled?: boolean;
-  is_deleted?: boolean;
 
   /** joined */
   product_name?: string;
   seller_name?: string;
   buyer_name?: string;
-  other_name?: string;
+  other?: IUser;
   hope_is_ask?: boolean;
-  hope_unit?: string;
-  hope_deal_method?: string;
-  hope_qty?: number;
-  hope_price?: number;
+  // hope_unit?: string;
+  // hope_deal_method?: string;
+  // hope_qty?: number;
+  // hope_price?: number;
   total?: number;
 }
 
