@@ -10,6 +10,11 @@ import { EditProductComponent } from './edit-product/edit-product.component';
 
 import { SwalService } from 'src/app/services/swal.service';
 import { SnackService } from 'src/app/services/snack.service';
+import { ConstListService } from 'src/app/services/const-list.service';
+import { ICategory } from 'src/app/interfaces/ICategory';
+import { ISubcategory } from 'src/app/interfaces/ISubcategory';
+import { BulkUploadProductsComponent } from './bulk-upload-products/bulk-upload-products.component';
+import { IProduct } from 'src/app/interfaces/IProduct';
 
 @Component({
   templateUrl: './products.component.html',
@@ -21,7 +26,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('input') input: ElementRef;
 
-  displayedColumns = ['photo_url', 'name', 'release_date', 'category_id', 'subcategory_id', 'actions'];
+  displayedColumns = ['photo_url', 'category_id', 'subcategory_id', 'name', 'release_date', 'actions'];
 
   tableName = 'products';
   config: ITableConfig = {
@@ -31,9 +36,25 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     pageSize: 10,
   };
 
-  constructor(private apiService: AdminApiService, public dialog: MatDialog, public swal: SwalService, private snack: SnackService) {}
+  categories: ICategory[] = [];
+  subcategories: ISubcategory[] = [];
 
-  ngOnInit(): void {
+  constructor(
+    private apiService: AdminApiService,
+    public consts: ConstListService,
+    public dialog: MatDialog,
+    public swal: SwalService,
+    private snack: SnackService
+  ) {}
+
+  async loadConsts() {
+    this.categories = await this.consts.getCategories();
+    this.subcategories = await this.consts.getSubcategories();
+  }
+
+  ngOnInit() {
+    this.loadConsts();
+
     this.dataSource = new MyDataSource(this.apiService, this.snack);
     this.dataSource.readItems(this.tableName, this.config);
   }
@@ -78,6 +99,61 @@ export class ProductsComponent implements OnInit, AfterViewInit {
         this.dataSource.addItem(this.tableName, result);
       }
     });
+  }
+
+  onClickAddBulk() {
+    const dialogRef = this.dialog.open(BulkUploadProductsComponent, {
+      data: { tableName: this.tableName },
+      panelClass: 'custom-dialog-container',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.analyzeText(result);
+      }
+    });
+  }
+
+  async analyzeText(txt: string) {
+    this.bulklogs = [];
+
+    txt = txt.trim();
+
+    let rows = txt.split('\n');
+
+    for (let i = 0; i < rows.length; i++) {
+      let row = rows[i];
+      let cols = row.split(',').map((x) => x.trim());
+
+      let productData: IProduct = {};
+      let category_name = cols[0];
+      let subcategory_name = cols[1];
+      productData.category_id = this.categories.find((x) => x.name === category_name)?.id;
+      productData.subcategory_id = this.subcategories.find((x) => x.name === subcategory_name)?.id;
+      productData.name = cols[2];
+      productData.release_date = new Date(cols[3]);
+
+      console.log(productData);
+
+      if (this.checkValid(productData, i)) {
+        await this.dataSource.addItem('products', productData);
+      }
+    }
+  }
+
+  bulklogs: string[] = [];
+
+  checkValid(p: IProduct, ii: number) {
+    if (!p.name) this.bulklogs.push(`Row(${ii}), Col(0) has invalid Product Name. Please Retry.\n`);
+    else if (!p.category_id) this.bulklogs.push(`Row(${ii}), Col(1) has invalid Sports. Please Retry.\n`);
+    else if (!p.subcategory_id) this.bulklogs.push(`Row(${ii}), Col(2) has invalid Year. Please Retry.\n`);
+    else if (!p.release_date) this.bulklogs.push(`Row(${ii}), Col(3) has invalid Release Date. Please Retry.\n`);
+    else {
+      this.bulklogs.push(`Row(${ii}) was successful.`);
+      return true;
+    }
+
+    return false;
   }
 
   onClickEdit(item) {

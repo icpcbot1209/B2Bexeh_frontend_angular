@@ -24,6 +24,9 @@ import { EditProductComponent } from './pages/products/edit-product/edit-product
 import { HopeComponent } from './pages/hope/hope.component';
 import { TransactionComponent } from './pages/transaction/transaction.component';
 import { SettingComponent } from './pages/setting/setting.component';
+import { EditTransactionComponent } from './pages/transaction/edit-transaction/edit-transaction.component';
+import { BulkUploadProductsComponent } from './pages/products/bulk-upload-products/bulk-upload-products.component';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 const routes: Routes = [
   {
@@ -90,6 +93,8 @@ const routes: Routes = [
     HopeComponent,
     TransactionComponent,
     SettingComponent,
+    EditTransactionComponent,
+    BulkUploadProductsComponent,
   ],
   imports: [
     CommonModule,
@@ -102,6 +107,7 @@ const routes: Routes = [
     LayoutContainersModule,
     ComponentsStateButtonModule,
     MaterialModule,
+    PerfectScrollbarModule,
   ],
 })
 export class AdminModule {}

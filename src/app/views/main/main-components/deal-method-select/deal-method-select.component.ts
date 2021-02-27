@@ -25,6 +25,6 @@ export class DealMethodSelectComponent implements OnInit {
     if (!this.isAll) this.items = this.items.slice(1);
   }
   onSelectItem(item: IDictItem) {
-    this.valueChanged.emit(item.uid);
+    this.valueChanged.emit(item.id);
   }
 }

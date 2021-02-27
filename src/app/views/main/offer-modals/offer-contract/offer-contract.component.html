@@ -7,14 +7,14 @@
   <div class="terms">
     <div class="term">
       <label>Type</label>
-      <p>{{ consts.dictVal(offer.unit, consts.dict_unit) }} {{ consts.dictVal(offer.deal_method, consts.dict_deal_method) }}</p>
+      <p>{{ consts.id2name(offer.unit, consts.dict_unit) }} {{ consts.id2name(offer.deal_method, consts.dict_deal_method) }}</p>
     </div>
     <div class="term">
       <label>Qty </label>
       <p class="bold">{{ offer.qty }}</p>
     </div>
     <div class="term">
-      <label>Price / {{ consts.dictVal(offer.unit, consts.dict_unit) }}</label>
+      <label>Price / {{ consts.id2name(offer.unit, consts.dict_unit) }}</label>
       <p class="bold">{{ offer.price | currency }}</p>
     </div>
     <div class="term">
@@ -44,7 +44,7 @@
           <input type="number" class="form-control" [(ngModel)]="newQty" />
         </div>
         <div class="term">
-          <label>Price / {{ consts.dictVal(offer.unit, consts.dict_unit) }}</label>
+          <label>Price / {{ consts.id2name(offer.unit, consts.dict_unit) }}</label>
           <input type="number" class="form-control" [(ngModel)]="newPrice" />
         </div>
       </div>

@@ -7,9 +7,27 @@
       </mat-form-field>
     </div>
     <div class="col-auto">
+      <button mat-raised-button color="primary" (click)="onClickAddBulk()" style="margin-right: 50px">
+        <i class="fas fa-plus"></i>
+        CSV As Text
+      </button>
+
       <button class="btn btn-primary" (click)="onClickAdd()">
         <i class="fas fa-plus"></i>
       </button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <mat-expansion-panel class="w-100">
+        <mat-expansion-panel-header>Show logs</mat-expansion-panel-header>
+        <div style="max-height: 50vh">
+          <perfect-scrollbar>
+            <div *ngFor="let log of bulklogs">{{ log }}</div>
+          </perfect-scrollbar>
+        </div>
+      </mat-expansion-panel>
     </div>
   </div>
 
@@ -22,7 +40,7 @@
       <mat-header-cell *matHeaderCellDef>Image</mat-header-cell>
 
       <mat-cell *matCellDef="let item">
-        <img [src]="item.photo_url" onerror="this.src='assets/img/profiles/profile.jpg'" height="64" width="auto" class="profile-img" />
+        <img [src]="item.photo_url" onerror="this.src='assets/img/b2bexch/product_placeholder.png'" height="64" width="auto" class="profile-img" />
       </mat-cell>
     </ng-container>
 
@@ -32,22 +50,22 @@
       <mat-cell *matCellDef="let item">{{ item.name }}</mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="release_date">
-      <mat-header-cell *matHeaderCellDef>Release Date</mat-header-cell>
-
-      <mat-cell *matCellDef="let item">{{ item.release_date }}</mat-cell>
-    </ng-container>
-
     <ng-container matColumnDef="category_id">
-      <mat-header-cell *matHeaderCellDef>Category</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Sports</mat-header-cell>
 
-      <mat-cell *matCellDef="let item">{{ item.category_id }}</mat-cell>
+      <mat-cell *matCellDef="let item">{{ consts.id2name(item.category_id, categories) }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="subcategory_id">
-      <mat-header-cell *matHeaderCellDef>Subcategory</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Year</mat-header-cell>
 
-      <mat-cell *matCellDef="let item">{{ item.subcategory_id }}</mat-cell>
+      <mat-cell *matCellDef="let item">{{ consts.id2name(item.subcategory_id, subcategories) }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="release_date">
+      <mat-header-cell *matHeaderCellDef>Release Date</mat-header-cell>
+
+      <mat-cell *matCellDef="let item">{{ item.release_date | date: 'yyyy-MM-dd' }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="actions">

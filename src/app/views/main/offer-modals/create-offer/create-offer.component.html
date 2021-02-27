@@ -19,7 +19,7 @@
   <div style="display: flex; margin: 20px 0">
     <div class="form-group" style="flex: 1">
       <label>Type</label>
-      <p style="margin: 10px">{{ consts.dictVal(data.hope.deal_method, consts.dict_deal_method) }}</p>
+      <p style="margin: 10px">{{ consts.id2name(data.hope.deal_method, consts.dict_deal_method) }}</p>
     </div>
 
     <div class="form-group" style="margin-left: 20px; flex: 1">
@@ -28,7 +28,7 @@
     </div>
 
     <div class="form-group" style="margin-left: 20px; flex: 1">
-      <label>Price / {{ consts.dictVal(data.hope.unit, consts.dict_unit) }}</label>
+      <label>Price / {{ consts.id2name(data.hope.unit, consts.dict_unit) }}</label>
       <ng-container *ngIf="data.isAccept; else elseTemplate1">
         <p style="margin: 10px">{{ price }}</p>
       </ng-container>

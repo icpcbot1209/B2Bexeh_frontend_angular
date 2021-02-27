@@ -28,7 +28,7 @@ export class CategorySelectComponent implements OnInit {
   async onChangeCategory(category) {
     this.subcategory = null;
     this.subcategories = [];
-    this.subcategories = await this.constService.getSubcategories(category.id);
+    this.subcategories = await this.constService.getSubcategoriesByCate(category.id);
   }
 
   onChangeSubcategory(subcategory) {

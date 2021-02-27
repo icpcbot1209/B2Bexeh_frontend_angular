@@ -10,23 +10,31 @@ import { ISubcategory } from '../interfaces/ISubcategory';
 export class ConstListService {
   constructor(private http: HttpClient) {}
 
-  private categories: ICategory[] = [];
-
   async getCategories() {
-    if (this.categories.length > 0) return this.categories;
+    let categories = [];
     try {
-      this.categories = await this.http.post<ICategory[]>(`${environment.myApiUrl2}/product/getCategories`, null).toPromise();
+      categories = await this.http.post<ICategory[]>(`${environment.myApiUrl2}/product/getCategories`, null).toPromise();
     } catch (err) {
       console.error(err);
     }
-    return this.categories;
+    return categories;
   }
 
-  async getSubcategories(category_id: string) {
+  async getSubcategories() {
+    let subcategories = [];
+    try {
+      subcategories = await this.http.post<ICategory[]>(`${environment.myApiUrl2}/product/getSubategories`, null).toPromise();
+    } catch (err) {
+      console.error(err);
+    }
+    return subcategories;
+  }
+
+  async getSubcategoriesByCate(category_id: string) {
     let arr = [];
     try {
       arr = await this.http
-        .post<ISubcategory[]>(`${environment.myApiUrl2}/product/getSubcategories`, { category_id })
+        .post<ISubcategory[]>(`${environment.myApiUrl2}/product/getSubcategoriesByCate`, { category_id })
         .toPromise();
     } catch (err) {
       console.error(err);
@@ -35,57 +43,55 @@ export class ConstListService {
   }
 
   dict_unit: IDictItem[] = [
-    { uid: 'all', value: 'All' },
-    { uid: 'box', value: 'Box' },
-    { uid: 'case', value: 'Case' },
+    { id: 'all', name: 'All' },
+    { id: 'box', name: 'Box' },
+    { id: 'case', name: 'Case' },
   ];
 
   dict_deal_method: IDictItem[] = [
-    { uid: 'all', value: 'All' },
-    { uid: 'hobby', value: 'Hobby' },
-    { uid: 'blaster', value: 'Blaster' },
-    { uid: 'jumbo', value: 'Jumbo' },
-    { uid: 'cellos', value: 'Cellos/Fat Packs' },
-    { uid: 'choice', value: 'Choice' },
-    { uid: 'fotl', value: 'FOTL' },
-    { uid: 'fast_break', value: 'Fast Break' },
-    { uid: 'hanger', value: 'Hanger' },
-    { uid: 'hybrid', value: 'Hybrid' },
-    { uid: 'mega', value: 'Mega' },
-    { uid: 'retail', value: 'Retail/Other' },
-    { uid: 'super_jumbos', value: 'Super Jumbos' },
-    { uid: 't_mall', value: 'T-mall' },
-    { uid: 'tins', value: 'Tins' },
-    { uid: 'x_gaming_only', value: 'x (Gaming Only)' },
+    { id: 'all', name: 'All' },
+    { id: 'hobby', name: 'Hobby' },
+    { id: 'blaster', name: 'Blaster' },
+    { id: 'jumbo', name: 'Jumbo' },
+    { id: 'cellos', name: 'Cellos/Fat Packs' },
+    { id: 'choice', name: 'Choice' },
+    { id: 'fotl', name: 'FOTL' },
+    { id: 'fast_break', name: 'Fast Break' },
+    { id: 'hanger', name: 'Hanger' },
+    { id: 'hybrid', name: 'Hybrid' },
+    { id: 'mega', name: 'Mega' },
+    { id: 'retail', name: 'Retail/Other' },
+    { id: 'super_jumbos', name: 'Super Jumbos' },
+    { id: 't_mall', name: 'T-mall' },
+    { id: 'tins', name: 'Tins' },
+    { id: 'x_gaming_only', name: 'x (Gaming Only)' },
   ];
 
   dict_payment_method: IDictItem[] = [
-    { uid: 'paypal', value: 'PayPal' },
-    { uid: 'check', value: 'Check' },
-    { uid: 'credit_card', value: 'Credit Card' },
+    { id: 'paypal', name: 'PayPal' },
+    { id: 'check', name: 'Check' },
+    { id: 'credit_card', name: 'Credit Card' },
   ];
 
   dict_payment_timing: IDictItem[] = [
-    { uid: 'prior', value: 'Prior To Shipping' },
-    { uid: 'net7', value: 'Net 7' },
-    { uid: 'net14', value: 'net 14' },
+    { id: 'prior', name: 'Prior To Shipping' },
+    { id: 'net7', name: 'Net 7' },
+    { id: 'net14', name: 'net 14' },
   ];
 
   dict_feedback: IDictItem[] = [
-    { uid: 'like', value: 'fa-smile' },
-    { uid: 'soso', value: 'fa-meh' },
-    { uid: 'dislike', value: 'fa-frown' },
+    { id: 'like', name: 'fa-smile' },
+    { id: 'soso', name: 'fa-meh' },
+    { id: 'dislike', name: 'fa-frown' },
   ];
 
-  dictVal(uid: string, dict: IDictItem[]): string {
-    const item = dict.find((x) => x.uid === uid);
-    if (item) {
-      return item.value;
-    }
+  id2name(id: string, dict): string {
+    const item = dict.find((x) => x.id === id);
+    if (item) return item.name;
     return '';
   }
 }
 export interface IDictItem {
-  uid: string;
-  value: string;
+  id: string;
+  name: string;
 }

@@ -1,0 +1,13 @@
+<div>
+  <p>You can add multiple lines. Please use the below syntax.</p>
+  <p>sports, year, productName, releaseDate</p>
+  <p>sports, year, productName, releaseDate</p>
+  <p>...</p>
+</div>
+<hr />
+<textarea cols="80" rows="20" [(ngModel)]="text"></textarea>
+<hr />
+<div style="display: flex; align-items: center; justify-content: center">
+  <button mat-raised-button color="primary" style="margin-right: 50px" (click)="onClickUpload()">Upload</button>
+  <button mat-raised-button color="warn" (click)="dialogRef.close()">Cancel</button>
+</div>
