@@ -46,9 +46,12 @@ export class MyHopesTableComponent implements OnInit {
 
   expandedElement: IHope | null;
 
-  ngOnInit(): void {
+  dealmethods = [];
+  async ngOnInit() {
+    this.dealmethods = await this.consts.getDealmethods();
     this.loadHopes();
   }
+
   async loadHopes() {
     try {
       this.hopes = await this.hopeService.getMyHopes(this.userService.me.id, this.isAsk).toPromise();

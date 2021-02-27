@@ -27,6 +27,8 @@ import { SettingComponent } from './pages/setting/setting.component';
 import { EditTransactionComponent } from './pages/transaction/edit-transaction/edit-transaction.component';
 import { BulkUploadProductsComponent } from './pages/products/bulk-upload-products/bulk-upload-products.component';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { DealmethodComponent } from './pages/dealmethod/dealmethod.component';
+import { EditDealmethodComponent } from './pages/dealmethod/edit-dealmethod/edit-dealmethod.component';
 
 const routes: Routes = [
   {
@@ -57,12 +59,12 @@ const routes: Routes = [
         data: { roles: ['admin'] },
         canActivate: [AuthGuard],
       },
-      // {
-      //   path: 'hope',
-      //   component: HopeComponent,
-      //   data: { roles: ['admin'] },
-      //   canActivate: [AuthGuard],
-      // },
+      {
+        path: 'dealmethod',
+        component: DealmethodComponent,
+        data: { roles: ['admin'] },
+        canActivate: [AuthGuard],
+      },
       {
         path: 'transaction',
         component: TransactionComponent,
@@ -95,6 +97,8 @@ const routes: Routes = [
     SettingComponent,
     EditTransactionComponent,
     BulkUploadProductsComponent,
+    DealmethodComponent,
+    EditDealmethodComponent,
   ],
   imports: [
     CommonModule,

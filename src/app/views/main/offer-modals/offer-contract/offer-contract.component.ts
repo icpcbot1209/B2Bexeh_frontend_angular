@@ -9,7 +9,7 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './offer-contract.component.html',
   styleUrls: ['./offer-contract.component.scss'],
 })
-export class OfferContractComponent implements OnChanges {
+export class OfferContractComponent implements OnInit, OnChanges {
   constructor(public userService: UserService, public consts: ConstListService, private offerService: OfferService) {}
   @Input() offer: IOffer;
   @Output() offerChanged = new EventEmitter<IOffer>();
@@ -17,6 +17,11 @@ export class OfferContractComponent implements OnChanges {
   isEditing = false;
   newQty: number;
   newPrice: number;
+
+  dealmethods = [];
+  async ngOnInit() {
+    this.dealmethods = await this.consts.getDealmethods();
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.offer) {

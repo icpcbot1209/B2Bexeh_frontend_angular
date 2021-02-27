@@ -25,9 +25,11 @@ export class CreateOfferComponent implements OnInit {
     public consts: ConstListService
   ) {}
 
-  ngOnInit() {
+  dealmethods = [];
+  async ngOnInit() {
     this.qty = this.data.hope.qty;
     this.price = this.data.hope.price;
+    this.dealmethods = await this.consts.getDealmethods();
   }
 
   onNoClick(): void {

@@ -5,4 +5,5 @@ export interface ISubcategory {
   status?: string;
 
   name?: string;
+  priority?: string;
 }

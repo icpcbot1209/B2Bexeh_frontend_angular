@@ -34,7 +34,11 @@ export class HopesTableComponent implements OnInit {
 
   selection = new SelectionModel<IHope>(true, []);
 
-  ngOnInit(): void {}
+  dealmethods = [];
+  async ngOnInit() {
+    this.dealmethods = await this.consts.getDealmethods();
+  }
+
   updateTableRows(hopes: IHope[]) {
     if (!hopes) {
       return;

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { animate, state, style, transition, trigger } from '@angular/animations';
@@ -20,7 +20,7 @@ import { SwalService } from 'src/app/services/swal.service';
     ]),
   ],
 })
-export class HopesTableComponent implements OnChanges {
+export class HopesTableComponent implements OnChanges, OnInit {
   @Input() set hopes(value: IHope[]) {
     this.updateTableRows(value);
   }
@@ -38,6 +38,11 @@ export class HopesTableComponent implements OnChanges {
 
   displayedColumns: string[] = ['dealer_name', 'deal_method', 'unit', 'qty', 'price', 'total', 'note'];
   dataSource: MatTableDataSource<IHope>;
+
+  dealmethods = [];
+  async ngOnInit() {
+    this.dealmethods = await this.consts.getDealmethods();
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.hopes && changes.hopes.currentValue !== changes.hopes.previousValue) {

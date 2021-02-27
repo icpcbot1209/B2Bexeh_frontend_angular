@@ -23,7 +23,11 @@ export class EditHopeComponent implements OnInit {
     public consts: ConstListService
   ) {
     this.units = this.consts.dict_unit.slice(1);
-    this.deal_methods = this.consts.dict_deal_method.slice(1);
+    this.getDealmethods();
+  }
+
+  async getDealmethods() {
+    this.deal_methods = await this.consts.getDealmethods();
   }
 
   ngOnInit(): void {

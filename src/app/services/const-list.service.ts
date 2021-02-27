@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { ICategory } from '../interfaces/ICategory';
 import { ISubcategory } from '../interfaces/ISubcategory';
+import { IDealmethod } from '../interfaces/IDealmethod';
 
 @Injectable({
   providedIn: 'root',
@@ -42,29 +43,21 @@ export class ConstListService {
     return arr;
   }
 
+  dealmethods: IDealmethod[] = [];
+  async getDealmethods() {
+    if (this.dealmethods.length > 0) return this.dealmethods;
+    try {
+      this.dealmethods = await this.http.post<IDealmethod[]>(`${environment.myApiUrl2}/consts/getDealmethods`, null).toPromise();
+    } catch (err) {
+      console.error(err);
+    }
+    return this.dealmethods;
+  }
+
   dict_unit: IDictItem[] = [
     { id: 'all', name: 'All' },
     { id: 'box', name: 'Box' },
     { id: 'case', name: 'Case' },
-  ];
-
-  dict_deal_method: IDictItem[] = [
-    { id: 'all', name: 'All' },
-    { id: 'hobby', name: 'Hobby' },
-    { id: 'blaster', name: 'Blaster' },
-    { id: 'jumbo', name: 'Jumbo' },
-    { id: 'cellos', name: 'Cellos/Fat Packs' },
-    { id: 'choice', name: 'Choice' },
-    { id: 'fotl', name: 'FOTL' },
-    { id: 'fast_break', name: 'Fast Break' },
-    { id: 'hanger', name: 'Hanger' },
-    { id: 'hybrid', name: 'Hybrid' },
-    { id: 'mega', name: 'Mega' },
-    { id: 'retail', name: 'Retail/Other' },
-    { id: 'super_jumbos', name: 'Super Jumbos' },
-    { id: 't_mall', name: 'T-mall' },
-    { id: 'tins', name: 'Tins' },
-    { id: 'x_gaming_only', name: 'x (Gaming Only)' },
   ];
 
   dict_payment_method: IDictItem[] = [

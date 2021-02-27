@@ -2,15 +2,15 @@
   <div style="position: relative">
     <mat-icon class="close-button" (click)="dialogRef.close()">close</mat-icon>
 
-    <h1 mat-dialog-title>{{ data.isEditing ? 'Edit' : 'Create' }} Subcategory</h1>
+    <h1 mat-dialog-title>{{ data.isEditing ? 'Edit' : 'Create' }} Category</h1>
   </div>
 
   <form [formGroup]="theForm" id="signup-form" (submit)="updateItem()">
     <div class="row">
       <div class="col-md-6">
         <mat-form-field class="w-100">
-          <mat-label class="required">Subcategory Name</mat-label>
-          <input matInput placeholder="Subcategory Name" formControlName="name" maxlength="40" />
+          <mat-label class="required">Deal Method Name</mat-label>
+          <input matInput placeholder="Deal Method Name" formControlName="name" maxlength="40" />
           <mat-error *ngIf="theForm.get('name').hasError('required')">Name is required</mat-error>
         </mat-form-field>
       </div>

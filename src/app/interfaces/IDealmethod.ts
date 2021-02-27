@@ -1,4 +1,4 @@
-export interface ICategory {
+export interface IDealmethod {
   id?: string;
   created_at?: Date;
   updated_at?: Date;

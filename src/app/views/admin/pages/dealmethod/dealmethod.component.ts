@@ -9,13 +9,13 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { SwalService } from 'src/app/services/swal.service';
 import { SnackService } from 'src/app/services/snack.service';
-import { EditSubcategoryComponent } from './edit-subcategory/edit-subcategory.component';
+import { EditDealmethodComponent } from './edit-dealmethod/edit-dealmethod.component';
 
 @Component({
-  templateUrl: './subcategory.component.html',
-  styleUrls: ['./subcategory.component.scss'],
+  templateUrl: './dealmethod.component.html',
+  styleUrls: ['./dealmethod.component.scss'],
 })
-export class SubcategoryComponent implements OnInit, AfterViewInit {
+export class DealmethodComponent implements OnInit, AfterViewInit {
   dataSource: MyDataSource;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -23,7 +23,7 @@ export class SubcategoryComponent implements OnInit, AfterViewInit {
 
   displayedColumns = ['name', 'priority', 'actions'];
 
-  tableName = 'subcategories';
+  tableName = 'dealmethods';
   config: ITableConfig = {
     filter: '',
     sortDirection: 'asc',
@@ -68,7 +68,7 @@ export class SubcategoryComponent implements OnInit, AfterViewInit {
   }
 
   onClickAdd() {
-    const dialogRef = this.dialog.open(EditSubcategoryComponent, {
+    const dialogRef = this.dialog.open(EditDealmethodComponent, {
       data: { isEditing: false },
       panelClass: 'custom-dialog-container',
     });
@@ -81,7 +81,7 @@ export class SubcategoryComponent implements OnInit, AfterViewInit {
   }
 
   onClickEdit(item) {
-    const dialogRef = this.dialog.open(EditSubcategoryComponent, {
+    const dialogRef = this.dialog.open(EditDealmethodComponent, {
       data: { isEditing: true, item: item },
       panelClass: 'custom-dialog-container',
     });

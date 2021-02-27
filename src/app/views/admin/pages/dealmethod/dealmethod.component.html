@@ -18,8 +18,14 @@
   </div>
 
   <mat-table class="mat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="priority" matSortDirection="asc" matSortDisableClear>
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef>id</mat-header-cell>
+
+      <mat-cell *matCellDef="let item">{{ item.id }}</mat-cell>
+    </ng-container>
+
     <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef>Category Name</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>Deal Method</mat-header-cell>
 
       <mat-cell *matCellDef="let item">{{ item.name }}</mat-cell>
     </ng-container>

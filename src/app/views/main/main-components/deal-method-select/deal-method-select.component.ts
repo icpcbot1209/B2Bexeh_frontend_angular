@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { IDealmethod } from 'src/app/interfaces/IDealmethod';
 import { ConstListService, IDictItem } from 'src/app/services/const-list.service';
 
 @Component({
@@ -13,18 +14,25 @@ export class DealMethodSelectComponent implements OnInit {
 
   constructor(public consts: ConstListService) {}
 
-  items: IDictItem[] = [];
+  items = [];
   theItem = null;
 
   ngOnInit(): void {
     this.initItems();
   }
 
-  initItems() {
-    this.items = this.consts.dict_deal_method;
-    if (!this.isAll) this.items = this.items.slice(1);
+  async initItems() {
+    const arr = await this.consts.getDealmethods();
+    arr.sort((x, y) => {
+      if (x.priority === y.priority) return 0;
+      if (x.priority > y.priority) return 1;
+      return -1;
+    });
+    if (this.isAll) arr.unshift({ id: 'all', name: 'All' });
+
+    this.items = arr;
   }
-  onSelectItem(item: IDictItem) {
+  onSelectItem(item) {
     this.valueChanged.emit(item.id);
   }
 }
