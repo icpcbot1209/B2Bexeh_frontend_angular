@@ -55,7 +55,7 @@
   <ng-container matColumnDef="action">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
     <td mat-cell *matCellDef="let element">
-      <a href="javascript:;" (click)="onClickOfferStatus(element)">{{ offerService.statusOffer(element).text }}</a>
+      <a href="javascript:;" (click)="onClickOfferStatus(element)">{{ offerService.statusOffer(element) }}</a>
     </td>
   </ng-container>
 

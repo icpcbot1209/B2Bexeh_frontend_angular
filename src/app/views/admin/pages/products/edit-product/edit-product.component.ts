@@ -8,6 +8,9 @@ import { SnackService } from 'src/app/services/snack.service';
 import { states } from 'src/app/constants/states_titlecase';
 import { countries } from 'src/app/constants/country';
 import { makeFileName, FileUploadService } from 'src/app/services/file-upload.service';
+import { ICategory } from 'src/app/interfaces/ICategory';
+import { ISubcategory } from 'src/app/interfaces/ISubcategory';
+import { ConstListService } from 'src/app/services/const-list.service';
 
 @Component({
   templateUrl: './edit-product.component.html',
@@ -28,7 +31,8 @@ export class EditProductComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private _formBuilder: FormBuilder,
     private snack: SnackService,
-    private uploadService: FileUploadService
+    private uploadService: FileUploadService,
+    public consts: ConstListService
   ) {}
 
   ngOnInit(): void {
@@ -40,6 +44,16 @@ export class EditProductComponent implements OnInit {
     });
 
     if (this.data.isEditing) this.setFormData(this.data.item);
+
+    this.getCategories();
+  }
+
+  categories: ICategory[] = [];
+  subcategories: ISubcategory[] = [];
+
+  async getCategories() {
+    this.categories = await this.consts.getCategories();
+    this.subcategories = await this.consts.getSubcategories();
   }
 
   setFormData(item: IProduct) {

@@ -9,26 +9,32 @@ import { SharedModule } from 'primeng/api';
 import { BootstrapModule } from 'src/app/components/bootstrap/bootstrap.module';
 import { LayoutContainersModule } from 'src/app/containers/layout/layout.containers.module';
 import { MaterialModule } from 'src/app/shared/material.module';
-
-import { AdminComponent } from './admin.component';
-import { UsersComponent } from './pages/users/users.component';
-import { ProductsComponent } from './pages/products/products.component';
-import { EditUserComponent } from './pages/users/edit-user/edit-user.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ComponentsStateButtonModule } from 'src/app/components/state-button/components.state-button.module';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+
+import { AdminComponent } from './admin.component';
+
+import { UsersComponent } from './pages/users/users.component';
+import { EditUserComponent } from './pages/users/edit-user/edit-user.component';
+
 import { CategoryComponent } from './pages/category/category.component';
 import { EditCategoryComponent } from './pages/category/edit-category/edit-category.component';
+
 import { SubcategoryComponent } from './pages/subcategory/subcategory.component';
 import { EditSubcategoryComponent } from './pages/subcategory/edit-subcategory/edit-subcategory.component';
-import { EditProductComponent } from './pages/products/edit-product/edit-product.component';
-import { HopeComponent } from './pages/hope/hope.component';
-import { TransactionComponent } from './pages/transaction/transaction.component';
-import { SettingComponent } from './pages/setting/setting.component';
-import { EditTransactionComponent } from './pages/transaction/edit-transaction/edit-transaction.component';
-import { BulkUploadProductsComponent } from './pages/products/bulk-upload-products/bulk-upload-products.component';
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+
 import { DealmethodComponent } from './pages/dealmethod/dealmethod.component';
 import { EditDealmethodComponent } from './pages/dealmethod/edit-dealmethod/edit-dealmethod.component';
+
+import { ProductsComponent } from './pages/products/products.component';
+import { EditProductComponent } from './pages/products/edit-product/edit-product.component';
+
+import { BulkUploadProductsComponent } from './pages/products/bulk-upload-products/bulk-upload-products.component';
+import { TransactionComponent } from './pages/transaction/transaction.component';
+import { EditTransactionComponent } from './pages/transaction/edit-transaction/edit-transaction.component';
+
+import { SettingComponent } from './pages/setting/setting.component';
 
 const routes: Routes = [
   {
@@ -92,7 +98,6 @@ const routes: Routes = [
     SubcategoryComponent,
     EditSubcategoryComponent,
     EditProductComponent,
-    HopeComponent,
     TransactionComponent,
     SettingComponent,
     EditTransactionComponent,

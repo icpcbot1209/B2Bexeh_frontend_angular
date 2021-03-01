@@ -1,4 +1,4 @@
-<div style="min-width: 600px; width: fit-content; margin: auto">
+<div>
   <h2>{{ tableName | uppercase }}</h2>
   <div class="row">
     <div class="col">
@@ -13,14 +13,66 @@
     <mat-progress-bar mode="indeterminate"></mat-progress-bar>
   </div>
 
-  <mat-table class="mat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="name" matSortDirection="asc" matSortDisableClear>
-    <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Category Name</mat-header-cell>
+  <mat-table class="mat-elevation-z8" [dataSource]="dataSource" matSort matSortActive="updated_at" matSortDirection="asc" matSortDisableClear>
+    <ng-container matColumnDef="product_name">
+      <mat-header-cell *matHeaderCellDef>Product Name</mat-header-cell>
 
-      <mat-cell *matCellDef="let item">{{ item.name }}</mat-cell>
+      <mat-cell *matCellDef="let item">{{ item.product_name }}</mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="actions">
+    <ng-container matColumnDef="updated_at">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Updated</mat-header-cell>
+
+      <mat-cell *matCellDef="let item">{{ item.updated_at | date: 'yyyy-MM-dd' }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="seller_name">
+      <mat-header-cell *matHeaderCellDef>Seller</mat-header-cell>
+
+      <mat-cell *matCellDef="let item">{{ item.seller_name }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="buyer_name">
+      <mat-header-cell *matHeaderCellDef>Buyer</mat-header-cell>
+
+      <mat-cell *matCellDef="let item">{{ item.buyer_name }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="total">
+      <mat-header-cell *matHeaderCellDef>Total</mat-header-cell>
+
+      <mat-cell *matCellDef="let item">{{ item.price * item.qty | currency }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="feedback2seller">
+      <mat-header-cell *matHeaderCellDef>Feedback To Seller</mat-header-cell>
+
+      <mat-cell *matCellDef="let item">
+        <i class="fas fa-smile fa-2x" style="color: rgb(52, 234, 95)" [ngStyle]="{ display: item.feedback2seller == 'like' ? 'block' : 'none' }"></i>
+        <i class="fas fa-meh fa-2x" style="color: rgb(243, 254, 131)" [ngStyle]="{ display: item.feedback2seller == 'soso' ? 'block' : 'none' }"></i>
+        <i
+          class="fas fa-frown fa-2x"
+          style="color: rgb(243, 94, 110)"
+          [ngStyle]="{ display: item.feedback2seller == 'dislike' ? 'block' : 'none' }"
+        ></i>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="feedback2buyer">
+      <mat-header-cell *matHeaderCellDef>Feedback To Buyer</mat-header-cell>
+
+      <mat-cell *matCellDef="let item">
+        <i class="fas fa-smile fa-2x" style="color: rgb(52, 234, 95)" [ngStyle]="{ display: item.feedback2buyer == 'like' ? 'block' : 'none' }"></i>
+        <i class="fas fa-meh fa-2x" style="color: rgb(243, 254, 131)" [ngStyle]="{ display: item.feedback2buyer == 'soso' ? 'block' : 'none' }"></i>
+        <i
+          class="fas fa-frown fa-2x"
+          style="color: rgb(243, 94, 110)"
+          [ngStyle]="{ display: item.feedback2buyer == 'dislike' ? 'block' : 'none' }"
+        ></i>
+      </mat-cell>
+    </ng-container>
+
+    <!-- <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
 
       <mat-cell *matCellDef="let item">
@@ -31,7 +83,7 @@
           <i class="fas fa-trash-alt fa-lg"></i>
         </button>
       </mat-cell>
-    </ng-container>
+    </ng-container> -->
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 

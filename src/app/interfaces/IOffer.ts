@@ -16,9 +16,9 @@ export interface IOffer {
   qty: number;
   price: number;
   unit?: string;
-  deal_method: string;
-  note: string;
-  payment_terms?: any;
+  deal_method?: string;
+  note?: string;
+  payment_timing?: any;
   shipping_terms?: any;
 
   paid_info?: string;

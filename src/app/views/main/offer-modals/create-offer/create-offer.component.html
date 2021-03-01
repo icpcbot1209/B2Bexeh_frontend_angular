@@ -43,49 +43,33 @@
     </div>
   </div>
 
-  <!-- <div style="display: flex; margin: 20px 0">
-    <div class="form-group" style="flex: 1">
-      <label>Payment Method</label>
-      <ng-select
-        class="form-control"
-        style="padding: 0"
-        [clearable]="false"
-        [placeholder]="'--- select method ---'"
-        [items]="payment_methods"
-        [(ngModel)]="payment_method"
-        [bindLabel]="'title'"
-        [bindValue]="'id'"
-      >
-      </ng-select>
-    </div>
-
-    <div class="form-group" style="margin-left: 20px; flex: 1">
+  <div style="display: flex; margin: 20px 0">
+    <div class="form-group" style="width: 150px">
       <label>Payment Timing</label>
       <ng-select
         class="form-control"
         style="padding: 0"
         [clearable]="false"
         [placeholder]="'--- select timing ---'"
-        [items]="payment_timings"
+        [items]="consts.dict_payment_timing"
         [(ngModel)]="payment_timing"
-        [bindLabel]="'title'"
+        [bindLabel]="'name'"
         [bindValue]="'id'"
       >
       </ng-select>
     </div>
     <div style="flex: 1"></div>
-  </div> -->
+  </div>
 
   <div>
     <textarea cols="80" rows="8" placeholder="Write message" [(ngModel)]="note"></textarea>
   </div>
-</div>
-<div mat-dialog-actions style="flex-direction: column">
-  <div>
+
+  <div style="text-align: center">
     <button mat-raised-button color="primary" style="margin: 20px auto" (click)="onClickCreate()">Send Offer</button>
   </div>
 
-  <div style="text-align: center; color: gray; margin-bottom: 50px">
+  <div style="text-align: center; color: gray; padding-bottom: 50px">
     ALL OFFERS SENT ARE BINDING AND CANNOT BE CANCELED IF ACCEPTED BY THE OTHER PARTY
   </div>
 </div>

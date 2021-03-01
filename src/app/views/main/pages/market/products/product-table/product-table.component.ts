@@ -22,7 +22,7 @@ export class ProductTableComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  displayedColumns: string[] = ['name', 'listingDates', 'release_date', 'boxhighestbid', 'boxlowestask'];
+  displayedColumns: string[] = ['photo_url', 'name', 'release_date', 'boxhighestbid', 'boxlowestask'];
   dataSource: MatTableDataSource<IProduct>;
 
   ngOnInit(): void {}
@@ -30,15 +30,8 @@ export class ProductTableComponent implements OnInit {
     if (!products) {
       return;
     }
-    const rows: IProduct[] = [];
-    products.forEach((product) => {
-      const differenceInTime = new Date().getTime() - new Date(product.release_date).getTime();
-      const listingDates = (differenceInTime / (1000 * 3600 * 24)).toFixed();
-      const row: IProduct = { ...product, listingDates };
-      rows.push(row);
-    });
 
-    this.dataSource = new MatTableDataSource(rows);
+    this.dataSource = new MatTableDataSource(products);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }

@@ -16,6 +16,7 @@ export class CreateOfferComponent implements OnInit {
   qty: number;
   price: number;
   note = '';
+  payment_timing: string;
 
   constructor(
     public dialogRef: MatDialogRef<CreateOfferComponent>,
@@ -60,6 +61,8 @@ export class CreateOfferComponent implements OnInit {
       price: this.price,
       unit: this.data.hope.unit,
       deal_method: this.data.hope.deal_method,
+
+      payment_timing: this.payment_timing,
     };
 
     try {

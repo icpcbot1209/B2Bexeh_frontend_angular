@@ -50,10 +50,6 @@ export class AuthService {
       if (this.uid !== auth_uid) {
         this.uid = auth_uid;
         this.uid$.next(this.uid);
-
-        this.ngZone.run(() => {
-          this.router.navigate(['/main/settings/account']);
-        });
       }
     } else {
       localStorage.removeItem('b2b_auth_token');
@@ -70,6 +66,8 @@ export class AuthService {
     const userCredential = await this.fireAuth.signInWithEmailAndPassword(credentials.email, credentials.password);
 
     await this.userService.getMe(userCredential.user.uid);
+
+    this.router.navigate(['/main']);
   }
 
   signOut() {
@@ -87,6 +85,7 @@ export class AuthService {
     userData.user_uid = userCredential.user.uid;
 
     await this.userService.createUser(userData);
+    this.router.navigate(['/main']);
   }
 
   updateEmail(email: string): void {

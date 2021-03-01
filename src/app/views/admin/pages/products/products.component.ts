@@ -48,8 +48,8 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   ) {}
 
   async loadConsts() {
-    this.categories = await this.consts.getCategories();
-    this.subcategories = await this.consts.getSubcategories();
+    this.categories = await this.consts.getCategories(true);
+    this.subcategories = await this.consts.getSubcategories(true);
   }
 
   ngOnInit() {

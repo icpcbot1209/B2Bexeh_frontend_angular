@@ -54,41 +54,71 @@ export class OfferService {
     return this.http.post(`${environment.myApiUrl2}/offer/changeTerms`, { offerId, price, qty });
   }
 
-  statusOffer(offer: IOffer, me?: IUser) {
-    if (!me) {
-      me = this.userService.me;
-    }
-    let text = '',
-      num = 0;
-    if (offer.is_canceled) {
-      text = 'Canceled';
-      num = 0;
-    } else if (!offer.is_accepted) {
-      const who = offer.creator_id === me.id ? 'Their' : 'Your';
-      text = `Pending ${who} Approval`;
-      num = 0;
-    } else if (!offer.is_paid || !offer.is_shipped) {
-      if (!offer.is_paid && offer.buyer_id === me.id) {
-        text = 'Pending Your Payment';
-      } else if (!offer.is_shipped && offer.seller_id === me.id) {
-        text = 'Pending Your Shipping';
-      } else if (!offer.is_paid && offer.buyer_id !== me.id) {
-        text = 'Pending Their Payment';
-      } else if (!offer.is_shipped && offer.seller_id !== me.id) {
-        text = 'Pending Their Shipping';
-      }
-
-      num = 1;
-    } else if (offer.is_paid && offer.is_shipped) {
-      if ((offer.seller_id === me.id && !offer.feedback2buyer) || (offer.buyer_id === me.id && !offer.feedback2seller)) {
-        text = 'Leave Feedback';
-        num = 2;
-      } else {
-        text = 'Completed';
-        num = 3;
-      }
+  makeFlowSteps(offer: IOffer) {
+    let flowSteps: IFlowStep[] = [];
+    if (offer.payment_timing === 'prior') {
+      flowSteps = [
+        { uid: 'contract', label: 'Contract', state: offer.is_accepted ? 'done' : 'cannot' },
+        { uid: 'payment', label: 'Payment', state: offer.is_paid ? 'done' : 'cannot' },
+        { uid: 'shipping', label: 'Shipping', state: offer.is_shipped ? 'done' : 'cannot' },
+        { uid: 'feedback', label: 'Feedback', state: this.myFeedback(offer) ? 'done' : 'cannot' },
+      ];
+    } else {
+      flowSteps = [
+        { uid: 'contract', label: 'Contract', state: offer.is_accepted ? 'done' : 'cannot' },
+        { uid: 'shipping', label: 'Shipping', state: offer.is_shipped ? 'done' : 'cannot' },
+        { uid: 'payment', label: 'Payment', state: offer.is_paid ? 'done' : 'cannot' },
+        { uid: 'feedback', label: 'Feedback', state: this.myFeedback(offer) ? 'done' : 'cannot' },
+      ];
     }
 
-    return { text, num };
+    const currentStepId = flowSteps.findIndex((x) => x.state === 'cannot');
+
+    if (currentStepId > -1) {
+      flowSteps[currentStepId].state = 'edit';
+    }
+
+    return { flowSteps, currentStepId };
   }
+
+  myFeedback(offer): string {
+    if (offer.buyer_id === this.userService.me.id) {
+      return offer.feedback2seller;
+    } else {
+      return offer.feedback2buyer;
+    }
+  }
+
+  statusOffer(offer: IOffer) {
+    let status = 'aaa';
+    const me = this.userService.me;
+
+    let { flowSteps, currentStepId } = this.makeFlowSteps(offer);
+
+    if (currentStepId > -1) {
+      const step = flowSteps[currentStepId];
+      if (step.uid === 'contract') {
+        const who = offer.creator_id === me.id ? 'Their' : 'Your';
+        status = `Pending ${who} Approval`;
+      } else if (step.uid === 'payment') {
+        const who = offer.buyer_id === me.id ? 'Your' : 'Their';
+        status = `Pending ${who} Payment`;
+      } else if (step.uid === 'shipping') {
+        const who = offer.seller_id === me.id ? 'Your' : 'Their';
+        status = `Pending ${who} Shipping`;
+      } else if (step.uid === 'feedback') {
+        status = 'Leave Feedback';
+      }
+    } else {
+      status = 'Completed';
+    }
+
+    return status;
+  }
+}
+
+export interface IFlowStep {
+  uid: 'contract' | 'payment' | 'shipping' | 'feedback';
+  label: string;
+  state: 'done' | 'edit' | 'cannot';
 }

@@ -21,7 +21,7 @@ export class TransactionComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('input') input: ElementRef;
 
-  displayedColumns = ['product_name', 'update_date', 'seller_name', 'buyer_name', 'total', 'feedback', 'actions'];
+  displayedColumns = ['product_name', 'updated_at', 'seller_name', 'buyer_name', 'total', 'feedback2seller', 'feedback2buyer'];
 
   tableName = 'transactions';
   config: ITableConfig = {

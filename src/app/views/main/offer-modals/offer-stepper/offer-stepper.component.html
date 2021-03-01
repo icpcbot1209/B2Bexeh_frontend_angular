@@ -2,32 +2,46 @@
   <div style="display: flex">
     <div class="title">Offer on {{ data.offer.created_at | date }}</div>
     <div style="flex: 1"></div>
-    <mat-icon class="close-button" (click)="onNoClick()">close</mat-icon>
+    <mat-icon class="close-button" (click)="dialogRef.close()">close</mat-icon>
   </div>
 
   <div>
-    <mat-horizontal-stepper [linear]="true" #stepper [selectedIndex]="selectedStepId">
-      <mat-step label="Contract" [completed]="data.offer.is_accepted" [state]="statusState(data.offer, 0)">
+    <mat-horizontal-stepper [linear]="true" #stepper [selectedIndex]="currentStepId">
+      <mat-step
+        *ngFor="let flowStep of flowSteps; let i = index"
+        [label]="flowStep.label"
+        [completed]="flowStep.state == 'done'"
+        [state]="flowStep.state"
+      >
         <div style="margin-top: 32px">
-          <main-offer-contract [offer]="data.offer" (offerChanged)="handleOfferChanged($event)"></main-offer-contract>
-        </div>
-      </mat-step>
+          <main-offer-contract
+            *ngIf="flowStep.uid == 'contract'"
+            [offer]="data.offer"
+            (offerChanged)="handleOfferChanged($event)"
+          ></main-offer-contract>
 
-      <mat-step label="Pay / Ship" [completed]="data.offer.is_paid && data.offer.is_shipped" [state]="statusState(data.offer, 1)">
-        <div style="margin-top: 32px">
-          <main-offer-payment [offer]="data.offer" (offerChanged)="handleOfferChanged($event)"></main-offer-payment>
-          <main-offer-shipment [offer]="data.offer" (offerChanged)="handleOfferChanged($event)"></main-offer-shipment>
-        </div>
-      </mat-step>
+          <main-offer-payment *ngIf="flowStep.uid == 'payment'" [offer]="data.offer" (offerChanged)="handleOfferChanged($event)"></main-offer-payment>
 
-      <mat-step label="Feedback" [completed]="myFeedback()" [state]="statusState(data.offer, 2)">
-        <div style="margin-top: 32px">
-          <main-offer-feedback [offer]="data.offer" (offerChanged)="handleOfferChanged($event)"></main-offer-feedback>
+          <main-offer-shipment
+            *ngIf="flowStep.uid == 'shipping'"
+            [offer]="data.offer"
+            (offerChanged)="handleOfferChanged($event)"
+          ></main-offer-shipment>
+
+          <main-offer-feedback
+            *ngIf="flowStep.uid == 'feedback'"
+            [offer]="data.offer"
+            (offerChanged)="handleOfferChanged($event)"
+          ></main-offer-feedback>
         </div>
       </mat-step>
 
       <!-- Icon overrides. -->
       <ng-template matStepperIcon="number">
+        <mat-icon></mat-icon>
+      </ng-template>
+
+      <ng-template matStepperIcon="cannot">
         <mat-icon></mat-icon>
       </ng-template>
 

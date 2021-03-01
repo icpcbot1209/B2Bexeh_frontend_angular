@@ -19,7 +19,8 @@ export class AuthGuard implements CanActivate, CanActivateChild {
         return false;
       }
     } else {
-      this.router.navigate(['/auth/login']);
+      const redirectTo = state.url;
+      this.router.navigate(['/auth/loading', { redirectTo }]);
       return false;
     }
   }
@@ -37,7 +38,8 @@ export class AuthGuard implements CanActivate, CanActivateChild {
         return false;
       }
     } else {
-      this.router.navigate(['/auth/login']);
+      const redirectTo = state.url;
+      this.router.navigate(['/auth/loading', { redirectTo }]);
       return false;
     }
   }

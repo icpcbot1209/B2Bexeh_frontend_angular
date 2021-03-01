@@ -9,12 +9,17 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { LoadingComponent } from './loading/loading.component';
 
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
     redirectTo: 'login',
+  },
+  {
+    path: 'loading',
+    component: LoadingComponent,
   },
   {
     path: 'login',
@@ -35,7 +40,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [LoginComponent, SignupComponent, ForgotPasswordComponent, UnauthorizedComponent],
+  declarations: [LoginComponent, SignupComponent, ForgotPasswordComponent, UnauthorizedComponent, LoadingComponent],
   imports: [CommonModule, RouterModule.forChild(routes), FormsModule, ReactiveFormsModule, MaterialModule, ComponentsStateButtonModule],
 })
 export class AuthModule {}

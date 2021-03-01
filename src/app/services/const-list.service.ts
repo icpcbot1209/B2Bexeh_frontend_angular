@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { ICategory } from '../interfaces/ICategory';
 import { ISubcategory } from '../interfaces/ISubcategory';
 import { IDealmethod } from '../interfaces/IDealmethod';
+import { ICatemap } from '../interfaces/ICateMap';
 
 @Injectable({
   providedIn: 'root',
@@ -11,28 +12,72 @@ import { IDealmethod } from '../interfaces/IDealmethod';
 export class ConstListService {
   constructor(private http: HttpClient) {}
 
-  async getCategories() {
-    let categories = [];
-    try {
-      categories = await this.http.post<ICategory[]>(`${environment.myApiUrl2}/product/getCategories`, null).toPromise();
-    } catch (err) {
-      console.error(err);
-    }
-    return categories;
+  doInit() {
+    this.getCategories();
+    this.getSubcategories();
+    this.getCatemaps();
+    this.getDealmethods();
   }
 
-  async getSubcategories() {
-    let subcategories = [];
-    try {
-      subcategories = await this.http.post<ICategory[]>(`${environment.myApiUrl2}/product/getSubategories`, null).toPromise();
-    } catch (err) {
-      console.error(err);
+  private categories: ICategory[] = [];
+  private subcategories: ISubcategory[] = [];
+  private catemaps: ICatemap[] = [];
+
+  async getCategories(reload = false) {
+    if (reload || this.categories.length === 0) {
+      try {
+        this.categories = await this.http.post<ICategory[]>(`${environment.myApiUrl2}/product/getCategories`, null).toPromise();
+      } catch (err) {
+        console.error(err);
+      }
     }
-    return subcategories;
+
+    return this.categories;
   }
 
-  async getSubcategoriesByCate(category_id: string) {
-    let arr = [];
+  async getSubcategories(reload = false) {
+    if (reload || this.subcategories.length === 0) {
+      try {
+        this.subcategories = await this.http.post<ICategory[]>(`${environment.myApiUrl2}/product/getSubategories`, null).toPromise();
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    return this.subcategories;
+  }
+
+  async getCatemaps(reload = false) {
+    if (reload || this.catemaps.length === 0) {
+      try {
+        this.catemaps = await this.http.post<ICatemap[]>(`${environment.myApiUrl2}/product/getCatemaps`, null).toPromise();
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    return this.catemaps;
+  }
+
+  async getSubcategoriesByCate(category_id: string, reload = false) {
+    let arr: ISubcategory[] = [];
+
+    if (!reload && this.catemaps.length > 0 && this.categories.length > 0 && this.subcategories.length > 0) {
+      this.catemaps.forEach((catemap) => {
+        if (catemap.category_id === category_id) {
+          const sub = this.subcategories.find((x) => x.id === catemap.subcategory_id);
+          if (sub) arr.push(sub);
+        }
+      });
+
+      arr.sort((x, y) => {
+        if (x.priority > y.priority) return 1;
+        if (x.priority === y.priority) return 0;
+        return -1;
+      });
+      return arr;
+    }
+
     try {
       arr = await this.http
         .post<ISubcategory[]>(`${environment.myApiUrl2}/product/getSubcategoriesByCate`, { category_id })
@@ -43,7 +88,7 @@ export class ConstListService {
     return arr;
   }
 
-  dealmethods: IDealmethod[] = [];
+  private dealmethods: IDealmethod[] = [];
   async getDealmethods() {
     if (this.dealmethods.length > 0) return this.dealmethods;
     try {
@@ -69,7 +114,7 @@ export class ConstListService {
   dict_payment_timing: IDictItem[] = [
     { id: 'prior', name: 'Prior To Shipping' },
     { id: 'net7', name: 'Net 7' },
-    { id: 'net14', name: 'net 14' },
+    { id: 'net14', name: 'Net 14' },
   ];
 
   dict_feedback: IDictItem[] = [

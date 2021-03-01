@@ -14,5 +14,4 @@ export interface IProduct {
   boxhighestbid?: number;
   caselowestask?: number;
   casehighestbid?: number;
-  listingDates?: any;
 }
