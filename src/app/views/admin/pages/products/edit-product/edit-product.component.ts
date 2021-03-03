@@ -8,8 +8,8 @@ import { SnackService } from 'src/app/services/snack.service';
 import { states } from 'src/app/constants/states_titlecase';
 import { countries } from 'src/app/constants/country';
 import { makeFileName, FileUploadService } from 'src/app/services/file-upload.service';
-import { ICategory } from 'src/app/interfaces/ICategory';
-import { ISubcategory } from 'src/app/interfaces/ISubcategory';
+import { ICategory } from 'src/app/interfaces/IProduct';
+import { ISubcategory } from 'src/app/interfaces/IProduct';
 import { ConstListService } from 'src/app/services/const-list.service';
 
 @Component({

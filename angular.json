@@ -63,7 +63,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
-            "assets": ["src/favicon.ico", "src/assets"],
+            "assets": ["src/favicon.ico", "src/assets", "src/firebase-messaging-sw.js", "src/manifest.json"],
             "extractCss": true,
             "styles": [
               "src/styles.scss",

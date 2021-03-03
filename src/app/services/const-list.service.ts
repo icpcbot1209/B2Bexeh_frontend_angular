@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { ICategory } from '../interfaces/ICategory';
-import { ISubcategory } from '../interfaces/ISubcategory';
+import { ICategory } from '../interfaces/IProduct';
+import { ISubcategory } from '../interfaces/IProduct';
 import { IDealmethod } from '../interfaces/IDealmethod';
-import { ICatemap } from '../interfaces/ICateMap';
+import { ICatemap } from '../interfaces/IProduct';
 
 @Injectable({
   providedIn: 'root',

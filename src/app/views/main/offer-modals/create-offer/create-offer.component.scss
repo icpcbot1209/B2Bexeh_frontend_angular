@@ -1,3 +1,13 @@
+.title {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 21px;
+  line-height: 34px;
+
+  color: #0f1b41;
+}
+
 .close-button {
   cursor: pointer;
 }
@@ -6,4 +16,29 @@ textarea {
   border: 1px solid lightgray;
   padding: 10px;
   border-radius: 5px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: 150px 150px 150px;
+  column-gap: 20px;
+  row-gap: 10px;
+
+  .form-group {
+    height: fit-content;
+
+    label {
+      font-family: Inter;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 10px;
+      /* or 62% */
+      color: #547282;
+    }
+
+    p {
+      margin: 5px 10px;
+    }
+  }
 }

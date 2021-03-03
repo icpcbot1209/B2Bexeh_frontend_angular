@@ -7,10 +7,8 @@ export const environment = {
   myApiUrl: 'http://localhost:9013/api/v1',
   myApiUrl2: 'http://localhost:9013/api/v2',
   apiAdminUrl: 'http://localhost:9013/api/admin',
-  buyUrl: 'https://1.envato.market/6NV1b',
   SCARF_ANALYTICS: false,
   adminRoot: '/',
-  apiUrl: 'https://api.coloredstrategies.com',
   defaultMenuType: 'menu-default',
   subHiddenBreakpoint: 1440,
   menuHiddenBreakpoint: 768,
@@ -30,17 +28,6 @@ export const environment = {
   isDarkSwitchActive: true,
   defaultDirection: 'ltr',
   themeRadiusStorageKey: 'vien-themeradius',
-  isAuthGuardActive: true,
-  vienFirebase: {
-    apiKey: 'AIzaSyCqoNLB_jTw4nncO12qR-eDH9gAeWiZVaw',
-    authDomain: 'vien-angular-login.firebaseapp.com',
-    databaseURL: 'https://vien-angular-login.firebaseio.com',
-    projectId: 'vien-angular-login',
-    storageBucket: 'vien-angular-login.appspot.com',
-    messagingSenderId: '16217062888',
-    appId: '1:16217062888:web:6b08232ca0c9662fedb85d',
-    measurementId: 'G-8ETT79WRRN',
-  },
 
   firebase: {
     apiKey: 'AIzaSyAq3nryW8yb7AknyVZPmdzAceq1Xi-KOK0',

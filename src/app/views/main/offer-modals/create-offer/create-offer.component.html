@@ -1,50 +1,33 @@
-<div mat-dialog-content>
+<div style="padding: 0 20px">
   <div style="display: flex">
-    <h1 mat-dialog-title>Send Offer to {{ !data.hope.is_ask ? 'Buyer' : 'Seller' }} {{ data.hope.dealer_name }}</h1>
+    <p class="title">Send Offer to {{ !data.hope.is_ask ? 'Buyer' : 'Seller' }} {{ data.hope.dealer_name }}</p>
     <div style="flex: 1"></div>
     <mat-icon class="close-button" (click)="onNoClick()">close</mat-icon>
   </div>
 
-  <div style="display: flex">
+  <div class="row" style="display: flex">
     <img [src]="data.product.photo_url" onerror="this.src='assets/img/profiles/profile.jpg'" width="158" height="auto" />
 
     <div style="margin-left: 50px">
-      <strong style="font-size: large">{{ data.product.name }}</strong>
+      <p class="title" style="font-size: large">{{ data.product.name }}</p>
       <p>Released on {{ data.product.release_date | date: 'longDate' }}</p>
+    </div>
+  </div>
+
+  <hr />
+
+  <div class="grid-3">
+    <div class="form-group">
       <label>Dealer</label>
       <p>{{ data.hope.dealer_name }}</p>
     </div>
-  </div>
 
-  <div style="display: flex; margin: 20px 0">
-    <div class="form-group" style="flex: 1">
-      <label>Type</label>
-      <p style="margin: 10px">{{ consts.id2name(data.hope.deal_method, dealmethods) }}</p>
+    <div class="form-group">
+      <label>Deal Type</label>
+      <p>{{ consts.id2name(data.hope.deal_method, dealmethods) }}</p>
     </div>
 
-    <div class="form-group" style="margin-left: 20px; flex: 1">
-      <label>Qty</label>
-      <input class="form-control" type="number" placeholder="" [(ngModel)]="qty" [min]="0" [max]="data.hope.qty" />
-    </div>
-
-    <div class="form-group" style="margin-left: 20px; flex: 1">
-      <label>Price / {{ consts.id2name(data.hope.unit, consts.dict_unit) }}</label>
-      <ng-container *ngIf="data.isAccept; else elseTemplate1">
-        <p style="margin: 10px">{{ price }}</p>
-      </ng-container>
-      <ng-template #elseTemplate1>
-        <input class="form-control" type="number" placeholder="" [(ngModel)]="price" [min]="0" />
-      </ng-template>
-    </div>
-
-    <div class="form-group" style="margin-left: 20px; flex: 1">
-      <label>Total</label>
-      <p style="margin: 10px">{{ price * qty | currency }}</p>
-    </div>
-  </div>
-
-  <div style="display: flex; margin: 20px 0">
-    <div class="form-group" style="width: 150px">
+    <div class="form-group">
       <label>Payment Timing</label>
       <ng-select
         class="form-control"
@@ -58,18 +41,41 @@
       >
       </ng-select>
     </div>
-    <div style="flex: 1"></div>
+
+    <div class="form-group">
+      <label>Qty ({{ consts.id2name(data.hope.unit, consts.dict_unit) }})</label>
+      <input class="form-control" type="number" placeholder="" [(ngModel)]="qty" [min]="0" [max]="data.hope.qty" />
+    </div>
+
+    <div class="form-group">
+      <label>Price / {{ consts.id2name(data.hope.unit, consts.dict_unit) }}</label>
+      <ng-container *ngIf="data.isAccept; else elseTemplate1">
+        <p>{{ price }}</p>
+      </ng-container>
+      <ng-template #elseTemplate1>
+        <input class="form-control" type="number" placeholder="" [(ngModel)]="price" [min]="0" />
+      </ng-template>
+    </div>
+
+    <div class="form-group">
+      <label>Total</label>
+      <p>{{ price * qty | currency }}</p>
+    </div>
   </div>
 
-  <div>
-    <textarea cols="80" rows="8" placeholder="Write message" [(ngModel)]="note"></textarea>
-  </div>
-
+  <hr />
   <div style="text-align: center">
-    <button mat-raised-button color="primary" style="margin: 20px auto" (click)="onClickCreate()">Send Offer</button>
+    <textarea cols="50" rows="4" placeholder="Write message" [(ngModel)]="note"></textarea>
   </div>
 
-  <div style="text-align: center; color: gray; padding-bottom: 50px">
-    ALL OFFERS SENT ARE BINDING AND CANNOT BE CANCELED IF ACCEPTED BY THE OTHER PARTY
+  <div style="text-align: center; margin: 10px 0">
+    <button mat-raised-button color="primary" (click)="onClickCreate()">Send Offer</button>
+  </div>
+
+  <hr />
+
+  <div style="text-align: center; color: gray">
+    <div>ALL OFFERS SENT ARE BINDING AND CANNOT BE CANCELED</div>
+    <div>IF ACCEPTED BY THE OTHER PARTY</div>
   </div>
 </div>

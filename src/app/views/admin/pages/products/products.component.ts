@@ -11,8 +11,8 @@ import { EditProductComponent } from './edit-product/edit-product.component';
 import { SwalService } from 'src/app/services/swal.service';
 import { SnackService } from 'src/app/services/snack.service';
 import { ConstListService } from 'src/app/services/const-list.service';
-import { ICategory } from 'src/app/interfaces/ICategory';
-import { ISubcategory } from 'src/app/interfaces/ISubcategory';
+import { ICategory } from 'src/app/interfaces/IProduct';
+import { ISubcategory } from 'src/app/interfaces/IProduct';
 import { BulkUploadProductsComponent } from './bulk-upload-products/bulk-upload-products.component';
 import { IProduct } from 'src/app/interfaces/IProduct';
 

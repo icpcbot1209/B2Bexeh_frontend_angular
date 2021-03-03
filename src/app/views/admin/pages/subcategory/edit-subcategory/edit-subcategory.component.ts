@@ -7,7 +7,7 @@ import { SnackService } from 'src/app/services/snack.service';
 import { UserService } from 'src/app/services/user.service';
 import { states } from 'src/app/constants/states_titlecase';
 import { countries } from 'src/app/constants/country';
-import { ISubcategory } from 'src/app/interfaces/ISubcategory';
+import { ISubcategory } from 'src/app/interfaces/IProduct';
 
 @Component({
   templateUrl: './edit-subcategory.component.html',

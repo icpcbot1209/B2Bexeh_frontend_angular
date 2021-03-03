@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { SidebarService, ISidebar } from 'src/app/containers/layout/sidebar/sidebar.service';
-import { ChattingService } from 'src/app/services/chatting.service';
 import { ConstListService } from 'src/app/services/const-list.service';
+import { NotifService } from 'src/app/services/notif.service';
 
 @Component({
   selector: 'app-main',

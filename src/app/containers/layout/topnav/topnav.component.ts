@@ -1,4 +1,3 @@
-import { NotifService } from './../../../services/notif.service';
 import { Component, OnInit, OnDestroy, HostListener, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { SidebarService, ISidebar } from '../sidebar/sidebar.service';
@@ -9,7 +8,6 @@ import { environment } from 'src/environments/environment';
 import { getThemeColor, setThemeColor } from 'src/app/utils/util';
 
 import { Colors } from 'src/app/constants/colors.service';
-import { INotif } from 'src/app/interfaces/INotif';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -20,17 +18,11 @@ import { UserService } from 'src/app/services/user.service';
 export class TopnavComponent implements OnInit, OnDestroy {
   @Input() isAdminSite: boolean = false;
 
-  buyUrl = environment.buyUrl;
   adminRoot = environment.adminRoot;
   sidebar: ISidebar;
   subscription: Subscription;
-  displayName = 'Sarah Cortney';
-  languages: Language[];
-  currentLanguage: string;
-  isSingleLang;
+
   isFullScreen = false;
-  isDarkModeActive = false;
-  searchKey = '';
 
   themeColor1 = Colors.getColors().themeColor1;
   foregroundColor = Colors.getColors().foregroundColor;
@@ -40,38 +32,8 @@ export class TopnavComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     public userService: UserService,
     private router: Router,
-    private langService: LangService,
-    public notifService: NotifService
-  ) {
-    this.languages = this.langService.supportedLanguages;
-    this.currentLanguage = this.langService.languageShorthand;
-    this.isSingleLang = this.langService.isSingleLang;
-    this.isDarkModeActive = getThemeColor().indexOf('dark') > -1 ? true : false;
-
-    this.notifs = this.notifService.notifs;
-    this.subsNotifs = this.notifService.notifs$.subscribe((notifs) => {
-      this.notifs = notifs;
-    });
-  }
-
-  /** JastiDev */
-
-  notifs: INotif[] = [];
-  subsNotifs: Subscription;
-  /** */
-
-  onDarkModeChange(event): void {
-    let color = getThemeColor();
-    if (color.indexOf('dark') > -1) {
-      color = color.replace('dark', 'light');
-    } else if (color.indexOf('light') > -1) {
-      color = color.replace('light', 'dark');
-    }
-    setThemeColor(color);
-    setTimeout(() => {
-      window.location.reload();
-    }, 200);
-  }
+    private langService: LangService
+  ) {}
 
   fullScreenClick(): void {
     if (document.fullscreenElement) {
@@ -90,11 +52,6 @@ export class TopnavComponent implements OnInit, OnDestroy {
     }
   }
 
-  onLanguageChange(lang): void {
-    this.langService.language = lang.code;
-    this.currentLanguage = this.langService.languageShorthand;
-  }
-
   async ngOnInit(): Promise<void> {
     this.subscription = this.sidebarService.getSidebar().subscribe(
       (res) => {
@@ -108,8 +65,6 @@ export class TopnavComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
-
-    this.subsNotifs.unsubscribe();
   }
 
   menuButtonClick = (e: { stopPropagation: () => void }, menuClickCount: number, containerClassnames: string) => {
@@ -137,59 +92,11 @@ export class TopnavComponent implements OnInit, OnDestroy {
     this.authService.signOut();
   }
 
-  searchKeyUp(event: KeyboardEvent): void {
-    if (event.key === 'Enter') {
-      this.search();
-    } else if (event.key === 'Escape') {
-      const input = document.querySelector('.mobile-view');
-      if (input && input.classList) {
-        input.classList.remove('mobile-view');
-      }
-      this.searchKey = '';
-    }
-  }
-
-  searchAreaClick(event): void {
-    event.stopPropagation();
-  }
-  searchClick(event): void {
-    if (window.innerWidth < environment.menuHiddenBreakpoint) {
-      let elem = event.target;
-      if (!event.target.classList.contains('search')) {
-        if (event.target.parentElement.classList.contains('search')) {
-          elem = event.target.parentElement;
-        } else if (event.target.parentElement.parentElement.classList.contains('search')) {
-          elem = event.target.parentElement.parentElement;
-        }
-      }
-
-      if (elem.classList.contains('mobile-view')) {
-        this.search();
-        elem.classList.remove('mobile-view');
-      } else {
-        elem.classList.add('mobile-view');
-      }
-    } else {
-      this.search();
-    }
-    event.stopPropagation();
-  }
-
-  search(): void {
-    if (this.searchKey && this.searchKey.length > 1) {
-      this.router.navigate([this.adminRoot + '/pages/miscellaneous/search'], {
-        queryParams: { key: this.searchKey.toLowerCase().trim() },
-      });
-      this.searchKey = '';
-    }
-  }
-
   @HostListener('document:click', ['$event'])
   handleDocumentClick(event): void {
     const input = document.querySelector('.mobile-view');
     if (input && input.classList) {
       input.classList.remove('mobile-view');
     }
-    this.searchKey = '';
   }
 }

@@ -4,7 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SnackService } from 'src/app/services/snack.service';
 import { UserService } from 'src/app/services/user.service';
-import { ICategory } from 'src/app/interfaces/ICategory';
+import { ICategory } from 'src/app/interfaces/IProduct';
 
 @Component({
   templateUrl: './edit-dealmethod.component.html',

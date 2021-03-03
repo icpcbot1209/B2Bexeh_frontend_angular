@@ -834,9 +834,9 @@ a.btn-primary:not([href]):not([tabindex]) {
 }
 
 .dropdown-menu.dropdown-menu-sm {
-  min-width: 4rem;
+  min-width: 5rem;
   .dropdown-item {
-    padding: 0.25rem 1rem;
+    padding: 0.25rem 0.5rem;
   }
 }
 
@@ -1927,7 +1927,6 @@ a.btn-secondary:not([href]):not([tabindex]) {
         text-align: center;
         font-weight: 700;
         top: -4px;
-        right: 1px;
         line-height: 14px;
 
         @include respond-below(xs) {

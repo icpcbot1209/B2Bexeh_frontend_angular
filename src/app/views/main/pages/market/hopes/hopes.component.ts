@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { IHope } from 'src/app/interfaces/IHope';
-import { IRespOffer } from 'src/app/interfaces/IRespOffer';
 import { HopeService } from 'src/app/services/hope.service';
 import { SnackService } from 'src/app/services/snack.service';
 

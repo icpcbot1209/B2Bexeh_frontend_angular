@@ -48,15 +48,7 @@
   <div class="navbar-right">
     <div class="header-icons d-inline-block align-middle">
       <div class="position-relative d-inline-block">
-        <div dropdown>
-          <button id="button-basic" dropdownToggle type="button" id="notificationButton" class="header-icon btn btn-empty">
-            <i class="fas fa-bell"></i>
-            <span class="count" *ngIf="notifs.length > 0">{{ notifs.length }}</span>
-          </button>
-          <div id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-right mt-3" id="notificationDropdown">
-            <app-notif-list></app-notif-list>
-          </div>
-        </div>
+        <app-notif-list *ngIf="userService.me"></app-notif-list>
       </div>
 
       <button class="header-icon btn btn-empty d-none d-sm-inline-block" type="button" id="fullScreenButton" (click)="fullScreenClick()">

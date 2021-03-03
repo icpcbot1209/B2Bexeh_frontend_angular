@@ -10,6 +10,7 @@ import { HopeModalsModule } from 'src/app/views/main/hope-modals/hope-modals.mod
 
 import { AccountComponent } from './account/account.component';
 import { AlertModule } from 'ngx-bootstrap/alert';
+import { NotifsComponent } from './notifs/notifs.component';
 
 const routes: Routes = [
   {
@@ -18,12 +19,13 @@ const routes: Routes = [
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'account' },
       { path: 'account', component: AccountComponent },
+      { path: 'notifications', component: NotifsComponent },
     ],
   },
 ];
 
 @NgModule({
-  declarations: [SettingsComponent, AccountComponent],
+  declarations: [SettingsComponent, AccountComponent, NotifsComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

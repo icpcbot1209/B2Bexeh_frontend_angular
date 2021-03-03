@@ -7,6 +7,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AngularFireModule } from '@angular/fire';
+import { AngularFireMessagingModule } from '@angular/fire/messaging';
+
 import { environment } from 'src/environments/environment';
 import { LayoutContainersModule } from './containers/layout/layout.containers.module';
 
@@ -24,6 +26,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     TranslateModule.forRoot(),
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
+    AngularFireMessagingModule,
     MatSnackBarModule,
   ],
   declarations: [AppComponent],

@@ -1,5 +1,5 @@
-import { Subject } from 'rxjs';
-import { INotif } from './../interfaces/INotif';
+import { Observable, Subject } from 'rxjs';
+import { INotif } from '../interfaces/INotif';
 import { Injectable, NgZone } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
@@ -11,45 +11,20 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class NotifService {
-  notifs: INotif[] = [];
-  notifs$ = new Subject<INotif[]>();
-  isLoading = false;
+  constructor(private afs: AngularFirestore, private userService: UserService) {}
 
-  constructor(private afs: AngularFirestore, private router: Router, private userService: UserService, private ngZone: NgZone) {}
-
-  private me: IUser;
-
-  async doInit() {
-    this.me = this.userService.me;
-    this.listenMyNotifs(this.me);
-    this.userService.me$.subscribe((me) => {
-      this.me = me;
-      this.listenMyNotifs(this.me);
-    });
-  }
-
-  async listenMyNotifs(me: IUser) {
-    if (!me) {
-      return;
-    }
-    this.isLoading = true;
-
-    try {
-      this.listenMyNotif_FS(me).subscribe(async (arr: INotif[]) => {
-        this.notifs$.next(this.notifs);
-        this.isLoading = false;
-      });
-    } catch (err) {
-      console.error(err);
-      this.isLoading = false;
-    }
-  }
-
-  private listenMyNotif_FS(me: IUser) {
+  listenMyNotifs(me: IUser, limitCount = 10): Observable<INotif[]> {
     return this.afs
       .collection('notifs')
-      .doc<any>(me.id)
-      .valueChanges()
-      .pipe(map((actions) => actions.map((a) => ({ id: a.payload.doc.id, ...a.payload.doc.data() }))));
+      .doc(me.id)
+      .collection<INotif>('notifs', (ref) => ref.orderBy('timestamp', 'desc').limit(limitCount))
+      .valueChanges({ idField: 'id' })
+      .pipe(map((arr) => arr.map((notif) => notif)));
+  }
+
+  markAsRead(notif: INotif) {
+    const me = this.userService.me;
+
+    this.afs.collection('notifs').doc(me.id).collection<INotif>('notifs').doc(notif.id).update({ is_read: true });
   }
 }

@@ -57,13 +57,13 @@ export const menuItemsAdmin: IMenuItem[] = [
   },
   {
     icon: 'fas fa-stream',
-    label: 'Category',
+    label: 'Category(Sport)',
     to: `/admin/category`,
     roles: ['admin'],
   },
   {
     icon: 'fas fa-stream',
-    label: 'Subcategory',
+    label: 'Subcate(Year)',
     to: `/admin/subcategory`,
     roles: ['admin'],
   },
@@ -79,13 +79,6 @@ export const menuItemsAdmin: IMenuItem[] = [
     to: `/admin/product`,
     roles: ['admin'],
   },
-
-  // {
-  //   icon: 'fas fa-file-invoice-dollar',
-  //   label: 'Bids/Asks',
-  //   to: `/admin/bids-asks`,
-  //   roles: ['admin'],
-  // },
   {
     icon: 'fas fa-money-check-alt',
     label: 'Transaction',
